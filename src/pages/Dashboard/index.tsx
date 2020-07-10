@@ -1,5 +1,5 @@
-import React from 'react'
-import { FiX } from 'react-icons/fi'
+import React, { useState, useCallback } from 'react'
+import { FiX, FiSearch } from 'react-icons/fi'
 
 import ComidaImg from '../../images/comida.jpg'
 import Header from '../../components/Header'
@@ -7,12 +7,26 @@ import {
   Container,
   ContainerFeed,
   Search,
+  InputContainer,
   IngredientsList,
   RecipeList,
   EquipamentsList,
 } from './styles'
 
 const Dashboard: React.FC = () => {
+  const [ingredients, setIngredients] = useState<string[]>([])
+  const [ingredient, setIngredient] = useState('')
+
+  const handleUpdateIngredients = useCallback(() => {
+    if (!ingredient) {
+      console.log('no ingredient found')
+      return
+    }
+
+    setIngredients([...ingredients, ingredient])
+    setIngredient('')
+  }, [ingredients, ingredient])
+
   return (
     <>
       <Header />
@@ -73,7 +87,18 @@ const Dashboard: React.FC = () => {
         <ContainerFeed>
           <Search>
             <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
-            <input placeholder="digite o nome de um ingrediente..." />
+            <InputContainer>
+              <input
+                placeholder="digite o nome de um ingrediente..."
+                value={ingredient}
+                onChange={e => {
+                  setIngredient(e.target.value)
+                }}
+              />
+              <button type="button" onClick={() => handleUpdateIngredients()}>
+                <FiSearch color="#000" size={18} />
+              </button>
+            </InputContainer>
           </Search>
           <IngredientsList>
             <div>

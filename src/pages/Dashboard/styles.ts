@@ -42,16 +42,29 @@ export const Search = styled.div`
     margin-left: 15px;
     font-size: 18px;
   }
+`
+export const InputContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  background: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-top: 15px;
+
+  font-size: 16px;
   input {
-    width: 100%;
-    border: 1px solid #000;
-    border-radius: 5px;
-
-    margin-top: 15px;
     padding: 8px;
-
-    font-size: 16px;
-    font-weight: 500;
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+  }
+  button {
+    padding: 7px;
+    background: #fff;
+    border: 0;
+    border-radius: 5px;
   }
 `
 
