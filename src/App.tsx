@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 import Dashboard from './pages/Dashboard'
 import GlobalStyle from './styles/global'
 
 function App() {
   return (
     <div className="App">
-        <Dashboard/>
-        <GlobalStyle/>
+      <Dashboard />
+      <GlobalStyle />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
