@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { FiX, FiSearch } from 'react-icons/fi'
 
-import ComidaImg from '../../images/comida.jpg'
+import api from '../../services/api'
+import ComidaImg from '../../images/comida.png'
 import Header from '../../components/Header'
 import {
   Container,
@@ -13,19 +14,38 @@ import {
   EquipamentsList,
 } from './styles'
 
+interface IRecipe {
+  id: string
+  name: string
+  image_url: string
+  ingredients: string
+  equipaments: string
+}
+
 const Dashboard: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
-  const [ingredient, setIngredient] = useState('')
+  const [recipes, setRecipes] = useState<IRecipe[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleUpdateIngredients = useCallback(() => {
-    if (!ingredient) {
+  useEffect(() => {
+    async function loadRecipes() {
+      const response = await api.get('/recipes')
+      setRecipes(response.data)
+    }
+
+    loadRecipes()
+  }, [])
+
+  const handleAddIngredient = useCallback(() => {
+    if (!inputRef.current) {
       console.log('no ingredient found')
       return
     }
 
-    setIngredients([...ingredients, ingredient])
-    setIngredient('')
-  }, [ingredients, ingredient])
+    setIngredients([...ingredients, inputRef.current.value])
+
+    inputRef.current.value = ''
+  }, [ingredients])
 
   return (
     <>
@@ -90,78 +110,48 @@ const Dashboard: React.FC = () => {
             <InputContainer>
               <input
                 placeholder="digite o nome de um ingrediente..."
-                value={ingredient}
-                onChange={e => {
-                  setIngredient(e.target.value)
+                ref={inputRef}
+                onKeyUp={e => {
+                  return (e.which || e.keyCode) === 13 && handleAddIngredient()
                 }}
               />
-              <button type="button" onClick={() => handleUpdateIngredients()}>
+
+              <button type="button" onClick={() => handleAddIngredient()}>
                 <FiSearch color="#000" size={18} />
               </button>
             </InputContainer>
           </Search>
           <IngredientsList>
-            <div>
-              <p>beterraba</p>
-              <button type="button">
-                <FiX color="#fff" size={14} />
-              </button>
-            </div>
-            <div>
-              <p>rabanete</p>
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-            <div>
-              <p>peixe</p>
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-            <div>
-              trigo
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-            <div>
-              amendoin
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-            <div>
-              fermento
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-            <div>
-              farinha de trigo
-              <button type="button">
-                <FiX color="#fff" size={16} />
-              </button>
-            </div>
-          </IngredientsList>
-          <RecipeList>
-            <div>
-              <img src={ComidaImg} alt="" />
+            {ingredients.map(ingredient => (
               <div>
-                <h3>Feijoada Quentinha</h3>
-                <p>Ingredientes</p>
-                <ul>
-                  <li>Feijão</li>
-                  <li>Pé de porco</li>
-                  <li>óleo</li>
-                  <li>farofa</li>
-                  <li>óleo</li>
-                  <li>farofa</li>
-                  <li>óleo</li>
-                  <li>farofa</li>
-                </ul>
+                <p>{ingredient}</p>
+                <button type="button">
+                  <FiX color="#fff" size={14} />
+                </button>
               </div>
-            </div>
+            ))}
+          </IngredientsList>
+          <h3>1 Resultado</h3>
+          <RecipeList>
+            {recipes.map(recipe => (
+              <div>
+                <img src={ComidaImg} alt="" />
+                <div>
+                  <h3>{recipe.name}</h3>
+                  <p>Ingredientes</p>
+                  <ul>
+                    <li>Feijão</li>
+                    <li>Pé de porco</li>
+                    <li>óleo</li>
+                    <li>farofa</li>
+                    <li>óleo</li>
+                    <li>farofa</li>
+                    <li>óleo</li>
+                    <li>farofa</li>
+                  </ul>
+                </div>
+              </div>
+            ))}
           </RecipeList>
         </ContainerFeed>
       </Container>

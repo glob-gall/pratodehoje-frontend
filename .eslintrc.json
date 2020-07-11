@@ -46,7 +46,8 @@
         "required": {
             "every": [ "id" ]
         }
-    }]
+    }],
+    "camelcase":"off"
     },
     "settings": {
       "import/resolver": {
