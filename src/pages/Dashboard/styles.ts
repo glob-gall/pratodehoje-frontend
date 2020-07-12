@@ -98,6 +98,7 @@ export const RecipeList = styled.div`
   max-width: 500px;
   padding: 15px;
   border-radius: 5px;
+  margin-bottom: 50px;
   div {
     display: flex;
     background: #f0f0f5;

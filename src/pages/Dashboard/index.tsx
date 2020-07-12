@@ -21,9 +21,13 @@ interface IRecipe {
   ingredients: string
   equipaments: string
 }
+interface IIngredient {
+  id: number
+  name: string
+}
 
 const Dashboard: React.FC = () => {
-  const [ingredients, setIngredients] = useState<string[]>([])
+  const [ingredients, setIngredients] = useState<IIngredient[]>([])
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -37,15 +41,26 @@ const Dashboard: React.FC = () => {
   }, [])
 
   const handleAddIngredient = useCallback(() => {
-    if (!inputRef.current) {
+    if (!inputRef.current || inputRef.current.value === '') {
       console.log('no ingredient found')
       return
     }
 
-    setIngredients([...ingredients, inputRef.current.value])
+    const newIngredient: IIngredient = {
+      id: ingredients.length + 1,
+      name: inputRef.current.value,
+    }
+    setIngredients([...ingredients, newIngredient])
 
     inputRef.current.value = ''
   }, [ingredients])
+
+  const handleRemoveIngredient = useCallback(
+    (id: number) => {
+      setIngredients(ingredients.filter(ingredient => ingredient.id !== id))
+    },
+    [ingredients],
+  )
 
   return (
     <>
@@ -123,9 +138,14 @@ const Dashboard: React.FC = () => {
           </Search>
           <IngredientsList>
             {ingredients.map(ingredient => (
-              <div>
-                <p>{ingredient}</p>
-                <button type="button">
+              <div key={ingredient.id}>
+                <p>{ingredient.name}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleRemoveIngredient(ingredient.id)
+                  }}
+                >
                   <FiX color="#fff" size={14} />
                 </button>
               </div>
@@ -134,20 +154,15 @@ const Dashboard: React.FC = () => {
           <h3>1 Resultado</h3>
           <RecipeList>
             {recipes.map(recipe => (
-              <div>
+              <div key={recipe.id}>
                 <img src={ComidaImg} alt="" />
                 <div>
                   <h3>{recipe.name}</h3>
                   <p>Ingredientes</p>
                   <ul>
-                    <li>Feijão</li>
-                    <li>Pé de porco</li>
-                    <li>óleo</li>
-                    <li>farofa</li>
-                    <li>óleo</li>
-                    <li>farofa</li>
-                    <li>óleo</li>
-                    <li>farofa</li>
+                    {recipe.ingredients.split(',').map(ingredient => (
+                      <li key={ingredient}>{ingredient}</li>
+                    ))}
                   </ul>
                 </div>
               </div>
