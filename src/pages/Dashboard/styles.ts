@@ -88,7 +88,7 @@ export const RecipeList = styled.div`
   border-radius: 10px;
   div {
     img {
-      height: 220px;
+      width: 160px;
     }
 
     background: #f0f0f5;
