@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
-import { FiX, FiSearch } from 'react-icons/fi'
+import { FiX } from 'react-icons/fi'
+import { FaSearch } from 'react-icons/fa'
 
 import api from '../../services/api'
 import ComidaImg from '../../images/comida.png'
 import Header from '../../components/Header'
+import Footer from '../../components/Footer'
 import {
   Container,
   ContainerFeed,
@@ -65,6 +67,15 @@ const Dashboard: React.FC = () => {
     },
     [ingredients],
   )
+  useEffect(() => {
+    setRecipes(state =>
+      state.filter(recipe =>
+        ingredients.every(ingredient =>
+          recipe.ingredients.includes(ingredient),
+        ),
+      ),
+    )
+  }, [ingredients])
 
   return (
     <>
@@ -96,7 +107,7 @@ const Dashboard: React.FC = () => {
               />
 
               <button type="button" onClick={() => handleAddIngredient()}>
-                <FiSearch color="#26598" size={18} />
+                <FaSearch color="#fff" size={20} />
               </button>
             </div>
           </Search>
@@ -122,18 +133,21 @@ const Dashboard: React.FC = () => {
                 <img src={ComidaImg} alt="" />
                 <div>
                   <h3>{recipe.name}</h3>
-                  <p>Ingredientes</p>
-                  <ul>
-                    {recipe.ingredients.map(ingredient => (
-                      <li key={ingredient}>{ingredient}</li>
-                    ))}
-                  </ul>
+                  <div>
+                    <p>Ingredientes</p>
+                    <ul>
+                      {recipe.ingredients.map(ingredient => (
+                        <li key={ingredient}>{ingredient}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             ))}
           </RecipeList>
         </ContainerFeed>
       </Container>
+      <Footer />
     </>
   )
 }

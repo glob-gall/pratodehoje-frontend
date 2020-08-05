@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  grid-auto-flow: 90px 1fr 100px;
   margin: 0 50px;
 `
 export const EquipamentsList = styled.div`
@@ -50,9 +51,8 @@ export const Search = styled.div`
       width: 10%;
       height: 45px;
       border: none;
-      /* border-left: 1px solid #303030; */
       border-radius: 0;
-      background: #94ff92;
+      background: #41c900;
     }
   }
 `
@@ -79,55 +79,75 @@ export const IngredientsList = styled.div`
 `
 
 export const RecipeList = styled.div`
-  h3 {
-    margin-top: 25px;
-  }
-
   background: #fff;
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 7px;
+  h3 {
+    margin-top: 15px;
+  }
+
   div {
+    background: #5de247;
+    border-radius: 7px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 180px;
+    overflow: hidden;
     & + div {
       margin-top: 20px;
     }
     img {
-      width: 300px;
-      height: 230px;
+      width: 100%;
+      height: 100%;
     }
 
-    background: #f0f0f5;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-
     div {
-      margin-left: 35px;
+      display: flex;
       flex-direction: column;
-
       h3 {
         font-size: 32px;
         margin-left: 45px;
+        height: 50px;
+        overflow: hidden;
       }
-      p {
-        font-size: 21px;
-        margin-top: 10px;
-        margin-left: 45px;
-        font-weight: bold;
-        color: #6c6c80;
-      }
-      ul {
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        list-style-type: none;
-        margin: 7px 10px 10px 25px;
-        li {
-          color: #6c6c80;
+      div {
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          width: 10px;
+          overflow: hidden;
+        }
+        &::-webkit-scrollbar-track {
           background: #c4c4c4;
-          margin: 10px;
-          padding: 10px;
-          font-weight: bold;
           border-radius: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #6c6c80;
+          border-radius: 5px;
+        }
+        margin: 7px 10px 10px 25px;
+
+        p {
+          font-size: 21px;
+          font-weight: bold;
+          color: #6c6c80;
+          margin-left: 20px;
+        }
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: row;
+
+          height: 100px;
+          list-style-type: none;
+
+          li {
+            color: #fff;
+            background: #1cca00;
+            margin: 10px;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 5px;
+          }
         }
       }
     }
