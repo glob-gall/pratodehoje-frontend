@@ -8,7 +8,6 @@ import {
   Container,
   ContainerFeed,
   Search,
-  InputContainer,
   IngredientsList,
   RecipeList,
   EquipamentsList,
@@ -18,17 +17,23 @@ interface IRecipe {
   id: string
   name: string
   image_url: string
-  ingredients: string
+  ingredients: string[]
   equipaments: string
-}
-interface IIngredient {
-  id: number
-  name: string
 }
 
 const Dashboard: React.FC = () => {
-  const [ingredients, setIngredients] = useState<IIngredient[]>([])
+  const [ingredients, setIngredients] = useState<string[]>([])
   const [recipes, setRecipes] = useState<IRecipe[]>([])
+  const [requireds, setRequireds] = useState([
+    'fogão',
+    'Forno',
+    'Churrasqueira',
+    'Grill',
+    'Micro-ondas',
+    'Geladeira',
+    'Freezer',
+    'Liquidificador',
+  ])
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
@@ -46,18 +51,17 @@ const Dashboard: React.FC = () => {
       return
     }
 
-    const newIngredient: IIngredient = {
-      id: ingredients.length + 1,
-      name: inputRef.current.value,
-    }
+    const newIngredient = inputRef.current.value
     setIngredients([...ingredients, newIngredient])
 
     inputRef.current.value = ''
   }, [ingredients])
 
   const handleRemoveIngredient = useCallback(
-    (id: number) => {
-      setIngredients(ingredients.filter(ingredient => ingredient.id !== id))
+    (ingredientRemove: string) => {
+      setIngredients(
+        ingredients.filter(ingredient => ingredient !== ingredientRemove),
+      )
     },
     [ingredients],
   )
@@ -69,60 +73,20 @@ const Dashboard: React.FC = () => {
         <EquipamentsList>
           <h4>Você possui:</h4>
           <div>
-            <div>
-              <label htmlFor="a">
-                <input type="checkbox" />
-                Fogão
-              </label>
-            </div>
-            <div>
-              <label htmlFor="b">
-                <input type="checkbox" />
-                Forno
-              </label>
-            </div>
-            <div>
-              <label htmlFor="c">
-                <input type="checkbox" />
-                Churrasqueira
-              </label>
-            </div>
-            <div>
-              <label htmlFor="d">
-                <input type="checkbox" />
-                Grill
-              </label>
-            </div>
-            <div>
-              <label htmlFor="e">
-                <input type="checkbox" />
-                Micro-ondas
-              </label>
-            </div>
-            <div>
-              <label htmlFor="f">
-                <input type="checkbox" />
-                Geladeira
-              </label>
-            </div>
-            <div>
-              <label htmlFor="g">
-                <input type="checkbox" />
-                Freezer
-              </label>
-            </div>
-            <div>
-              <label htmlFor="h">
-                <input type="checkbox" />
-                Liquidificador
-              </label>
-            </div>
+            {requireds.map(required => (
+              <div key={required}>
+                <label htmlFor="a">
+                  <input type="checkbox" />
+                  {required}
+                </label>
+              </div>
+            ))}
           </div>
         </EquipamentsList>
         <ContainerFeed>
           <Search>
             <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
-            <InputContainer>
+            <div>
               <input
                 placeholder="digite o nome de um ingrediente..."
                 ref={inputRef}
@@ -132,18 +96,18 @@ const Dashboard: React.FC = () => {
               />
 
               <button type="button" onClick={() => handleAddIngredient()}>
-                <FiSearch color="#000" size={18} />
+                <FiSearch color="#26598" size={18} />
               </button>
-            </InputContainer>
+            </div>
           </Search>
           <IngredientsList>
             {ingredients.map(ingredient => (
-              <div key={ingredient.id}>
-                <p>{ingredient.name}</p>
+              <div key={ingredient}>
+                <p>{ingredient}</p>
                 <button
                   type="button"
                   onClick={() => {
-                    handleRemoveIngredient(ingredient.id)
+                    handleRemoveIngredient(ingredient)
                   }}
                 >
                   <FiX color="#fff" size={14} />
@@ -160,7 +124,7 @@ const Dashboard: React.FC = () => {
                   <h3>{recipe.name}</h3>
                   <p>Ingredientes</p>
                   <ul>
-                    {recipe.ingredients.split(',').map(ingredient => (
+                    {recipe.ingredients.map(ingredient => (
                       <li key={ingredient}>{ingredient}</li>
                     ))}
                   </ul>
