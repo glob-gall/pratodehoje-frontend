@@ -6,6 +6,7 @@ export const Container = styled.div`
   grid-auto-flow: 90px 1fr 100px;
   margin: 0 50px;
 `
+
 export const EquipamentsList = styled.div`
   margin-top: 150px;
   div {
@@ -52,7 +53,7 @@ export const Search = styled.div`
       height: 45px;
       border: none;
       border-radius: 0;
-      background: #41c900;
+      background: #1cca00;
     }
   }
 `
@@ -87,7 +88,7 @@ export const RecipeList = styled.div`
   }
 
   div {
-    background: #5de247;
+    background: #f0f0f5;
     border-radius: 7px;
     display: grid;
     grid-template-columns: 200px 1fr;
@@ -142,7 +143,7 @@ export const RecipeList = styled.div`
 
           li {
             color: #fff;
-            background: #1cca00;
+            background: #41c900;
             margin: 10px;
             padding: 10px;
             font-weight: bold;

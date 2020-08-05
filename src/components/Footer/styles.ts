@@ -18,6 +18,9 @@ export const Content = styled.p`
   background: #262625;
   margin: 15px;
   border-radius: 7px;
+  p {
+    text-align: center;
+  }
 `
 export const SocialLinks = styled.div`
   grid-column: 3/4;
@@ -25,12 +28,14 @@ export const SocialLinks = styled.div`
 
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+
   div {
     display: flex;
     align-items: center;
-    & + div {
-      margin-left: 10px;
-    }
+
+    margin: 10px;
+
     svg {
       margin-right: 5px;
     }

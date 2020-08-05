@@ -126,7 +126,11 @@ const Dashboard: React.FC = () => {
               </div>
             ))}
           </IngredientsList>
-          <h3>1 Resultado</h3>
+          <h3>
+            {recipes.length === 1
+              ? `${recipes.length} resultado`
+              : `${recipes.length} resultados`}
+          </h3>
           <RecipeList>
             {recipes.map(recipe => (
               <div key={recipe.id}>
