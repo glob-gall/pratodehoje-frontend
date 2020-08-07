@@ -8,13 +8,15 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 50px 1fr 1fr 50px;
 `
-export const Content = styled.p`
+export const Content = styled.div`
   grid-column: 2/3;
   color: #01b801;
 
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
+
   background: #262625;
   margin: 15px;
   border-radius: 7px;

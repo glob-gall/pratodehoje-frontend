@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 import { FaSearch } from 'react-icons/fa'
-
+import RecipeNotFound from '../../images/recipeNotFound.svg'
 import api from '../../services/api'
 import ComidaImg from '../../images/comida.png'
 import Header from '../../components/Header'
@@ -10,8 +10,11 @@ import {
   Container,
   ContainerFeed,
   Search,
+  IngredientsContainer,
   IngredientsList,
   RecipeList,
+  RecipesNotFound,
+  Recipe,
   EquipamentsList,
 } from './styles'
 
@@ -38,14 +41,22 @@ const Dashboard: React.FC = () => {
   ])
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // useEffect(() => {
+  //   async function loadRecipes() {
+  //     const response = await api.get('/recipes/all')
+  //     setRecipes(response.data)
+  //   }
+
+  //   loadRecipes()
+  // }, [])
   useEffect(() => {
-    async function loadRecipes() {
-      const response = await api.get('/recipes')
+    async function loadRecipesByIngredients() {
+      const response = await api.post('/recipes/ingredients', { ingredients })
       setRecipes(response.data)
     }
 
-    loadRecipes()
-  }, [])
+    loadRecipesByIngredients()
+  }, [ingredients])
 
   const handleAddIngredient = useCallback(() => {
     if (!inputRef.current || inputRef.current.value === '') {
@@ -67,15 +78,6 @@ const Dashboard: React.FC = () => {
     },
     [ingredients],
   )
-  useEffect(() => {
-    setRecipes(state =>
-      state.filter(recipe =>
-        ingredients.every(ingredient =>
-          recipe.ingredients.includes(ingredient),
-        ),
-      ),
-    )
-  }, [ingredients])
 
   return (
     <>
@@ -132,22 +134,29 @@ const Dashboard: React.FC = () => {
               : `${recipes.length} resultados`}
           </h3>
           <RecipeList>
-            {recipes.map(recipe => (
-              <div key={recipe.id}>
-                <img src={ComidaImg} alt="" />
-                <div>
-                  <h3>{recipe.name}</h3>
+            {recipes.length !== 0 ? (
+              recipes.map(recipe => (
+                <Recipe key={recipe.id}>
+                  <img src={ComidaImg} alt="" />
                   <div>
-                    <p>Ingredientes</p>
-                    <ul>
-                      {recipe.ingredients.map(ingredient => (
-                        <li key={ingredient}>{ingredient}</li>
-                      ))}
-                    </ul>
+                    <h3>{recipe.name}</h3>
+                    <IngredientsContainer>
+                      <p>Ingredientes</p>
+                      <ul>
+                        {recipe.ingredients.map(ingredient => (
+                          <li key={ingredient}>{ingredient}</li>
+                        ))}
+                      </ul>
+                    </IngredientsContainer>
                   </div>
-                </div>
-              </div>
-            ))}
+                </Recipe>
+              ))
+            ) : (
+              <RecipesNotFound>
+                <img src={RecipeNotFound} alt="recipe not found" />
+                <p>nenhuma receita encontrada</p>
+              </RecipesNotFound>
+            )}
           </RecipeList>
         </ContainerFeed>
       </Container>

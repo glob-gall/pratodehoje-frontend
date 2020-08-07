@@ -7,7 +7,7 @@ const Footer: React.FC = () => {
   return (
     <Container>
       <Content>
-        <p>conteudo do footer</p>
+        <p>© 2020 - Todas as lisenças reservadas Glob</p>
       </Content>
       <SocialLinks>
         <div>
