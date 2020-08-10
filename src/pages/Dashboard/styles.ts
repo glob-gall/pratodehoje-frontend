@@ -37,13 +37,13 @@ export const Search = styled.div`
     margin-top: 35px;
     width: 100%;
     display: flex;
-    border-radius: 5px;
+    border-radius: 7px;
     overflow: hidden;
     height: 45px;
     input {
       width: 90%;
       padding: 20px 20px 10px 10px;
-
+      border-radius: 0;
       font-size: 16px;
 
       border: none;
@@ -149,6 +149,7 @@ export const IngredientsContainer = styled.div`
       background: #41c900;
       margin: 10px;
       padding: 10px;
+      height: 38px;
       font-weight: bold;
       border-radius: 5px;
     }
@@ -162,6 +163,7 @@ export const RecipesNotFound = styled.div`
   margin: 100px;
   padding: 15px;
   border: 10px;
+  border-radius: 10px;
 
   align-items: center;
   img {
@@ -170,6 +172,7 @@ export const RecipesNotFound = styled.div`
     border-radius: 50%;
   }
   p {
+    text-align: center;
     font-size: 30px;
     font-weight: bold;
     margin-top: 15px;

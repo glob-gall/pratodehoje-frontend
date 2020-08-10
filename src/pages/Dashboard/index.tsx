@@ -18,11 +18,15 @@ import {
   EquipamentsList,
 } from './styles'
 
+interface Ingredient {
+  id: string
+  name: string
+}
 interface IRecipe {
   id: string
   name: string
   image_url: string
-  ingredients: string[]
+  ingredients: Ingredient[]
   equipaments: string
 }
 
@@ -51,8 +55,14 @@ const Dashboard: React.FC = () => {
   // }, [])
   useEffect(() => {
     async function loadRecipesByIngredients() {
-      const response = await api.post('/recipes/ingredients', { ingredients })
-      setRecipes(response.data)
+      if (ingredients.length > 0) {
+        const response = await api.post('/recipes/ingredients', { ingredients })
+        console.log(response.data)
+        setRecipes(response.data)
+      } else {
+        const response = await api.get('/recipes/all')
+        setRecipes(response.data)
+      }
     }
 
     loadRecipesByIngredients()
@@ -144,7 +154,7 @@ const Dashboard: React.FC = () => {
                       <p>Ingredientes</p>
                       <ul>
                         {recipe.ingredients.map(ingredient => (
-                          <li key={ingredient}>{ingredient}</li>
+                          <li key={ingredient.id}>{ingredient.name}</li>
                         ))}
                       </ul>
                     </IngredientsContainer>
