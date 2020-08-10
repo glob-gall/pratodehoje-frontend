@@ -12,6 +12,11 @@ export const Logo = styled.div`
   img {
     width: 240px;
   }
+  @media (max-width: 768px) {
+    display: block;
+    height: 100vh;
+    /* position: absolute; */
+  }
 `
 
 export const Nav = styled.div`
@@ -49,5 +54,24 @@ export const Nav = styled.div`
         visibility: visible;
       }
     }
+  }
+`
+export const Burguer = styled.div`
+  display: none;
+  &:hover {
+    border: 1px solid #f0f0f0;
+    border-radius: 5px;
+  }
+
+  div {
+    width: 35px;
+    height: 5px;
+    border-radius: 5px;
+    background: #fff;
+    margin: 10px;
+  }
+  @media (max-width: 768px) {
+    display: initial;
+    margin-left: auto;
   }
 `

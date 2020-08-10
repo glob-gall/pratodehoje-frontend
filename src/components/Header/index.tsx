@@ -1,6 +1,6 @@
 import React from 'react'
 import LogoImg from '../../images/logo.svg'
-import { Container, Logo, Nav } from './styled'
+import { Container, Logo, Nav, Burguer } from './styled'
 
 const Header: React.FC = () => {
   return (
@@ -13,6 +13,11 @@ const Header: React.FC = () => {
         <a href="/">Mais acessados</a>
         <a href="/">Profissionais</a>
       </Nav>
+      <Burguer>
+        <div />
+        <div />
+        <div />
+      </Burguer>
     </Container>
   )
 }
