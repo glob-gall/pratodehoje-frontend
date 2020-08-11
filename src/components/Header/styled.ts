@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 interface NavItemsProps {
   active: boolean
+  page: string
 }
 
 export const Container = styled.div`
@@ -42,6 +43,10 @@ export const NavItems = styled.div<NavItemsProps>`
     font-size: 20px;
     text-decoration: none;
     color: #fff;
+    padding: 5px;
+    &.dashboard {
+      ${props => props.page}
+    }
   }
   @media (max-width: 768px) {
     ${props =>

@@ -37,6 +37,7 @@ export const ContainerFeed = styled.div`
 `
 export const Search = styled.div`
   text-align: center;
+
   div {
     margin-top: 35px;
     width: 100%;
@@ -44,6 +45,7 @@ export const Search = styled.div`
     border-radius: 7px;
     overflow: hidden;
     height: 45px;
+    /* box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2); */
     input {
       width: 90%;
       padding: 20px 20px 10px 10px;
@@ -154,7 +156,8 @@ export const IngredientsContainer = styled.div`
       margin: 10px;
       padding: 10px;
       font-weight: bold;
-      border-radius: 5px;
+      border-radius: 10px;
+      box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
     }
   }
 `

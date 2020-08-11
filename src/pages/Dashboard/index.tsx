@@ -91,7 +91,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header page="dashboard" />
       <Container>
         <ContainerFeed>
           <Search>
