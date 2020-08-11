@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 interface NavItemsProps {
   active: boolean
-  page: string
+  activeLink: 'dashboard' | 'topRecipes' | 'profiles'
 }
 
 export const Container = styled.div`
@@ -40,12 +40,31 @@ export const NavItems = styled.div<NavItemsProps>`
   margin-right: 50px;
   a {
     margin: 10px;
+    padding: 5px;
     font-size: 20px;
     text-decoration: none;
     color: #fff;
-    padding: 5px;
+    border-bottom: 3px solid #ed3939;
     &.dashboard {
-      ${props => props.page}
+      ${props =>
+        props.activeLink === 'dashboard' &&
+        css`
+          border-bottom: 3px solid #1cca00;
+        `}
+    }
+    &.topRecipes {
+      ${props =>
+        props.activeLink === 'topRecipes' &&
+        css`
+          border-bottom: 3px solid #1cca00;
+        `}
+    }
+    &.profiles {
+      ${props =>
+        props.activeLink === 'profiles' &&
+        css`
+          border-bottom: 3px solid #1cca00;
+        `}
     }
   }
   @media (max-width: 768px) {
