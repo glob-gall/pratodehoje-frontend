@@ -24,6 +24,7 @@ export const EquipamentsList = styled.div`
 `
 
 export const ContainerFeed = styled.div`
+  grid-column: 2/3;
   margin-top: 50px;
   > h3 {
     margin-bottom: 5px;
@@ -143,13 +144,12 @@ export const IngredientsContainer = styled.div`
 
     height: 100px;
     list-style-type: none;
-
+    align-items: center;
     li {
       color: #fff;
       background: #41c900;
       margin: 10px;
       padding: 10px;
-      height: 38px;
       font-weight: bold;
       border-radius: 5px;
     }

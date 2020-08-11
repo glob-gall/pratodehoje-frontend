@@ -8,7 +8,6 @@ export const Container = styled.div`
   background: #ed3939;
   align-items: center;
   display: flex;
-  width: 100%;
   @media (max-width: 768px) {
     align-items: center;
     justify-content: center;

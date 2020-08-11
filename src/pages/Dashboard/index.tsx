@@ -93,19 +93,6 @@ const Dashboard: React.FC = () => {
     <>
       <Header />
       <Container>
-        <EquipamentsList>
-          <h4>Você possui:</h4>
-          <div>
-            {requireds.map(required => (
-              <div key={required}>
-                <label htmlFor="a">
-                  <input type="checkbox" />
-                  {required}
-                </label>
-              </div>
-            ))}
-          </div>
-        </EquipamentsList>
         <ContainerFeed>
           <Search>
             <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
