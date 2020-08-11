@@ -1,4 +1,5 @@
 import React, { useState, HTMLAttributes } from 'react'
+import { Link } from 'react-router-dom'
 import LogoImg from '../../images/logo.svg'
 import { Container, Logo, Nav, NavItems, Burguer } from './styled'
 
@@ -14,15 +15,15 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
           <img src={LogoImg} alt="prato de hoje" />
         </Logo>
         <NavItems active={isActive} activeLink={page}>
-          <a href="/" className="dashboard">
+          <Link to="/" className="dashboard">
             Procurar receitas
-          </a>
-          <a href="/" className="topRecipes">
+          </Link>
+          <Link to="/" className="topRecipes">
             Mais acessados
-          </a>
-          <a href="/" className="profiles">
+          </Link>
+          <Link to="/profiles" className="profiles">
             Profissionais
-          </a>
+          </Link>
         </NavItems>
       </Nav>
       <Burguer
