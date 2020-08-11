@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import LogoImg from '../../images/logo.svg'
-import { Container, Logo, Nav, Burguer } from './styled'
+import { Container, Logo, Nav, NavItems, Burguer } from './styled'
 
 const Header: React.FC = () => {
+  const [isActive, setIsActive] = useState(false)
   return (
     <Container>
-      <Logo>
-        <img src={LogoImg} alt="prato de hoje" />
-      </Logo>
       <Nav>
-        <a href="/">Procurar receitas</a>
-        <a href="/">Mais acessados</a>
-        <a href="/">Profissionais</a>
+        <Logo>
+          <img src={LogoImg} alt="prato de hoje" />
+        </Logo>
+        <NavItems active={isActive}>
+          <a href="/">Procurar receitas</a>
+          <a href="/">Mais acessados</a>
+          <a href="/">Profissionais</a>
+        </NavItems>
       </Nav>
-      <Burguer>
+      <Burguer
+        onClick={() => {
+          setIsActive(!isActive)
+        }}
+      >
         <div />
         <div />
         <div />

@@ -1,63 +1,67 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+
+interface NavItemsProps {
+  active: boolean
+}
 
 export const Container = styled.div`
   background: #ed3939;
-  padding: 0 65px;
-  display: flex;
-
   align-items: center;
+  display: flex;
+  width: 100%;
+  @media (max-width: 768px) {
+    align-items: center;
+    justify-content: center;
+  }
 `
+
+export const Nav = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    width: auto;
+  }
+`
+
 export const Logo = styled.div`
   margin: 15px;
   img {
     width: 240px;
   }
-  @media (max-width: 768px) {
-    display: block;
-    height: 100vh;
-    /* position: absolute; */
-  }
 `
 
-export const Nav = styled.div`
+export const NavItems = styled.div<NavItemsProps>`
   margin-left: auto;
-  display: block;
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
   a {
-    margin: 25px;
-
+    margin: 10px;
+    font-size: 20px;
     text-decoration: none;
     color: #fff;
-    font-size: 18px;
-
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      width: 85%;
-      height: 3px;
-      background: #39b100;
-
-      left: 50%;
-      transform: translateX(-50%);
-      top: 115%;
-
-      visibility: hidden;
-      opacity: 0;
-      transform: opacity 0.6s;
-    }
-
-    &:hover {
-      color: #d4d4d4;
-      &::after {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
+  }
+  @media (max-width: 768px) {
+    ${props =>
+      props.active
+        ? css`
+            display: flex;
+          `
+        : css`
+            display: none;
+          `}
+    flex-direction:column;
   }
 `
-export const Burguer = styled.div`
+
+export const Burguer = styled.button`
   display: none;
+  background: transparent;
+  border: 1px solid #ed3939;
+  margin-right: 50px;
   &:hover {
     border: 1px solid #f0f0f0;
     border-radius: 5px;
@@ -73,5 +77,8 @@ export const Burguer = styled.div`
   @media (max-width: 768px) {
     display: initial;
     margin-left: auto;
+    position: absolute;
+    right: 0px;
+    top: 20px;
   }
 `
