@@ -31,6 +31,9 @@ export const ContainerFeed = styled.div`
     margin-left: 10px;
     font-size: 25px;
   }
+  @media (max-width: 768px) {
+    grid-column: 1/4;
+  }
 `
 export const Search = styled.div`
   text-align: center;
