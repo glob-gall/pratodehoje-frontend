@@ -1,13 +1,51 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import { Container, GridContainer } from './styles'
+import { Container, GridContainer, CardProfile } from './styles'
+import Image from '../../images/comida.png'
+
+interface ProfileInfo {
+  id: number
+  name: string
+  starts: number
+  totalRecipes: number
+  image_url: string
+}
 
 const Profiles: React.FC = () => {
+  const [profiles, setProfiles] = useState<ProfileInfo[]>([])
+  useEffect(() => {
+    const profile = {
+      id: 0,
+      name: 'joao',
+      starts: 3,
+      totalRecipes: 35,
+      image_url: 'image_img',
+    }
+    const array: ProfileInfo[] = []
+    for (let i = 0; i < 4; i += 1) {
+      array[i] = profile
+      array[i].id = i
+    }
+    setProfiles(array)
+  }, [])
   return (
     <GridContainer>
       <Header page="profiles" />
-      <Container />
+      <Container>
+        {profiles.map(profile => (
+          <CardProfile key={profile.id}>
+            <img src={Image} alt="author" />
+            <div>
+              <div>
+                <h3>{profile.name}</h3>
+                <strong>{profile.totalRecipes}</strong>
+              </div>
+              <span>{profile.starts}</span>
+            </div>
+          </CardProfile>
+        ))}
+      </Container>
       <Footer />
     </GridContainer>
   )

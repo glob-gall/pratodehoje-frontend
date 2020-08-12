@@ -7,6 +7,7 @@ import ComidaImg from '../../images/comida.png'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import {
+  GridContainer,
   Container,
   ContainerFeed,
   Search,
@@ -16,6 +17,7 @@ import {
   RecipesNotFound,
   Recipe,
   EquipamentsList,
+  ContainerPagination,
 } from './styles'
 
 interface Ingredient {
@@ -33,31 +35,32 @@ interface IRecipe {
 const Dashboard: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipes, setRecipes] = useState<IRecipe[]>([])
-  const [requireds, setRequireds] = useState([
-    'fogão',
-    'Forno',
-    'Churrasqueira',
-    'Grill',
-    'Micro-ondas',
-    'Geladeira',
-    'Freezer',
-    'Liquidificador',
-  ])
+  const [recipesToList, setRecipesToList] = useState<IRecipe[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, _] = useState(4)
+
   const inputRef = useRef<HTMLInputElement>(null)
+  const prevPage = useCallback(() => {
+    setCurrentPage(state => (state === 1 ? state : state - 1))
+  }, [])
+  const nextPage = useCallback(() => {
+    setCurrentPage(state =>
+      state === Math.ceil(recipes.length / 4) ? state : state + 1,
+    )
+  }, [recipes.length])
 
-  // useEffect(() => {
-  //   async function loadRecipes() {
-  //     const response = await api.get('/recipes/all')
-  //     setRecipes(response.data)
-  //   }
+  useEffect(() => {
+    const page = currentPage - 1
+    const start = page * itemsPerPage
+    const end = start + itemsPerPage
 
-  //   loadRecipes()
-  // }, [])
+    setRecipesToList(recipes.slice(start, end))
+  }, [recipes, currentPage, itemsPerPage])
+
   useEffect(() => {
     async function loadRecipesByIngredients() {
       if (ingredients.length > 0) {
         const response = await api.post('/recipes/ingredients', { ingredients })
-        console.log(response.data)
         setRecipes(response.data)
       } else {
         const response = await api.get('/recipes/all')
@@ -70,7 +73,6 @@ const Dashboard: React.FC = () => {
 
   const handleAddIngredient = useCallback(() => {
     if (!inputRef.current || inputRef.current.value === '') {
-      console.log('no ingredient found')
       return
     }
 
@@ -90,7 +92,7 @@ const Dashboard: React.FC = () => {
   )
 
   return (
-    <>
+    <GridContainer>
       <Header page="dashboard" />
       <Container>
         <ContainerFeed>
@@ -131,14 +133,24 @@ const Dashboard: React.FC = () => {
               : `${recipes.length} resultados`}
           </h3>
           <RecipeList>
+            {recipes.length > 4 && (
+              <ContainerPagination>
+                <button type="button" onClick={() => prevPage()}>
+                  Prev
+                </button>
+                <button type="button" onClick={() => nextPage()}>
+                  Next
+                </button>
+              </ContainerPagination>
+            )}
             {recipes.length !== 0 ? (
-              recipes.map(recipe => (
+              recipesToList.map(recipe => (
                 <Recipe key={recipe.id}>
                   <img src={ComidaImg} alt="" />
                   <div>
                     <h3>{recipe.name}</h3>
                     <IngredientsContainer>
-                      <p>Ingredientes</p>
+                      <p>Ingredients</p>
                       <ul>
                         {recipe.ingredients.map(ingredient => (
                           <li key={ingredient.id}>{ingredient.name}</li>
@@ -154,11 +166,21 @@ const Dashboard: React.FC = () => {
                 <p>nenhuma receita encontrada</p>
               </RecipesNotFound>
             )}
+            {recipes.length > 4 && (
+              <ContainerPagination>
+                <button type="button" onClick={() => prevPage()}>
+                  Prev
+                </button>
+                <button type="button" onClick={() => nextPage()}>
+                  Next
+                </button>
+              </ContainerPagination>
+            )}
           </RecipeList>
         </ContainerFeed>
       </Container>
       <Footer />
-    </>
+    </GridContainer>
   )
 }
 

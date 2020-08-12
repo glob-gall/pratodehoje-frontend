@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const GridContainer = styled.div`
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+`
 export const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
@@ -31,7 +36,7 @@ export const ContainerFeed = styled.div`
     margin-left: 10px;
     font-size: 25px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 836px) {
     grid-column: 1/4;
   }
 `
@@ -141,6 +146,7 @@ export const IngredientsContainer = styled.div`
     font-weight: bold;
     color: #6c6c80;
     margin-left: 20px;
+    display: inline;
   }
   ul {
     display: flex;
@@ -182,5 +188,27 @@ export const RecipesNotFound = styled.div`
     font-size: 30px;
     font-weight: bold;
     margin-top: 15px;
+  }
+`
+
+export const ContainerPagination = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+
+  button {
+    width: 75px;
+    height: 40px;
+    background: #ff6242;
+
+    color: #fff;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    &:hover {
+      background: #d94629;
+      color: #ddd;
+    }
   }
 `

@@ -9,7 +9,7 @@ export const Container = styled.div`
   background: #ed3939;
   align-items: center;
   display: flex;
-  @media (max-width: 768px) {
+  @media (max-width: 836px) {
     align-items: center;
     justify-content: center;
   }
@@ -20,7 +20,7 @@ export const Nav = styled.div`
   align-items: center;
   width: 100%;
   position: relative;
-  @media (max-width: 768px) {
+  @media (max-width: 836px) {
     flex-direction: column;
     width: auto;
   }
@@ -49,7 +49,7 @@ export const NavItems = styled.div<NavItemsProps>`
       ${props =>
         props.activeLink === 'dashboard' &&
         css`
-          border-bottom: 3px solid #1cca00;
+          border-color: #1cca00;
         `}
     }
     &.topRecipes {
@@ -63,11 +63,11 @@ export const NavItems = styled.div<NavItemsProps>`
       ${props =>
         props.activeLink === 'profiles' &&
         css`
-          border-bottom: 3px solid #1cca00;
+          border-color: #1cca00;
         `}
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 836px) {
     ${props =>
       props.active
         ? css`
@@ -97,7 +97,7 @@ export const Burguer = styled.button`
     background: #fff;
     margin: 10px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 836px) {
     display: initial;
     margin-left: auto;
     position: absolute;
