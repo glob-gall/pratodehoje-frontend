@@ -6,7 +6,13 @@ export const GridContainer = styled.div`
   height: 100vh;
 `
 export const Container = styled.div`
-  margin: 100px 150px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+`
+export const CardContainer = styled.div`
+  margin-top: 50px;
+  grid-column: 2/3;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -16,6 +22,7 @@ export const CardProfile = styled.div`
   background: #fff;
   margin: 20px;
   width: 220px;
+  height: 250px;
   border-radius: 5px;
   overflow: hidden;
 
@@ -26,6 +33,7 @@ export const CardProfile = styled.div`
   }
   div {
     display: flex;
+    height: 60px;
     justify-content: space-between;
     span {
       margin-right: 10px;

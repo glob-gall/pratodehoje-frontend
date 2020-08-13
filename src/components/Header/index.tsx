@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
   return (
     <Container>
       <Nav>
-        <Logo>
+        <Logo to="/">
           <img src={LogoImg} alt="prato de hoje" />
         </Logo>
         <NavItems active={isActive} activeLink={page}>

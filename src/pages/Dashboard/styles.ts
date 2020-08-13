@@ -74,8 +74,8 @@ export const IngredientsList = styled.div`
   display: flex;
   flex-wrap: wrap;
   div {
-    display: flex;
     align-items: center;
+    display: flex;
     margin: 5px;
     background: #41c900;
     color: #fff;
@@ -199,7 +199,7 @@ export const ContainerPagination = styled.div`
   button {
     width: 75px;
     height: 40px;
-    background: #ff6242;
+    background: #ffaf37;
 
     color: #fff;
     font-weight: bold;
@@ -207,7 +207,7 @@ export const ContainerPagination = styled.div`
     border: none;
     font-size: 16px;
     &:hover {
-      background: #d94629;
+      background: #ff6242;
       color: #ddd;
     }
   }

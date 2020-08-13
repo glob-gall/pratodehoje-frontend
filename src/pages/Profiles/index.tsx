@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
-import { Container, GridContainer, CardProfile } from './styles'
+import { Container, GridContainer, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
 
 interface ProfileInfo {
@@ -23,7 +24,7 @@ const Profiles: React.FC = () => {
       image_url: 'image_img',
     }
     const array: ProfileInfo[] = []
-    for (let i = 0; i < 4; i += 1) {
+    for (let i = 0; i < 9; i += 1) {
       array[i] = profile
       array[i].id = i
     }
@@ -33,18 +34,20 @@ const Profiles: React.FC = () => {
     <GridContainer>
       <Header page="profiles" />
       <Container>
-        {profiles.map(profile => (
-          <CardProfile key={profile.id}>
-            <img src={Image} alt="author" />
-            <div>
+        <CardContainer>
+          {profiles.map(profile => (
+            <CardProfile key={profile.id}>
+              <img src={Image} alt="author" />
               <div>
-                <h3>{profile.name}</h3>
-                <strong>{profile.totalRecipes}</strong>
+                <div>
+                  <h3>{profile.name}</h3>
+                  <strong>{profile.totalRecipes}</strong>
+                </div>
+                <span>{profile.starts}</span>
               </div>
-              <span>{profile.starts}</span>
-            </div>
-          </CardProfile>
-        ))}
+            </CardProfile>
+          ))}
+        </CardContainer>
       </Container>
       <Footer />
     </GridContainer>

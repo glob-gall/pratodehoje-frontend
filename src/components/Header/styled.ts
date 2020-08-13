@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import { Link } from 'react-router-dom'
 
 interface NavItemsProps {
   active: boolean
@@ -26,7 +27,7 @@ export const Nav = styled.div`
   }
 `
 
-export const Logo = styled.div`
+export const Logo = styled(Link)`
   margin: 15px;
   img {
     width: 240px;
