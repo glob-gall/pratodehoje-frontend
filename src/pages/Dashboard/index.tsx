@@ -37,6 +37,7 @@ const Dashboard: React.FC = () => {
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   const [recipesToList, setRecipesToList] = useState<IRecipe[]>([])
   const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
   const [itemsPerPage, _] = useState(4)
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -50,6 +51,7 @@ const Dashboard: React.FC = () => {
   }, [recipes.length])
 
   useEffect(() => {
+    setTotalPages(Math.ceil(recipes.length / 4))
     const page = currentPage - 1
     const start = page * itemsPerPage
     const end = start + itemsPerPage
@@ -138,6 +140,7 @@ const Dashboard: React.FC = () => {
                 <button type="button" onClick={() => prevPage()}>
                   Prev
                 </button>
+                <span>{`${currentPage}/${totalPages}`}</span>
                 <button type="button" onClick={() => nextPage()}>
                   Next
                 </button>
@@ -145,7 +148,7 @@ const Dashboard: React.FC = () => {
             )}
             {recipes.length !== 0 ? (
               recipesToList.map(recipe => (
-                <Recipe key={recipe.id}>
+                <Recipe key={recipe.id} to={`/${recipe.id}`}>
                   <img src={ComidaImg} alt="" />
                   <div>
                     <h3>{recipe.name}</h3>
@@ -171,6 +174,7 @@ const Dashboard: React.FC = () => {
                 <button type="button" onClick={() => prevPage()}>
                   Prev
                 </button>
+                <span>{`${currentPage}/${totalPages}`}</span>
                 <button type="button" onClick={() => nextPage()}>
                   Next
                 </button>

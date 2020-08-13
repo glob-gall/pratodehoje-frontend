@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const GridContainer = styled.div`
   display: grid;
@@ -99,7 +100,8 @@ export const RecipeList = styled.div`
     margin-top: 15px;
   }
 `
-export const Recipe = styled.div`
+export const Recipe = styled(Link)`
+  text-decoration: none;
   background: #f0f0f5;
   border-radius: 7px;
   display: grid;
@@ -118,6 +120,7 @@ export const Recipe = styled.div`
     display: flex;
     flex-direction: column;
     h3 {
+      color: #303030;
       font-size: 32px;
       margin-left: 45px;
       height: 50px;
@@ -194,8 +197,16 @@ export const RecipesNotFound = styled.div`
 export const ContainerPagination = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 15px 0;
-
+  span {
+    padding: 0 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #6c6c80;
+    font-size: 18px;
+    border-bottom: 2px solid #ffaf37;
+  }
   button {
     width: 75px;
     height: 40px;
