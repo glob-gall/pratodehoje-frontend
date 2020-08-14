@@ -10,10 +10,10 @@ export const RecipeContainer = styled.div`
   border-radius: 10px;
   width: 70%;
   margin: 25px auto;
-  overflow: hidden;
-  height: 533px;
 `
 export const TitleContainer = styled.div`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   height: 150px;
   overflow: hidden;
   position: relative;
@@ -38,15 +38,19 @@ export const TitleContainer = styled.div`
 export const DetailsContainer = styled.div`
   margin: 15px;
   display: flex;
+  @media (max-width: 836px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 export const MethodContainer = styled.div`
   width: 65%;
   strong {
-    margin: 10px;
+    margin: 15px;
+    font-size: 18px;
   }
   ul {
-    height: 322px;
     margin-top: 10px;
     background: #e8e8e8;
     list-style: none;
@@ -54,21 +58,23 @@ export const MethodContainer = styled.div`
     padding: 10px;
     li {
       margin: 10px;
-      /* font-weight: bold; */
       font-size: 19px;
     }
+  }
+  @media (max-width: 836px) {
+    width: 90%;
   }
 `
 
 export const IngredientsContainer = styled.div`
   border-radius: 10px;
-
   background: #e8e8e8;
   display: flex;
   flex-wrap: wrap;
   margin-left: auto;
+  margin-bottom: auto;
+  min-height: 250px;
   width: 30%;
-  height: 350px;
   list-style-type: none;
   align-items: center;
   padding: 10px;
@@ -79,11 +85,11 @@ export const IngredientsContainer = styled.div`
   }
   &::-webkit-scrollbar-track {
     background: #e8e8e8;
-    border-radius: 5px;
+    border-radius: 10px;
   }
   &::-webkit-scrollbar-thumb {
     background: #6c6c80;
-    border-radius: 5px;
+    border-radius: 10px;
   }
   strong {
     width: 100%;
@@ -98,6 +104,13 @@ export const IngredientsContainer = styled.div`
     padding: 10px;
     font-weight: bold;
     border-radius: 10px;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
+  }
+  @media (max-width: 836px) {
+    width: 90%;
+    margin: 15px auto 15px;
+    /* display: block; */
+    li {
+      text-align: center;
+    }
   }
 `

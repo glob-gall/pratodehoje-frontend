@@ -26,7 +26,7 @@ interface IRecipe {
   equipaments: string
 }
 
-const RecipeDetails: React.FC = props => {
+const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe>({} as IRecipe)
   const [loaded, setLoaded] = useState(false)
   const { id } = useParams()
@@ -34,7 +34,6 @@ const RecipeDetails: React.FC = props => {
     const loadRecipe = async () => {
       const response = await api.get(`/recipes/${id}`)
       setRecipe(response.data)
-      console.log(response.data)
       setLoaded(true)
     }
     loadRecipe()
@@ -52,9 +51,11 @@ const RecipeDetails: React.FC = props => {
             <MethodContainer>
               <strong>Modo de preparo</strong>
               <ul>
-                {recipe.method.map(method => (
-                  <li key={method}>{method}</li>
-                ))}
+                {recipe.method.map(step => {
+                  const i = recipe.method.indexOf(step) + 1
+
+                  return <li key={i}>{`${i} - ${step}`}</li>
+                })}
               </ul>
             </MethodContainer>
             <IngredientsContainer>

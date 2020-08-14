@@ -10,7 +10,7 @@ export const Container = styled.div`
 `
 export const Content = styled.div`
   grid-column: 2/3;
-  color: #01b801;
+  color: #529333;
 
   display: flex;
   flex-wrap: wrap;

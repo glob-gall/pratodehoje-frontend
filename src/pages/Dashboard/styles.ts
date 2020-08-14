@@ -218,7 +218,7 @@ export const ContainerPagination = styled.div`
     border: none;
     font-size: 16px;
     &:hover {
-      background: #ff6242;
+      background: #ea920f;
       color: #ddd;
     }
   }
