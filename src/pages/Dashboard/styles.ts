@@ -108,7 +108,7 @@ export const Recipe = styled(Link)`
   grid-template-columns: 200px 1fr;
   grid-template-rows: 180px;
   overflow: hidden;
-  & + div {
+  & + a {
     margin-top: 20px;
   }
   img {
