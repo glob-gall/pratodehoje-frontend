@@ -93,8 +93,7 @@ export const IngredientsContainer = styled.div`
   }
   strong {
     width: 100%;
-    text-align: center;
-    margin: 15px 0;
+    margin: 0 20px;
   }
 
   li {

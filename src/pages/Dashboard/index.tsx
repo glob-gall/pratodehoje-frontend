@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 import { FaSearch } from 'react-icons/fa'
-import RecipeNotFound from '../../images/recipeNotFound.svg'
+import RecipesList from '../../components/RecipesList'
 import api from '../../services/api'
-import ComidaImg from '../../images/comida.png'
+
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import {
@@ -11,13 +11,7 @@ import {
   Container,
   ContainerFeed,
   Search,
-  IngredientsContainer,
   IngredientsList,
-  RecipeList,
-  RecipesNotFound,
-  Recipe,
-  EquipamentsList,
-  ContainerPagination,
 } from './styles'
 
 interface Ingredient {
@@ -35,29 +29,8 @@ interface IRecipe {
 const Dashboard: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
   const [recipes, setRecipes] = useState<IRecipe[]>([])
-  const [recipesToList, setRecipesToList] = useState<IRecipe[]>([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [totalPages, setTotalPages] = useState(0)
-  const [itemsPerPage, _] = useState(4)
 
   const inputRef = useRef<HTMLInputElement>(null)
-  const prevPage = useCallback(() => {
-    setCurrentPage(state => (state === 1 ? state : state - 1))
-  }, [])
-  const nextPage = useCallback(() => {
-    setCurrentPage(state =>
-      state === Math.ceil(recipes.length / 4) ? state : state + 1,
-    )
-  }, [recipes.length])
-
-  useEffect(() => {
-    setTotalPages(Math.ceil(recipes.length / 4))
-    const page = currentPage - 1
-    const start = page * itemsPerPage
-    const end = start + itemsPerPage
-
-    setRecipesToList(recipes.slice(start, end))
-  }, [recipes, currentPage, itemsPerPage])
 
   useEffect(() => {
     async function loadRecipesByIngredients() {
@@ -129,58 +102,7 @@ const Dashboard: React.FC = () => {
               </div>
             ))}
           </IngredientsList>
-          <h3>
-            {recipes.length === 1
-              ? `${recipes.length} resultado`
-              : `${recipes.length} resultados`}
-          </h3>
-          <RecipeList>
-            {recipes.length > 4 && (
-              <ContainerPagination>
-                <button type="button" onClick={() => prevPage()}>
-                  Prev
-                </button>
-                <span>{`${currentPage}/${totalPages}`}</span>
-                <button type="button" onClick={() => nextPage()}>
-                  Next
-                </button>
-              </ContainerPagination>
-            )}
-            {recipes.length !== 0 ? (
-              recipesToList.map(recipe => (
-                <Recipe key={recipe.id} to={`/${recipe.id}`}>
-                  <img src={ComidaImg} alt="" />
-                  <div>
-                    <h3>{recipe.name}</h3>
-                    <IngredientsContainer>
-                      <p>Ingredients</p>
-                      <ul>
-                        {recipe.ingredients.map(ingredient => (
-                          <li key={ingredient.id}>{ingredient.name}</li>
-                        ))}
-                      </ul>
-                    </IngredientsContainer>
-                  </div>
-                </Recipe>
-              ))
-            ) : (
-              <RecipesNotFound>
-                <img src={RecipeNotFound} alt="recipe not found" />
-                <p>nenhuma receita encontrada</p>
-              </RecipesNotFound>
-            )}
-            {recipes.length > 4 && (
-              <ContainerPagination>
-                <button type="button" onClick={() => prevPage()}>
-                  Prev
-                </button>
-                <span>{`${currentPage}/${totalPages}`}</span>
-                <button type="button" onClick={() => nextPage()}>
-                  Next
-                </button>
-              </ContainerPagination>
-            )}
-          </RecipeList>
+          <RecipesList recipesProps={recipes} />
         </ContainerFeed>
       </Container>
       <Footer />
