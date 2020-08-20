@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react'
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import React, { useState, useCallback, useRef } from 'react'
+import { FiChevronLeft, FiChevronRight, FiPlus, FiX } from 'react-icons/fi'
 import {
   Container,
   GridContainer,
@@ -9,13 +9,39 @@ import {
   DragAndDrop,
   ContainerButtons,
   SecondStep,
+  IngredientsList,
+  InputAdditems,
+  MethodContainer,
 } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 const CreateRecipe: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [progress, setProgress] = useState(34)
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(2)
+
+  const [ingredients, setIngredients] = useState<string[]>([])
+  const [method, setMethod] = useState<string[]>([])
+
+  const handleAddIngredient = useCallback(() => {
+    if (!inputRef.current || inputRef.current.value === '') {
+      return
+    }
+
+    const newIngredient = inputRef.current.value
+    setIngredients([...ingredients, newIngredient])
+
+    inputRef.current.value = ''
+  }, [ingredients])
+  const handleRemoveIngredient = useCallback((ingredientRemove: string) => {
+    setIngredients(state => {
+      const filtred = state.filter(
+        ingredient => ingredient !== ingredientRemove,
+      )
+      return filtred
+    })
+  }, [])
 
   const prevStep = useCallback(() => {
     if (step === 1) return
@@ -55,7 +81,60 @@ const CreateRecipe: React.FC = () => {
               <input id="image-field" name="image" type="file" />
             </DragAndDrop>
           </FirstStep>
-          <SecondStep step={step} />
+          <SecondStep step={step}>
+            <InputAdditems>
+              <input
+                placeholder="digite o nome de um ingrediente..."
+                ref={inputRef}
+                onKeyUp={e => {
+                  return (e.which || e.keyCode) === 13 && handleAddIngredient()
+                }}
+              />
+
+              <button type="button" onClick={() => handleAddIngredient()}>
+                <FiPlus color="#fff" size={20} />
+              </button>
+            </InputAdditems>
+            <strong>Ingredientes</strong>
+            <IngredientsList>
+              {ingredients.map(ingredient => (
+                <div key={ingredient}>
+                  <p>{ingredient}</p>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleRemoveIngredient(ingredient)
+                    }}
+                  >
+                    <FiX color="#fff" size={14} />
+                  </button>
+                </div>
+              ))}
+            </IngredientsList>
+            <InputAdditems>
+              <input
+                placeholder="digite o nome de um ingrediente..."
+                ref={inputRef}
+                onKeyUp={e => {
+                  return (e.which || e.keyCode) === 13 && handleAddIngredient()
+                }}
+              />
+
+              <button type="button" onClick={() => handleAddIngredient()}>
+                <FiPlus color="#fff" size={20} />
+              </button>
+            </InputAdditems>
+            <MethodContainer>
+              <strong>Modo de preparo</strong>
+              <ul>
+                {method.map(methodStep => {
+                  const i = method.indexOf(methodStep) + 1
+
+                  return <li key={i}>{`${i} - ${methodStep}`}</li>
+                })}
+              </ul>
+            </MethodContainer>
+          </SecondStep>
           <ContainerButtons>
             <button
               type="button"

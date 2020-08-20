@@ -92,7 +92,7 @@ export const DragAndDrop = styled.div`
 export const ContainerButtons = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 10px;
+  margin: 16px;
 
   button {
     display: flex;
@@ -106,13 +106,82 @@ export const ContainerButtons = styled.div`
   }
 `
 export const SecondStep = styled.div<formProps>`
+  strong {
+    margin: 25px;
+    font-size: 18px;
+  }
   display: none;
   ${props =>
     props.step === 2 &&
     css`
-      display: initial;
+      display: block;
     `}
-  height: 25px;
-  width: 25px;
-  background: red;
+  min-height: 300px;
+`
+export const InputAdditems = styled.div`
+  border: 2px solid #dadada;
+  border-radius: 8px;
+  margin: 0 16px;
+  margin-top: 35px;
+  margin-bottom: 24px;
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 45px;
+  /* box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2); */
+  input {
+    width: 90%;
+    padding: 20px 20px 10px 10px;
+    border-radius: 0;
+    font-size: 16px;
+
+    border: none;
+  }
+  button {
+    width: 10%;
+    height: 45px;
+    border: none;
+    border-radius: 0;
+    background: #1cca00;
+  }
+`
+
+export const IngredientsList = styled.div`
+  margin: 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  height: auto;
+  background: #e8e8e8;
+  min-height: 54px;
+  border-radius: 8px;
+  div {
+    align-items: center;
+    display: flex;
+    margin: 5px;
+    background: #41c900;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
+    button {
+      margin-left: 5px;
+      background: transparent;
+      border: 0;
+    }
+  }
+`
+
+export const MethodContainer = styled.div`
+  ul {
+    margin: 8px 16px;
+    background: #e8e8e8;
+    list-style: none;
+    border-radius: 10px;
+    padding: 10px;
+    min-height: 54px;
+    li {
+      margin: 10px;
+      font-size: 19px;
+    }
+  }
 `
