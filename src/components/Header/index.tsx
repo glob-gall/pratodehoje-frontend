@@ -4,7 +4,7 @@ import LogoImg from '../../images/logo.svg'
 import { Container, Logo, Nav, NavItems, Burguer } from './styled'
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-  page: 'dashboard' | 'topRecipes' | 'profiles'
+  page: 'dashboard' | 'createRecipe' | 'profiles'
 }
 const Header: React.FC<HeaderProps> = ({ page }) => {
   const [isActive, setIsActive] = useState(false)
@@ -18,8 +18,8 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
           <Link to="/" className="dashboard">
             Procurar receitas
           </Link>
-          <Link to="/" className="topRecipes">
-            Mais acessados
+          <Link to="/createRecipe" className="createRecipe">
+            Criar receitas
           </Link>
           <Link to="/profiles" className="profiles">
             Profissionais

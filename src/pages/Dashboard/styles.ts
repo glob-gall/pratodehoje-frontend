@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 export const GridContainer = styled.div`
   display: grid;
@@ -48,7 +47,7 @@ export const Search = styled.div`
     margin-top: 35px;
     width: 100%;
     display: flex;
-    border-radius: 7px;
+    border-radius: 8px;
     overflow: hidden;
     height: 45px;
     /* box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2); */

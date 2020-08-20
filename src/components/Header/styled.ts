@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 interface NavItemsProps {
   active: boolean
-  activeLink: 'dashboard' | 'topRecipes' | 'profiles'
+  activeLink: 'dashboard' | 'createRecipe' | 'profiles'
 }
 
 export const Container = styled.div`
@@ -53,9 +53,9 @@ export const NavItems = styled.div<NavItemsProps>`
           border-color: #1cca00;
         `}
     }
-    &.topRecipes {
+    &.createRecipe {
       ${props =>
-        props.activeLink === 'topRecipes' &&
+        props.activeLink === 'createRecipe' &&
         css`
           border-bottom: 3px solid #1cca00;
         `}
