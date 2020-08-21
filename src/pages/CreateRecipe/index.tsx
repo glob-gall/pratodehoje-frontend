@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from 'react'
+import React, { useState, useCallback, useRef, ChangeEvent } from 'react'
 import {
   FiChevronLeft,
   FiChevronRight,
@@ -23,6 +23,7 @@ import {
 } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import api from '../../services/api'
 
 const CreateRecipe: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -32,7 +33,21 @@ const CreateRecipe: React.FC = () => {
 
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
+  const [time, setTime] = useState('')
+  const [name, setName] = useState('')
+  const [image, setImage] = useState('')
+  const createRecipe = useCallback(async () => {
+    const recipe = {
+      name,
+      time,
+      method,
+      ingredientsNames: ingredients,
+      equipaments: '',
+      image_url: '',
+    }
 
+    await api.post('/recipes', recipe)
+  }, [name, time, method, ingredients])
   const handleAddIngredient = useCallback(() => {
     if (!inputRef.current || inputRef.current.value === '') {
       return
@@ -69,6 +84,14 @@ const CreateRecipe: React.FC = () => {
     })
   }, [])
 
+  const changeTime = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    if (parseInt(e.target.value, 10) < 0) {
+      setTime('')
+      return
+    }
+    setTime(e.target.value)
+  }, [])
+
   const prevStep = useCallback(() => {
     if (step === 1) return
 
@@ -81,6 +104,7 @@ const CreateRecipe: React.FC = () => {
     setStep(step + 1)
     setProgress(progress + 33)
   }, [step, progress])
+
   return (
     <GridContainer>
       <Header page="createRecipe" />
@@ -93,18 +117,35 @@ const CreateRecipe: React.FC = () => {
             <div>
               <div>
                 <label htmlFor="name-field">Nome da Receita</label>
-                <input id="name-field" name="name" />
+                <input
+                  id="name-field"
+                  name="name"
+                  value={name}
+                  onChange={e => setName(e.target.value)}
+                />
               </div>
               <div>
                 <label htmlFor="time-field">Tempo de Preparo</label>
-                <input id="time-field" name="time" />
+                <input
+                  id="time-field"
+                  name="time"
+                  type="number"
+                  value={time}
+                  onChange={changeTime}
+                />
               </div>
             </div>
             <DragAndDrop>
               <label htmlFor="image-field">
                 Selecione ou arraste o arquivo aqui
               </label>
-              <input id="image-field" name="image" type="file" />
+              <input
+                id="image-field"
+                name="image"
+                type="file"
+                value={image}
+                onChange={e => setImage(e.target.value)}
+              />
             </DragAndDrop>
             <ContainerButtons>
               <button
@@ -207,7 +248,13 @@ const CreateRecipe: React.FC = () => {
           <ThirdStep step={step}>
             <p>RECEITA CRIADA!</p>
             <FiCheck size={256} color="#39B100" />
-            <Link to="/">Cadastrar Receita</Link>
+            <span>
+              sua receita esta pronta, para confirmar seu cadastro clique no
+              botão a baixo
+            </span>
+            <Link to="/" onClick={() => createRecipe()}>
+              Cadastrar Receita
+            </Link>
             <ContainerButtons>
               <button
                 type="button"

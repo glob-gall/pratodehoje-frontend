@@ -213,6 +213,12 @@ export const ThirdStep = styled.div<formProps>`
     margin-top: 32px;
     font-weight: bold;
   }
+  span {
+    margin: 8px 24px;
+    text-align: center;
+    color: #6c6c80;
+    font-weight: bold;
+  }
   a {
     background: #ff6242;
     border-radius: 10px;
@@ -223,7 +229,7 @@ export const ThirdStep = styled.div<formProps>`
     color: #fff;
     text-decoration: none;
     padding: 12px;
-    margin: 24px;
+    margin: 4px 24px 24px;
     &:hover {
       color: #ddd;
       background: #d95237;
