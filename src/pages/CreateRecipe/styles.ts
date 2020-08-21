@@ -129,6 +129,7 @@ export const InputAdditems = styled.div`
   overflow: hidden;
   height: 45px;
   /* box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2); */
+  background: #1cca00;
   input {
     width: 90%;
     padding: 20px 20px 10px 10px;
@@ -182,6 +183,38 @@ export const MethodContainer = styled.div`
     li {
       margin: 10px;
       font-size: 19px;
+    }
+  }
+`
+
+export const ThirdStep = styled.div<formProps>`
+  display: none;
+  ${props =>
+    props.step === 3 &&
+    css`
+      display: flex;
+    `}
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+  p {
+    font-size: 36px;
+    margin-top: 32px;
+    font-weight: bold;
+  }
+  a {
+    background: #ff6242;
+    border-radius: 10px;
+    width: 368px;
+    height: 56px;
+    text-align: center;
+    font-size: 28px;
+    color: #fff;
+    text-decoration: none;
+    padding: 12px;
+    &:hover {
+      color: #ddd;
+      background: #d95237;
     }
   }
 `

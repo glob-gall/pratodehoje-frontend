@@ -1,5 +1,12 @@
 import React, { useState, useCallback, useRef } from 'react'
-import { FiChevronLeft, FiChevronRight, FiPlus, FiX } from 'react-icons/fi'
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiPlus,
+  FiX,
+  FiCheck,
+} from 'react-icons/fi'
+import { Link } from 'react-router-dom'
 import {
   Container,
   GridContainer,
@@ -12,14 +19,15 @@ import {
   IngredientsList,
   InputAdditems,
   MethodContainer,
+  ThirdStep,
 } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 
 const CreateRecipe: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [progress, setProgress] = useState(34)
-  const [step, setStep] = useState(2)
+  const [progress, setProgress] = useState(100)
+  const [step, setStep] = useState(3)
 
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
@@ -135,6 +143,11 @@ const CreateRecipe: React.FC = () => {
               </ul>
             </MethodContainer>
           </SecondStep>
+          <ThirdStep step={step}>
+            <p>RECEITA CRIADA!</p>
+            <FiCheck size={256} color="#39B100" />
+            <Link to="/">Voltar</Link>
+          </ThirdStep>
           <ContainerButtons>
             <button
               type="button"
