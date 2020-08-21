@@ -26,8 +26,9 @@ import Footer from '../../components/Footer'
 
 const CreateRecipe: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [progress, setProgress] = useState(100)
-  const [step, setStep] = useState(3)
+  const inputMethod = useRef<HTMLInputElement>(null)
+  const [progress, setProgress] = useState(34)
+  const [step, setStep] = useState(1)
 
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
@@ -47,6 +48,23 @@ const CreateRecipe: React.FC = () => {
       const filtred = state.filter(
         ingredient => ingredient !== ingredientRemove,
       )
+      return filtred
+    })
+  }, [])
+
+  const handleAddMethod = useCallback(() => {
+    if (!inputMethod.current || inputMethod.current.value === '') {
+      return
+    }
+
+    const newMethod = inputMethod.current.value
+    setMethod([...method, newMethod])
+
+    inputMethod.current.value = ''
+  }, [method])
+  const handleRemoveMethod = useCallback((methodRemove: string) => {
+    setMethod(state => {
+      const filtred = state.filter(methodStep => methodStep !== methodRemove)
       return filtred
     })
   }, [])
@@ -88,6 +106,17 @@ const CreateRecipe: React.FC = () => {
               </label>
               <input id="image-field" name="image" type="file" />
             </DragAndDrop>
+            <ContainerButtons>
+              <button
+                type="button"
+                onClick={() => {
+                  nextStep()
+                }}
+              >
+                proxima Etapa
+                <FiChevronRight size={22} />
+              </button>
+            </ContainerButtons>
           </FirstStep>
           <SecondStep step={step}>
             <InputAdditems>
@@ -121,14 +150,14 @@ const CreateRecipe: React.FC = () => {
             </IngredientsList>
             <InputAdditems>
               <input
-                placeholder="digite o nome de um ingrediente..."
-                ref={inputRef}
+                placeholder="digite a receita passo a passo..."
+                ref={inputMethod}
                 onKeyUp={e => {
-                  return (e.which || e.keyCode) === 13 && handleAddIngredient()
+                  return (e.which || e.keyCode) === 13 && handleAddMethod()
                 }}
               />
 
-              <button type="button" onClick={() => handleAddIngredient()}>
+              <button type="button" onClick={() => handleAddMethod()}>
                 <FiPlus color="#fff" size={20} />
               </button>
             </InputAdditems>
@@ -138,36 +167,59 @@ const CreateRecipe: React.FC = () => {
                 {method.map(methodStep => {
                   const i = method.indexOf(methodStep) + 1
 
-                  return <li key={i}>{`${i} - ${methodStep}`}</li>
+                  return (
+                    <li key={i}>
+                      {`${i} - ${methodStep}`}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleRemoveMethod(methodStep)
+                        }}
+                      >
+                        <FiX color="#000" size={22} />
+                      </button>
+                    </li>
+                  )
                 })}
               </ul>
             </MethodContainer>
+            <ContainerButtons>
+              <button
+                type="button"
+                onClick={() => {
+                  prevStep()
+                }}
+              >
+                <FiChevronLeft size={22} />
+                Etapa Anterior
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  nextStep()
+                }}
+              >
+                proxima Etapa
+                <FiChevronRight size={22} />
+              </button>
+            </ContainerButtons>
           </SecondStep>
           <ThirdStep step={step}>
             <p>RECEITA CRIADA!</p>
             <FiCheck size={256} color="#39B100" />
-            <Link to="/">Voltar</Link>
+            <Link to="/">Cadastrar Receita</Link>
+            <ContainerButtons>
+              <button
+                type="button"
+                onClick={() => {
+                  prevStep()
+                }}
+              >
+                <FiChevronLeft size={22} />
+                Etapa Anterior
+              </button>
+            </ContainerButtons>
           </ThirdStep>
-          <ContainerButtons>
-            <button
-              type="button"
-              onClick={() => {
-                prevStep()
-              }}
-            >
-              <FiChevronLeft size={22} />
-              Etapa Anterior
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                nextStep()
-              }}
-            >
-              proxima Etapa
-              <FiChevronRight size={22} />
-            </button>
-          </ContainerButtons>
         </Form>
       </Container>
       <Footer />

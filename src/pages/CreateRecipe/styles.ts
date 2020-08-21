@@ -18,10 +18,11 @@ export const Container = styled.div`
 export const Form = styled.form`
   margin: 48px auto;
   width: 500px;
-  min-height: 400px;
+  /* min-height: 500px; */
   background: #fff;
   border-radius: 10px;
   display: inline-block;
+  position: relative;
 `
 export const Progress = styled.div<stepProps>`
   display: block;
@@ -90,10 +91,11 @@ export const DragAndDrop = styled.div`
 `
 
 export const ContainerButtons = styled.div`
+  width: 100%;
+  height: 80px;
   display: flex;
   justify-content: space-between;
-  margin: 16px;
-
+  margin-top: auto;
   button {
     display: flex;
     background: #41c900;
@@ -103,6 +105,7 @@ export const ContainerButtons = styled.div`
     padding: 8px;
     border-radius: 8px;
     color: #fff;
+    margin: 10px auto 24px;
   }
 `
 export const SecondStep = styled.div<formProps>`
@@ -181,8 +184,16 @@ export const MethodContainer = styled.div`
     padding: 10px;
     min-height: 54px;
     li {
+      display: flex;
+      word-break: break-all;
       margin: 10px;
-      font-size: 19px;
+      font-size: 18px;
+      height: 36px;
+      button {
+        background: transparent;
+        border: none;
+        margin-left: auto;
+      }
     }
   }
 `
@@ -212,6 +223,7 @@ export const ThirdStep = styled.div<formProps>`
     color: #fff;
     text-decoration: none;
     padding: 12px;
+    margin: 24px;
     &:hover {
       color: #ddd;
       background: #d95237;
