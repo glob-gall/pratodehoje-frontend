@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { FiX } from 'react-icons/fi'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { Container, GridContainer, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
+import Input from '../../components/Input'
 
 interface ProfileInfo {
   id: number
@@ -33,6 +35,7 @@ const Profiles: React.FC = () => {
     <GridContainer>
       <Header page="profiles" />
       <Container>
+        <Input placeholder="teste" icon={FiX} />
         <CardContainer>
           {profiles.map(profile => (
             <CardProfile key={profile.id}>

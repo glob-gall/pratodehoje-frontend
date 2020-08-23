@@ -48,6 +48,7 @@ const CreateRecipe: React.FC = () => {
 
     await api.post('/recipes', recipe)
   }, [name, time, method, ingredients])
+
   const handleAddIngredient = useCallback(() => {
     if (!inputRef.current || inputRef.current.value === '') {
       return
@@ -116,7 +117,9 @@ const CreateRecipe: React.FC = () => {
           <FirstStep step={step}>
             <div>
               <div>
-                <label htmlFor="name-field">Nome da Receita</label>
+                <label htmlFor="name-field">
+                  <strong>Nome da Receita</strong>
+                </label>
                 <input
                   id="name-field"
                   name="name"
@@ -125,7 +128,9 @@ const CreateRecipe: React.FC = () => {
                 />
               </div>
               <div>
-                <label htmlFor="time-field">Tempo de Preparo</label>
+                <label htmlFor="time-field">
+                  <strong>Tempo de Preparo</strong>
+                </label>
                 <input
                   id="time-field"
                   name="time"

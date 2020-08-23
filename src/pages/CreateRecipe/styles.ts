@@ -18,7 +18,6 @@ export const Container = styled.div`
 export const Form = styled.form`
   margin: 48px auto;
   width: 500px;
-  /* min-height: 500px; */
   background: #fff;
   border-radius: 10px;
   display: inline-block;
@@ -44,6 +43,13 @@ export const FirstStep = styled.div<formProps>`
     css`
       display: initial;
     `}
+  strong {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  label {
+    margin-bottom: 4px;
+  }
   margin: 8px;
   div {
     display: flex;
@@ -57,12 +63,12 @@ export const FirstStep = styled.div<formProps>`
         margin-left: 8px;
       }
       input {
-        margin-top: 4px;
+        padding: 20px 20px 15px;
         border: 2px solid #dadada;
         border-radius: 8px;
         height: 36px;
+        font-size: 16px;
 
-        padding-top: 8px;
         font-size: 16px;
       }
       & + div {
