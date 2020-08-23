@@ -121,7 +121,7 @@ export const ContainerPagination = styled.div`
       svg {
         margin: auto;
       }
-      background: #ffd700;
+      background: #89b0cd;
       align-items: center;
       color: #fff;
       font-weight: bold;
@@ -132,8 +132,8 @@ export const ContainerPagination = styled.div`
         margin-left: 15px;
       }
       &:hover {
-        background: #edc90a;
-        color: #ddd;
+        background: #7ca2bd;
+        color: #fff;
       }
     }
   }
