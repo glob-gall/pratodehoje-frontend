@@ -30,7 +30,7 @@ export const Progress = styled.div<stepProps>`
   border-radius: 10px;
   margin: 4px 8px;
   div {
-    background: #41c900;
+    background: #65bf39;
     height: 5px;
     width: ${props => props.progress && `${props.progress}%`};
     border-radius: 10px;
@@ -43,33 +43,26 @@ export const FirstStep = styled.div<formProps>`
     css`
       display: initial;
     `}
+
   strong {
     font-size: 18px;
     font-weight: bold;
+    margin-left: 4px;
   }
-  label {
-    margin-bottom: 4px;
-  }
-  margin: 8px;
+
   div {
     display: flex;
-    div {
-      width: 100%;
-      flex-direction: column;
-      font-size: 16px;
-      margin: 0 16px;
-      label {
-        margin-top: 36px;
-        margin-left: 8px;
-      }
-      input {
-        padding: 20px 20px 15px;
-        border: 2px solid #dadada;
-        border-radius: 8px;
-        height: 36px;
-        font-size: 16px;
 
-        font-size: 16px;
+    justify-content: center;
+    div {
+      margin: 0 8px;
+      flex-direction: column;
+      label {
+        /* margin-top: 24px;
+        margin-left: 8px; */
+        margin: 24px 0 8px 8px;
+      }
+      div {
       }
       & + div {
         width: 34%;
@@ -80,12 +73,12 @@ export const FirstStep = styled.div<formProps>`
 `
 
 export const DragAndDrop = styled.div`
-  height: 200px;
+  height: 224px;
   margin: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 3px dashed #7dcc57;
+  border: 3px dashed #65bf39;
   label {
     width: 100%;
     height: 80%;
@@ -104,7 +97,7 @@ export const ContainerButtons = styled.div`
   margin-top: auto;
   button {
     display: flex;
-    background: #41c900;
+    background: #7dcc57;
     font-size: 16px;
     align-items: center;
     border: none;
@@ -128,32 +121,8 @@ export const SecondStep = styled.div<formProps>`
   min-height: 300px;
 `
 export const InputAdditems = styled.div`
-  border: 2px solid #dadada;
-  border-radius: 8px;
   margin: 0 16px;
   margin-top: 35px;
-  margin-bottom: 24px;
-  display: flex;
-  border-radius: 8px;
-  overflow: hidden;
-  height: 45px;
-  /* box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.2); */
-  background: #1cca00;
-  input {
-    width: 90%;
-    padding: 20px 20px 10px 10px;
-    border-radius: 0;
-    font-size: 16px;
-
-    border: none;
-  }
-  button {
-    width: 10%;
-    height: 45px;
-    border: none;
-    border-radius: 0;
-    background: #1cca00;
-  }
 `
 
 export const IngredientsList = styled.div`
@@ -168,7 +137,7 @@ export const IngredientsList = styled.div`
     align-items: center;
     display: flex;
     margin: 5px;
-    background: #41c900;
+    background: #69b645;
     color: #fff;
     padding: 10px;
     border-radius: 10px;
@@ -181,7 +150,7 @@ export const IngredientsList = styled.div`
   }
 `
 
-export const MethodContainer = styled.div`
+export const MethodList = styled.div`
   ul {
     margin: 8px 16px;
     background: #e8e8e8;
@@ -211,22 +180,23 @@ export const ThirdStep = styled.div<formProps>`
     css`
       display: flex;
     `}
-  flex-direction:column;
+  height:446px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   p {
     font-size: 36px;
-    margin-top: 32px;
+    margin-top: 24px;
     font-weight: bold;
   }
   span {
-    margin: 8px 24px;
+    margin: 8px 36px;
     text-align: center;
     color: #6c6c80;
     font-weight: bold;
   }
   a {
-    background: #ff6242;
+    background: #43abf6;
     border-radius: 10px;
     width: 368px;
     height: 56px;
@@ -235,10 +205,20 @@ export const ThirdStep = styled.div<formProps>`
     color: #fff;
     text-decoration: none;
     padding: 12px;
-    margin: 4px 24px 24px;
     &:hover {
       color: #ddd;
-      background: #d95237;
+      background: #1d95ec;
+    }
+  }
+  strong {
+    margin: auto auto 24px;
+    color: #69b645;
+    cursor: pointer;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    &:hover {
+      color: #5b9751;
     }
   }
 `

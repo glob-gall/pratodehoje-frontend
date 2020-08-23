@@ -7,7 +7,7 @@ interface NavItemsProps {
 }
 
 export const Container = styled.div`
-  background: #ed3939;
+  background: #db1010;
   align-items: center;
   display: flex;
   @media (max-width: 836px) {
@@ -45,26 +45,26 @@ export const NavItems = styled.div<NavItemsProps>`
     font-size: 20px;
     text-decoration: none;
     color: #fff;
-    border-bottom: 3px solid #ed3939;
+    border-bottom: 3px solid #db1010;
     &.dashboard {
       ${props =>
         props.activeLink === 'dashboard' &&
         css`
-          border-color: #1cca00;
+          border-color: #69b645;
         `}
     }
     &.createRecipe {
       ${props =>
         props.activeLink === 'createRecipe' &&
         css`
-          border-bottom: 3px solid #1cca00;
+          border-bottom: 3px solid #69b645;
         `}
     }
     &.profiles {
       ${props =>
         props.activeLink === 'profiles' &&
         css`
-          border-color: #1cca00;
+          border-color: #69b645;
         `}
     }
   }

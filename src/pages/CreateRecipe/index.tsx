@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, ChangeEvent } from 'react'
+import React, { useState, useCallback, ChangeEvent } from 'react'
 import {
   FiChevronLeft,
   FiChevronRight,
@@ -18,21 +18,23 @@ import {
   SecondStep,
   IngredientsList,
   InputAdditems,
-  MethodContainer,
+  MethodList,
   ThirdStep,
 } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import Input from '../../components/Input'
+
 import api from '../../services/api'
 
 const CreateRecipe: React.FC = () => {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const inputMethod = useRef<HTMLInputElement>(null)
   const [progress, setProgress] = useState(34)
   const [step, setStep] = useState(1)
 
   const [ingredients, setIngredients] = useState<string[]>([])
+  const [newIngredient, setNewIngredient] = useState('')
   const [method, setMethod] = useState<string[]>([])
+  const [newMethod, setNewMethod] = useState('')
   const [time, setTime] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
@@ -50,15 +52,14 @@ const CreateRecipe: React.FC = () => {
   }, [name, time, method, ingredients])
 
   const handleAddIngredient = useCallback(() => {
-    if (!inputRef.current || inputRef.current.value === '') {
+    if (newIngredient === '') {
       return
     }
 
-    const newIngredient = inputRef.current.value
-    setIngredients([...ingredients, newIngredient])
+    setNewIngredient('')
+    setIngredients(state => [...state, newIngredient])
+  }, [newIngredient])
 
-    inputRef.current.value = ''
-  }, [ingredients])
   const handleRemoveIngredient = useCallback((ingredientRemove: string) => {
     setIngredients(state => {
       const filtred = state.filter(
@@ -69,15 +70,15 @@ const CreateRecipe: React.FC = () => {
   }, [])
 
   const handleAddMethod = useCallback(() => {
-    if (!inputMethod.current || inputMethod.current.value === '') {
+    if (newMethod === '') {
+      // setHasError(true)
       return
     }
 
-    const newMethod = inputMethod.current.value
-    setMethod([...method, newMethod])
-
-    inputMethod.current.value = ''
-  }, [method])
+    setNewMethod('')
+    setMethod(state => [...state, newMethod])
+    // setHasError(false)
+  }, [newMethod])
   const handleRemoveMethod = useCallback((methodRemove: string) => {
     setMethod(state => {
       const filtred = state.filter(methodStep => methodStep !== methodRemove)
@@ -120,23 +121,20 @@ const CreateRecipe: React.FC = () => {
                 <label htmlFor="name-field">
                   <strong>Nome da Receita</strong>
                 </label>
-                <input
-                  id="name-field"
-                  name="name"
+                <Input
                   value={name}
-                  onChange={e => setName(e.target.value)}
+                  inputOnChange={e => setName(e.target.value)}
+                  placeholder="digite o nome da receita"
                 />
               </div>
               <div>
                 <label htmlFor="time-field">
                   <strong>Tempo de Preparo</strong>
                 </label>
-                <input
-                  id="time-field"
-                  name="time"
-                  type="number"
+                <Input
                   value={time}
-                  onChange={changeTime}
+                  inputOnChange={changeTime}
+                  placeholder="ex:120"
                 />
               </div>
             </div>
@@ -166,17 +164,18 @@ const CreateRecipe: React.FC = () => {
           </FirstStep>
           <SecondStep step={step}>
             <InputAdditems>
-              <input
-                placeholder="digite o nome de um ingrediente..."
-                ref={inputRef}
-                onKeyUp={e => {
+              <Input
+                value={newIngredient}
+                inputOnChange={e => setNewIngredient(e.target.value)}
+                placeholder="digite o nome de um ingrediente"
+                icon={FiPlus}
+                iconColor="#69B645"
+                onClickButton={handleAddIngredient}
+                inputOnKeyUp={e => {
                   return (e.which || e.keyCode) === 13 && handleAddIngredient()
                 }}
+                // hasError={hasError}
               />
-
-              <button type="button" onClick={() => handleAddIngredient()}>
-                <FiPlus color="#fff" size={20} />
-              </button>
             </InputAdditems>
             <strong>Ingredientes</strong>
             <IngredientsList>
@@ -195,19 +194,19 @@ const CreateRecipe: React.FC = () => {
               ))}
             </IngredientsList>
             <InputAdditems>
-              <input
-                placeholder="digite a receita passo a passo..."
-                ref={inputMethod}
-                onKeyUp={e => {
+              <Input
+                placeholder="digite a receita passo a passo"
+                value={newMethod}
+                inputOnChange={e => setNewMethod(e.target.value)}
+                icon={FiPlus}
+                iconColor="#69B645"
+                inputOnKeyUp={e => {
                   return (e.which || e.keyCode) === 13 && handleAddMethod()
                 }}
+                onClickButton={handleAddMethod}
               />
-
-              <button type="button" onClick={() => handleAddMethod()}>
-                <FiPlus color="#fff" size={20} />
-              </button>
             </InputAdditems>
-            <MethodContainer>
+            <MethodList>
               <strong>Modo de preparo</strong>
               <ul>
                 {method.map(methodStep => {
@@ -222,13 +221,13 @@ const CreateRecipe: React.FC = () => {
                           handleRemoveMethod(methodStep)
                         }}
                       >
-                        <FiX color="#000" size={22} />
+                        <FiX color="#333" size={22} />
                       </button>
                     </li>
                   )
                 })}
               </ul>
-            </MethodContainer>
+            </MethodList>
             <ContainerButtons>
               <button
                 type="button"
@@ -252,7 +251,7 @@ const CreateRecipe: React.FC = () => {
           </SecondStep>
           <ThirdStep step={step}>
             <p>RECEITA CRIADA!</p>
-            <FiCheck size={256} color="#39B100" />
+            <FiCheck size={256} color="#7dcc57" />
             <span>
               sua receita esta pronta, para confirmar seu cadastro clique no
               botão a baixo
@@ -261,15 +260,15 @@ const CreateRecipe: React.FC = () => {
               Cadastrar Receita
             </Link>
             <ContainerButtons>
-              <button
-                type="button"
+              <strong
+                role="none"
                 onClick={() => {
                   prevStep()
                 }}
               >
-                <FiChevronLeft size={22} />
-                Etapa Anterior
-              </button>
+                <FiChevronLeft size={18} />
+                Caso queira alterar sua receita clique aqui
+              </strong>
             </ContainerButtons>
           </ThirdStep>
         </Form>

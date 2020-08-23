@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 import { FaSearch } from 'react-icons/fa'
 import RecipesList from '../../components/RecipesList'
@@ -6,6 +6,7 @@ import api from '../../services/api'
 
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import Input from '../../components/Input'
 import {
   GridContainer,
   Container,
@@ -28,9 +29,9 @@ interface IRecipe {
 
 const Dashboard: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
+  const [newIngredient, setNewIngredient] = useState('')
+  const [hasError, setHasError] = useState(false)
   const [recipes, setRecipes] = useState<IRecipe[]>([])
-
-  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     async function loadRecipesByIngredients() {
@@ -47,15 +48,15 @@ const Dashboard: React.FC = () => {
   }, [ingredients])
 
   const handleAddIngredient = useCallback(() => {
-    if (!inputRef.current || inputRef.current.value === '') {
+    if (newIngredient === '') {
+      setHasError(true)
       return
     }
 
-    const newIngredient = inputRef.current.value
-    setIngredients([...ingredients, newIngredient])
-
-    inputRef.current.value = ''
-  }, [ingredients])
+    setNewIngredient('')
+    setIngredients(state => [...state, newIngredient])
+    setHasError(false)
+  }, [newIngredient])
 
   const handleRemoveIngredient = useCallback(
     (ingredientRemove: string) => {
@@ -74,17 +75,18 @@ const Dashboard: React.FC = () => {
           <Search>
             <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
             <div>
-              <input
+              <Input
+                value={newIngredient}
+                inputOnChange={e => setNewIngredient(e.target.value)}
                 placeholder="digite o nome de um ingrediente..."
-                ref={inputRef}
-                onKeyUp={e => {
+                icon={FaSearch}
+                iconColor="#69B645"
+                onClickButton={handleAddIngredient}
+                inputOnKeyUp={e => {
                   return (e.which || e.keyCode) === 13 && handleAddIngredient()
                 }}
+                hasError={hasError}
               />
-
-              <button type="button" onClick={() => handleAddIngredient()}>
-                <FaSearch color="#fff" size={20} />
-              </button>
             </div>
           </Search>
           <IngredientsList>

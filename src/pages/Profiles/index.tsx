@@ -36,7 +36,6 @@ const Profiles: React.FC = () => {
       <Header page="profiles" />
       <Container>
         <CardContainer>
-          <Input placeholder="teste" icon={FiX} iconColor="#41c900" />
           {profiles.map(profile => (
             <CardProfile key={profile.id}>
               <img src={Image} alt="author" />

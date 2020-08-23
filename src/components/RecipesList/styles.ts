@@ -71,7 +71,7 @@ export const IngredientsContainer = styled.div`
     align-items: center;
     li {
       color: #fff;
-      background: #41c900;
+      background: #69b645;
       margin: 10px;
       padding: 10px;
       font-weight: bold;
@@ -121,7 +121,7 @@ export const ContainerPagination = styled.div`
       svg {
         margin: auto;
       }
-      background: #ffaf37;
+      background: #ffd700;
       align-items: center;
       color: #fff;
       font-weight: bold;
@@ -132,7 +132,7 @@ export const ContainerPagination = styled.div`
         margin-left: 15px;
       }
       &:hover {
-        background: #ea920f;
+        background: #edc90a;
         color: #ddd;
       }
     }
@@ -141,8 +141,8 @@ export const ContainerPagination = styled.div`
     padding: 0 5px;
     text-align: center;
     font-weight: bold;
-    color: #6c6c80;
+    color: #7a8078;
     font-size: 18px;
-    border-bottom: 2px solid #ffaf37;
+    border-bottom: 3px solid #ffd700;
   }
 `

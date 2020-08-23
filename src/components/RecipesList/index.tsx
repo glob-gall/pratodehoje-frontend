@@ -39,6 +39,7 @@ const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   useEffect(() => {
     setRecipes(recipesProps)
+    setCurrentPage(1)
   }, [recipesProps])
 
   const prevPage = useCallback(() => {

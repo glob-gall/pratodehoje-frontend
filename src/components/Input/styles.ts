@@ -7,7 +7,7 @@ interface containerProps {
   hasError: boolean
 }
 export const Container = styled.div<containerProps>`
-  border-radius: 8px;
+  border-radius: 10px;
   margin-bottom: 24px;
   display: flex;
   height: 45px;
@@ -15,16 +15,16 @@ export const Container = styled.div<containerProps>`
   ${props =>
     props.hasError &&
     css`
-      border: 2px solid #dd3434;
+      border: 2px solid #e05c5c;
     `}
   ${props =>
     props.hasFocused &&
     css`
-      border: 2px solid #41c900;
+      border: 2px solid #65bf39;
     `}
   input {
     flex: 1;
-    border-radius: 0;
+    /* border-radius: 0; */
     font-size: 18px;
     border: none;
     color: #535353;
@@ -40,15 +40,15 @@ export const Container = styled.div<containerProps>`
   button {
     width: 49px;
     border: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
 
     background: ${props => props.iconColor};
 
     ${props =>
       props.hasError &&
       css`
-        background: #dd3434;
+        background: #e05c5c;
       `}
     ${props =>
       props.hasFocused &&
