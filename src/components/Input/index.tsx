@@ -5,11 +5,17 @@ import { Container } from './styles'
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string
   icon?: React.ComponentType<IconBaseProps>
+  iconColor?: string
 }
 
-const Input: React.FC<InputProps> = ({ placeholder, icon: Icon, ...rest }) => {
+const Input: React.FC<InputProps> = ({
+  placeholder,
+  icon: Icon,
+  iconColor = '#fff',
+  ...rest
+}) => {
   return (
-    <Container>
+    <Container hasIcon={!!Icon} iconColor={iconColor}>
       <input type="text" placeholder={placeholder} />
       {Icon && (
         <button type="button">

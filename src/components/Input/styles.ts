@@ -1,30 +1,29 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const Container = styled.div`
+interface containerProps {
+  hasIcon: boolean
+  iconColor: string
+}
+export const Container = styled.div<containerProps>`
   border-radius: 8px;
-  /* margin: 0 16px;
-  margin-top: 35px; */
   margin-bottom: 24px;
   display: flex;
-  border-radius: 8px;
-  overflow: hidden;
   height: 45px;
-  width: 100%;
-  background: #fff;
+  background: ${props => props.iconColor};
   input {
     flex: 1;
-    /* max-width: 80%; */
-    /* padding: 20px 20px 10px 10px; */
     border-radius: 0;
     font-size: 18px;
     border: none;
     color: #535353;
+    padding: 0 16px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
   }
   button {
     width: 45px;
-    /* height: 45px; */
     border: none;
-    border-radius: 0;
-    background: #1cca00;
+    border-radius: 8px;
+    background: ${props => props.iconColor};
   }
 `

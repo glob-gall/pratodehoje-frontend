@@ -35,7 +35,6 @@ const Profiles: React.FC = () => {
     <GridContainer>
       <Header page="profiles" />
       <Container>
-        <Input placeholder="teste" icon={FiX} />
         <CardContainer>
           {profiles.map(profile => (
             <CardProfile key={profile.id}>
