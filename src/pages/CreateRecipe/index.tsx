@@ -35,11 +35,15 @@ const CreateRecipe: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
   const [newIngredient, setNewIngredient] = useState('')
-  const [hasError, setError] = useState(false)
+  const [hasNameError, setNameError] = useState(false)
+  const [hasTimeError, setTimeError] = useState(false)
+  const [hasIngredientError, setIngredientError] = useState(false)
+  const [hasMethodError, setMethodError] = useState(false)
   const [newMethod, setNewMethod] = useState('')
   const [time, setTime] = useState('')
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
+
   const createRecipe = useCallback(async () => {
     const recipe = {
       name,
@@ -48,15 +52,6 @@ const CreateRecipe: React.FC = () => {
       ingredientsNames: ingredients,
       equipaments: '',
       image_url: '',
-    }
-    if (
-      name === '' ||
-      time === '' ||
-      method.length === 0 ||
-      ingredients.length === 0
-    ) {
-      setError(true)
-      return
     }
     await api.post('/recipes', recipe)
   }, [name, time, method, ingredients])
@@ -115,6 +110,35 @@ const CreateRecipe: React.FC = () => {
     setProgress(progress + 33)
   }, [step, progress])
 
+  const validateFirstStep = useCallback(() => {
+    setNameError(false)
+    setTimeError(false)
+    if (name === '') {
+      setNameError(true)
+    }
+    if (time === '') {
+      setTimeError(true)
+    }
+    if (name !== '' && time !== '') {
+      nextStep()
+    }
+  }, [name, time, nextStep])
+
+  const validateSecondStep = useCallback(() => {
+    setIngredientError(false)
+    setMethodError(false)
+
+    if (ingredients.length === 0) {
+      setIngredientError(true)
+    }
+    if (method.length === 0) {
+      setMethodError(true)
+    }
+    if (ingredients.length !== 0 && method.length !== 0) {
+      nextStep()
+    }
+  }, [ingredients, method, nextStep])
+
   return (
     <GridContainer>
       <Header page="createRecipe" />
@@ -133,7 +157,7 @@ const CreateRecipe: React.FC = () => {
                   value={name}
                   inputOnChange={e => setName(e.target.value)}
                   placeholder="digite o nome da receita"
-                  hasError={hasError}
+                  hasError={hasNameError}
                 />
               </div>
               <div>
@@ -142,7 +166,7 @@ const CreateRecipe: React.FC = () => {
                 </label>
                 <Input
                   value={time}
-                  hasError={hasError}
+                  hasError={hasTimeError}
                   inputOnChange={changeTime}
                   placeholder="ex:120"
                 />
@@ -164,7 +188,7 @@ const CreateRecipe: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  nextStep()
+                  validateFirstStep()
                 }}
               >
                 proxima Etapa
@@ -175,7 +199,7 @@ const CreateRecipe: React.FC = () => {
           <SecondStep step={step}>
             <InputAdditems>
               <Input
-                hasError={hasError}
+                hasError={hasIngredientError}
                 value={newIngredient}
                 inputOnChange={e => setNewIngredient(e.target.value)}
                 placeholder="digite o nome de um ingrediente"
@@ -203,7 +227,7 @@ const CreateRecipe: React.FC = () => {
             </IngredientsList>
             <InputAdditems>
               <Input
-                hasError={hasError}
+                hasError={hasMethodError}
                 placeholder="digite a receita passo a passo"
                 value={newMethod}
                 inputOnChange={e => setNewMethod(e.target.value)}
@@ -250,7 +274,7 @@ const CreateRecipe: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  nextStep()
+                  validateSecondStep()
                 }}
               >
                 proxima Etapa
