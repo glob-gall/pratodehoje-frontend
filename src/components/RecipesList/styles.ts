@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const RecipeList = styled.div`
@@ -10,11 +10,20 @@ export const RecipeList = styled.div`
     margin-top: 15px;
   }
 `
-export const Recipe = styled(Link)`
-  transition: transform 300ms ease-in-out;
+const recipeOnHover = keyframes`
+  from{
+    /* transition: transform 300ms ease-in-out; */
+    transform:scale(1)
+  }
+  to{
+    transform:scale(1.03)
+  }
+`
 
+export const Recipe = styled(Link)`
   &:hover {
-    transform: translate(5px);
+    animation: ${recipeOnHover} 100ms ease-out forwards;
+    /* transform: translate(5px); */
   }
   text-decoration: none;
   background: #f0f0f5;
@@ -124,6 +133,7 @@ export const ContainerPagination = styled.div`
       font-size: 16px;
       transition: background-color 0.2s;
       &:hover {
+        animation: ${recipeOnHover} 200ms ease-out forwards;
         background: #7ca2bd;
         color: #fff;
       }

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 interface stepProps {
   progress: number
@@ -22,6 +22,7 @@ export const Form = styled.form`
   border-radius: 10px;
   display: inline-block;
   position: relative;
+  overflow: hidden;
 `
 export const Progress = styled.div<stepProps>`
   display: block;
@@ -37,30 +38,31 @@ export const Progress = styled.div<stepProps>`
     transition: width 0.5s;
   }
 `
+const pageInAnimation = keyframes`
+  from{
+    transform:translateX(100%)
+  }
+  to{
+    transform:translateX(0%)
+  }
+`
 export const FirstStep = styled.div<formProps>`
   display: none;
+
   ${props =>
     props.step === 1 &&
     css`
       display: initial;
     `}
 
-  strong {
-    font-size: 18px;
-    font-weight: bold;
-    margin-left: 4px;
-  }
-
   div {
+    animation: ${pageInAnimation} 0.8s ease;
     display: flex;
-
     justify-content: center;
     div {
       margin: 0 8px;
       flex-direction: column;
       label {
-        /* margin-top: 24px;
-        margin-left: 8px; */
         margin: 24px 0 8px 8px;
       }
       div {
@@ -124,6 +126,9 @@ export const SecondStep = styled.div<formProps>`
       display: block;
     `}
   min-height: 300px;
+  div {
+    animation: ${pageInAnimation} 0.8s ease;
+  }
 `
 export const InputAdditems = styled.div`
   margin: 0 16px;
@@ -178,14 +183,17 @@ export const ThirdStep = styled.div<formProps>`
     font-size: 36px;
     margin-top: 24px;
     font-weight: bold;
+    animation: ${pageInAnimation} 0.8s ease;
   }
   span {
     margin: 8px 36px;
     text-align: center;
     color: #6c6c80;
     font-weight: bold;
+    animation: ${pageInAnimation} 0.8s ease;
   }
   button {
+    animation: ${pageInAnimation} 0.8s ease;
     background: #43abf6;
 
     border: none;
@@ -203,6 +211,7 @@ export const ThirdStep = styled.div<formProps>`
     }
   }
   strong {
+    animation: ${pageInAnimation} 0.8s ease;
     margin: auto auto 24px;
     color: #69b645;
     cursor: pointer;
@@ -213,5 +222,8 @@ export const ThirdStep = styled.div<formProps>`
     &:hover {
       color: #5b9751;
     }
+  }
+  svg {
+    animation: ${pageInAnimation} 0.8s ease;
   }
 `

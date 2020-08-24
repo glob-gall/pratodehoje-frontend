@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const GridContainer = styled.div`
   display: grid;
@@ -24,6 +24,14 @@ export const ContainerFeed = styled.div`
     grid-column: 1/4;
   }
 `
+const pageInAnimation = keyframes`
+  from{
+    transform:translateX(100%)
+  }
+  to{
+    transform:translateX(0%)
+  }
+`
 export const Search = styled.div`
   text-align: center;
   h2 {
@@ -35,4 +43,7 @@ export const IngredientsList = styled.div`
   margin: 15px 10px;
   display: flex;
   flex-wrap: wrap;
+  div {
+    animation: ${pageInAnimation} 0.8s ease;
+  }
 `

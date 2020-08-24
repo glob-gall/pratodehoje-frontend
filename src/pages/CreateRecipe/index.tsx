@@ -6,7 +6,6 @@ import {
   FiX,
   FiCheck,
 } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
 import {
   Container,
   GridContainer,
@@ -212,7 +211,9 @@ const CreateRecipe: React.FC = () => {
                 // hasError={hasError}
               />
             </InputAdditems>
-            <strong>Ingredientes</strong>
+            <div>
+              <strong>Ingredientes</strong>
+            </div>
             <IngredientsList>
               {ingredients.map(ingredient => (
                 <IngredientCard

@@ -15,12 +15,12 @@ export const Container = styled.div<containerProps>`
   ${props =>
     props.hasError &&
     css`
-      border: 2px solid #f63440;
+      border: 2px solid #ff4949;
     `}
   ${props =>
     props.hasFocused &&
     css`
-      border: 2px solid #65bf39;
+      border: 2px solid #81e251;
     `}
   input {
     flex: 1;
@@ -48,7 +48,7 @@ export const Container = styled.div<containerProps>`
     ${props =>
       props.hasError &&
       css`
-        background: #f63440;
+        background: #ff4949;
       `}
     ${props =>
       props.hasFocused &&
