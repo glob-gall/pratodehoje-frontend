@@ -15,7 +15,7 @@ export const Container = styled.div<containerProps>`
   ${props =>
     props.hasError &&
     css`
-      border: 2px solid #e05c5c;
+      border: 2px solid #ff7373;
     `}
   ${props =>
     props.hasFocused &&
@@ -48,7 +48,7 @@ export const Container = styled.div<containerProps>`
     ${props =>
       props.hasError &&
       css`
-        background: #e05c5c;
+        background: #ff7373;
       `}
     ${props =>
       props.hasFocused &&

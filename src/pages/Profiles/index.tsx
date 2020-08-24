@@ -4,7 +4,6 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { Container, GridContainer, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
-import Input from '../../components/Input'
 
 interface ProfileInfo {
   id: number

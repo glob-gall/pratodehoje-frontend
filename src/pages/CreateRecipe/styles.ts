@@ -34,6 +34,7 @@ export const Progress = styled.div<stepProps>`
     height: 5px;
     width: ${props => props.progress && `${props.progress}%`};
     border-radius: 10px;
+    transition: width 0.5s;
   }
 `
 export const FirstStep = styled.div<formProps>`

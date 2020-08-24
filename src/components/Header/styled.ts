@@ -46,6 +46,7 @@ export const NavItems = styled.div<NavItemsProps>`
     text-decoration: none;
     color: #fff;
     border-bottom: 3px solid #db1010;
+    transition: color 1s ease;
     &.dashboard {
       ${props =>
         props.activeLink === 'dashboard' &&
