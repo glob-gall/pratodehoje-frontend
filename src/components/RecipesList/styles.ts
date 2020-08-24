@@ -11,6 +11,11 @@ export const RecipeList = styled.div`
   }
 `
 export const Recipe = styled(Link)`
+  transition: transform 300ms ease-in-out;
+
+  &:hover {
+    transform: translate(5px);
+  }
   text-decoration: none;
   background: #f0f0f5;
   border-radius: 7px;
@@ -30,7 +35,7 @@ export const Recipe = styled(Link)`
     display: flex;
     flex-direction: column;
     h3 {
-      color: #303030;
+      color: #535353;
       font-size: 32px;
       margin-left: 45px;
       height: 50px;
@@ -61,23 +66,12 @@ export const IngredientsContainer = styled.div`
     margin-left: 20px;
     display: inline;
   }
-  ul {
+  > div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
 
     height: 100px;
-    list-style-type: none;
-    align-items: center;
-    li {
-      color: #fff;
-      background: #69b645;
-      margin: 10px;
-      padding: 10px;
-      font-weight: bold;
-      border-radius: 10px;
-      box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
-    }
   }
 `
 
@@ -128,12 +122,13 @@ export const ContainerPagination = styled.div`
       border-radius: 10px;
       border: none;
       font-size: 16px;
-      & + button {
-        margin-left: 15px;
-      }
+      transition: background-color 0.2s;
       &:hover {
         background: #7ca2bd;
         color: #fff;
+      }
+      & + button {
+        margin-left: 15px;
       }
     }
   }

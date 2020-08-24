@@ -35,19 +35,4 @@ export const IngredientsList = styled.div`
   margin: 15px 10px;
   display: flex;
   flex-wrap: wrap;
-  div {
-    align-items: center;
-    display: flex;
-    margin: 5px;
-    background: #69b645;
-    color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
-    button {
-      margin-left: 5px;
-      background: transparent;
-      border: 0;
-    }
-  }
 `

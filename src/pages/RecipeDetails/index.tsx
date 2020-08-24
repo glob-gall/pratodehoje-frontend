@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import api from '../../services/api'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
+import IngredientCard from '../../components/IngredientCard'
 import backgroundImg from '../../images/comida.png'
 import {
   GridContainer,
@@ -61,7 +62,7 @@ const RecipeDetails: React.FC = () => {
             <IngredientsContainer>
               <strong>Ingredients</strong>
               {recipe.ingredients.map(ingredient => (
-                <li key={ingredient.id}>{ingredient.name}</li>
+                <IngredientCard key={ingredient.id} message={ingredient.name} />
               ))}
             </IngredientsContainer>
           </DetailsContainer>

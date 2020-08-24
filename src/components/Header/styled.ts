@@ -73,10 +73,11 @@ export const NavItems = styled.div<NavItemsProps>`
     ${props =>
       props.active
         ? css`
-            display: flex;
+            /* display: flex; */
           `
         : css`
-            display: none;
+            height: 0px;
+            overflow: hidden;
           `}
     flex-direction:column;
   }
@@ -85,7 +86,7 @@ export const NavItems = styled.div<NavItemsProps>`
 export const Burguer = styled.button`
   display: none;
   background: transparent;
-  border: 1px solid #ed3939;
+  border: 1px solid #db1010;
   margin-right: 50px;
   &:hover {
     border: 1px solid #f0f0f0;

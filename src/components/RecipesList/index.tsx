@@ -15,6 +15,7 @@ import {
 } from './styles'
 import RecipeNotFound from '../../images/recipeNotFound.svg'
 import ComidaImg from '../../images/comida.png'
+import IngredientCard from '../IngredientCard'
 
 interface Ingredient {
   id: string
@@ -100,11 +101,14 @@ const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
                 <h3>{recipe.name}</h3>
                 <IngredientsContainer>
                   <p>Ingredients</p>
-                  <ul>
+                  <div>
                     {recipe.ingredients.map(ingredient => (
-                      <li key={ingredient.id}>{ingredient.name}</li>
+                      <IngredientCard
+                        key={ingredient.id}
+                        message={ingredient.name}
+                      />
                     ))}
-                  </ul>
+                  </div>
                 </IngredientsContainer>
               </div>
             </Recipe>

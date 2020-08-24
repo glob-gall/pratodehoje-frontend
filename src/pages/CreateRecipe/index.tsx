@@ -24,6 +24,7 @@ import {
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Input from '../../components/Input'
+import IngredientCard from '../../components/IngredientCard'
 
 import api from '../../services/api'
 
@@ -32,8 +33,9 @@ const CreateRecipe: React.FC = () => {
   const [step, setStep] = useState(1)
 
   const [ingredients, setIngredients] = useState<string[]>([])
-  const [newIngredient, setNewIngredient] = useState('')
   const [method, setMethod] = useState<string[]>([])
+  const [newIngredient, setNewIngredient] = useState('')
+  const [hasError, setError] = useState(false)
   const [newMethod, setNewMethod] = useState('')
   const [time, setTime] = useState('')
   const [name, setName] = useState('')
@@ -47,7 +49,15 @@ const CreateRecipe: React.FC = () => {
       equipaments: '',
       image_url: '',
     }
-
+    if (
+      name === '' ||
+      time === '' ||
+      method.length === 0 ||
+      ingredients.length === 0
+    ) {
+      setError(true)
+      return
+    }
     await api.post('/recipes', recipe)
   }, [name, time, method, ingredients])
 
@@ -71,13 +81,11 @@ const CreateRecipe: React.FC = () => {
 
   const handleAddMethod = useCallback(() => {
     if (newMethod === '') {
-      // setHasError(true)
       return
     }
 
     setNewMethod('')
     setMethod(state => [...state, newMethod])
-    // setHasError(false)
   }, [newMethod])
   const handleRemoveMethod = useCallback((methodRemove: string) => {
     setMethod(state => {
@@ -125,6 +133,7 @@ const CreateRecipe: React.FC = () => {
                   value={name}
                   inputOnChange={e => setName(e.target.value)}
                   placeholder="digite o nome da receita"
+                  hasError={hasError}
                 />
               </div>
               <div>
@@ -133,6 +142,7 @@ const CreateRecipe: React.FC = () => {
                 </label>
                 <Input
                   value={time}
+                  hasError={hasError}
                   inputOnChange={changeTime}
                   placeholder="ex:120"
                 />
@@ -165,6 +175,7 @@ const CreateRecipe: React.FC = () => {
           <SecondStep step={step}>
             <InputAdditems>
               <Input
+                hasError={hasError}
                 value={newIngredient}
                 inputOnChange={e => setNewIngredient(e.target.value)}
                 placeholder="digite o nome de um ingrediente"
@@ -180,21 +191,19 @@ const CreateRecipe: React.FC = () => {
             <strong>Ingredientes</strong>
             <IngredientsList>
               {ingredients.map(ingredient => (
-                <div key={ingredient}>
-                  <p>{ingredient}</p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      handleRemoveIngredient(ingredient)
-                    }}
-                  >
-                    <FiX color="#fff" size={14} />
-                  </button>
-                </div>
+                <IngredientCard
+                  key={ingredient}
+                  message={ingredient}
+                  onClickButton={() => {
+                    handleRemoveIngredient(ingredient)
+                  }}
+                  hasDeleteButton
+                />
               ))}
             </IngredientsList>
             <InputAdditems>
               <Input
+                hasError={hasError}
                 placeholder="digite a receita passo a passo"
                 value={newMethod}
                 inputOnChange={e => setNewMethod(e.target.value)}
@@ -256,9 +265,9 @@ const CreateRecipe: React.FC = () => {
               sua receita esta pronta, para confirmar seu cadastro clique no
               botão a baixo
             </span>
-            <Link to="/" onClick={() => createRecipe()}>
+            <button type="button" onClick={() => createRecipe()}>
               Cadastrar Receita
-            </Link>
+            </button>
             <ContainerButtons>
               <strong
                 role="none"

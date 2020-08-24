@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react'
 import { FiX } from 'react-icons/fi'
 import { FaSearch } from 'react-icons/fa'
 import RecipesList from '../../components/RecipesList'
+import IngredientCard from '../../components/IngredientCard'
 import api from '../../services/api'
 
 import Header from '../../components/Header'
@@ -48,12 +49,12 @@ const Dashboard: React.FC = () => {
   }, [ingredients])
 
   const handleAddIngredient = useCallback(() => {
-    if (newIngredient === '') {
+    setNewIngredient('')
+    if (newIngredient === '' || newIngredient.includes(' ')) {
       setHasError(true)
       return
     }
 
-    setNewIngredient('')
     setIngredients(state => [...state, newIngredient])
     setHasError(false)
   }, [newIngredient])
@@ -91,17 +92,14 @@ const Dashboard: React.FC = () => {
           </Search>
           <IngredientsList>
             {ingredients.map(ingredient => (
-              <div key={ingredient}>
-                <p>{ingredient}</p>
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleRemoveIngredient(ingredient)
-                  }}
-                >
-                  <FiX color="#fff" size={14} />
-                </button>
-              </div>
+              <IngredientCard
+                key={ingredient}
+                hasDeleteButton
+                message={ingredient}
+                onClickButton={() => {
+                  handleRemoveIngredient(ingredient)
+                }}
+              />
             ))}
           </IngredientsList>
           <RecipesList recipesProps={recipes} />

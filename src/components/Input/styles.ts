@@ -15,7 +15,7 @@ export const Container = styled.div<containerProps>`
   ${props =>
     props.hasError &&
     css`
-      border: 2px solid #ff7373;
+      border: 2px solid #f63440;
     `}
   ${props =>
     props.hasFocused &&
@@ -24,7 +24,6 @@ export const Container = styled.div<containerProps>`
     `}
   input {
     flex: 1;
-    /* border-radius: 0; */
     font-size: 18px;
     border: none;
     color: #535353;
@@ -37,6 +36,7 @@ export const Container = styled.div<containerProps>`
         border-radius: 8px;
       `}
   }
+  transition: background-color 0.5s;
   button {
     width: 49px;
     border: none;
@@ -48,12 +48,13 @@ export const Container = styled.div<containerProps>`
     ${props =>
       props.hasError &&
       css`
-        background: #ff7373;
+        background: #f63440;
       `}
     ${props =>
       props.hasFocused &&
       css`
         background: ${props.iconColor};
       `}
+      transition: background-color 0.2s;
   }
 `

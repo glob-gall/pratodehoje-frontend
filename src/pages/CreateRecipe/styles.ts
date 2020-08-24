@@ -98,7 +98,7 @@ export const ContainerButtons = styled.div`
   margin-top: auto;
   button {
     display: flex;
-    background: #7dcc57;
+    background: #89b0cd;
     font-size: 16px;
     align-items: center;
     border: none;
@@ -106,6 +106,10 @@ export const ContainerButtons = styled.div`
     border-radius: 8px;
     color: #fff;
     margin: 10px auto 24px;
+    transition: background-color 0.2s;
+    &:hover {
+      background-color: #7ca2bd;
+    }
   }
 `
 export const SecondStep = styled.div<formProps>`
@@ -134,21 +138,6 @@ export const IngredientsList = styled.div`
   background: #e8e8e8;
   min-height: 54px;
   border-radius: 8px;
-  div {
-    align-items: center;
-    display: flex;
-    margin: 5px;
-    background: #69b645;
-    color: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
-    button {
-      margin-left: 5px;
-      background: transparent;
-      border: 0;
-    }
-  }
 `
 
 export const MethodList = styled.div`
@@ -196,8 +185,10 @@ export const ThirdStep = styled.div<formProps>`
     color: #6c6c80;
     font-weight: bold;
   }
-  a {
+  button {
     background: #43abf6;
+
+    border: none;
     border-radius: 10px;
     width: 368px;
     height: 56px;
@@ -206,8 +197,8 @@ export const ThirdStep = styled.div<formProps>`
     color: #fff;
     text-decoration: none;
     padding: 12px;
+    transition: background-color 0.2s;
     &:hover {
-      color: #ddd;
       background: #1d95ec;
     }
   }
@@ -218,6 +209,7 @@ export const ThirdStep = styled.div<formProps>`
     height: 20px;
     display: flex;
     align-items: center;
+    transition: color 0.2s;
     &:hover {
       color: #5b9751;
     }
