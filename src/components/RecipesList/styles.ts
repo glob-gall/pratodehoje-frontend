@@ -19,8 +19,17 @@ const recipeOnHover = keyframes`
     transform:scale(1.03)
   }
 `
+const onNotHover = keyframes`
+  from{
+    transform:scale(1.03);
+  }to{
+    transform:scale(1);
+
+  }
+`
 
 export const Recipe = styled(Link)`
+  animation: ${onNotHover} 100ms ease;
   &:hover {
     animation: ${recipeOnHover} 100ms ease-out forwards;
     /* transform: translate(5px); */

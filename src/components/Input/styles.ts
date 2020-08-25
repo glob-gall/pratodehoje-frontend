@@ -1,11 +1,29 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
 interface containerProps {
   hasIcon: boolean
   iconColor: string
   hasFocused: boolean
   hasError: boolean
+  animationOn: boolean
 }
+
+const onHover = keyframes`
+  from{
+    transform:scale(1);
+  }to{
+    transform:scale(1.01);
+
+  }
+`
+const onNotHover = keyframes`
+  from{
+    transform:scale(1.01);
+  }to{
+    transform:scale(1);
+
+  }
+`
 export const Container = styled.div<containerProps>`
   border-radius: 10px;
   margin-bottom: 24px;
@@ -22,6 +40,22 @@ export const Container = styled.div<containerProps>`
     css`
       border: 2px solid #81e251;
     `}
+    ${props =>
+      props.animationOn &&
+      css`
+        animation: ${onNotHover} 250ms ease;
+      `}
+
+
+  &:hover {
+    ${props =>
+      props.animationOn &&
+      css`
+        animation: ${onHover} 250ms forwards;
+      `}
+
+
+  }
   input {
     flex: 1;
     font-size: 18px;

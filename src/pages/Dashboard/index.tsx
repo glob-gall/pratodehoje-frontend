@@ -77,6 +77,7 @@ const Dashboard: React.FC = () => {
             <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
             <div>
               <Input
+                animationOn
                 value={newIngredient}
                 inputOnChange={e => setNewIngredient(e.target.value)}
                 placeholder="digite o nome de um ingrediente..."

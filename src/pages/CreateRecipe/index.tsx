@@ -89,7 +89,10 @@ const CreateRecipe: React.FC = () => {
   }, [])
 
   const changeTime = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (parseInt(e.target.value, 10) < 0) {
+    const { value } = e.target
+    const hasLetters = /[^0-9]/.test(value)
+
+    if (hasLetters) {
       setTime('')
       return
     }

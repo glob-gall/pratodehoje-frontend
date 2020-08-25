@@ -13,6 +13,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   iconColor?: string
   hasError?: boolean
   value?: string
+  animationOn?: boolean
   onClickButton?: () => void
   inputOnChange?: (e: ChangeEvent<HTMLInputElement>) => void
   inputOnKeyUp?: (e: KeyboardEvent<HTMLInputElement>) => void
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   icon: Icon,
   iconColor = '#fff',
   hasError = false,
+  animationOn = false,
   onClickButton = () => '',
   inputOnChange,
   inputOnKeyUp,
@@ -36,6 +38,7 @@ const Input: React.FC<InputProps> = ({
       iconColor={iconColor}
       hasError={hasError}
       hasFocused={focused}
+      animationOn={animationOn}
     >
       <input
         value={value}

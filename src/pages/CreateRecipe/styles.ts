@@ -7,6 +7,17 @@ interface formProps {
   step: number
 }
 
+const pageInAnimation = keyframes`
+  from{
+    transform:translateX(100%)
+
+  }
+  to{
+    transform:translateX(0%)
+
+  }
+`
+
 export const GridContainer = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
@@ -23,6 +34,9 @@ export const Form = styled.form`
   display: inline-block;
   position: relative;
   overflow: hidden;
+  div {
+    animation: ${pageInAnimation} 0.8s normal ease;
+  }
 `
 export const Progress = styled.div<stepProps>`
   display: block;
@@ -38,14 +52,7 @@ export const Progress = styled.div<stepProps>`
     transition: width 0.5s;
   }
 `
-const pageInAnimation = keyframes`
-  from{
-    transform:translateX(100%)
-  }
-  to{
-    transform:translateX(0%)
-  }
-`
+
 export const FirstStep = styled.div<formProps>`
   display: none;
 
@@ -56,7 +63,6 @@ export const FirstStep = styled.div<formProps>`
     `}
 
   div {
-    animation: ${pageInAnimation} 0.8s ease;
     display: flex;
     justify-content: center;
     div {
@@ -126,9 +132,6 @@ export const SecondStep = styled.div<formProps>`
       display: block;
     `}
   min-height: 300px;
-  div {
-    animation: ${pageInAnimation} 0.8s ease;
-  }
 `
 export const InputAdditems = styled.div`
   margin: 0 16px;

@@ -44,6 +44,6 @@ export const IngredientsList = styled.div`
   display: flex;
   flex-wrap: wrap;
   div {
-    animation: ${pageInAnimation} 0.8s ease;
+    animation: ${pageInAnimation} 100ms ease-out forwards;
   }
 `

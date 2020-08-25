@@ -100,7 +100,7 @@ const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
               <div>
                 <h3>{recipe.name}</h3>
                 <IngredientsContainer>
-                  <p>Ingredients</p>
+                  <p>Ingredientes</p>
                   <div>
                     {recipe.ingredients.map(ingredient => (
                       <IngredientCard

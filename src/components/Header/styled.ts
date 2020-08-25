@@ -7,7 +7,7 @@ interface NavItemsProps {
 }
 
 export const Container = styled.div`
-  background: #db1010;
+  background: #e94141;
   align-items: center;
   display: flex;
   @media (max-width: 836px) {
@@ -45,7 +45,7 @@ export const NavItems = styled.div<NavItemsProps>`
     font-size: 20px;
     text-decoration: none;
     color: #fff;
-    border-bottom: 3px solid #db1010;
+    border-bottom: 3px solid #e94141;
     transition: color 1s ease;
     &.dashboard {
       ${props =>
@@ -86,7 +86,7 @@ export const NavItems = styled.div<NavItemsProps>`
 export const Burguer = styled.button`
   display: none;
   background: transparent;
-  border: 1px solid #db1010;
+  border: 1px solid #e94141;
   margin-right: 50px;
   &:hover {
     border: 1px solid #f0f0f0;
