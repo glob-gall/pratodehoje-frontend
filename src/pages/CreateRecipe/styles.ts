@@ -9,11 +9,12 @@ interface formProps {
 
 const pageInAnimation = keyframes`
   from{
-    transform:translateX(100%)
-
+    transform:scale(0.9);
+    opacity:0;
   }
   to{
-    transform:translateX(0%)
+    opacity:1;
+    transform:scale(1);
 
   }
 `
@@ -34,6 +35,7 @@ export const Form = styled.form`
   display: inline-block;
   position: relative;
   overflow: hidden;
+  animation: ${pageInAnimation} 0.8s normal ease;
   div {
     animation: ${pageInAnimation} 0.8s normal ease;
   }
@@ -157,6 +159,7 @@ export const MethodList = styled.div`
     padding: 10px;
     min-height: 54px;
     li {
+      animation: ${pageInAnimation} 0.8s normal ease;
       display: flex;
       word-break: break-all;
       margin: 10px;

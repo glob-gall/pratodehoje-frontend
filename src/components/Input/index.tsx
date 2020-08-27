@@ -22,7 +22,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 const Input: React.FC<InputProps> = ({
   placeholder,
   icon: Icon,
-  iconColor = '#fff',
+  iconColor = '#81e251',
   hasError = false,
   animationOn = false,
   onClickButton = () => '',

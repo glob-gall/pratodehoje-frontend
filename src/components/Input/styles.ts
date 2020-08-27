@@ -46,7 +46,6 @@ export const Container = styled.div<containerProps>`
         animation: ${onNotHover} 250ms ease;
       `}
 
-
   &:hover {
     ${props =>
       props.animationOn &&

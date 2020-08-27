@@ -13,7 +13,7 @@ import {
   ContainerPagination,
   IngredientsContainer,
 } from './styles'
-import RecipeNotFound from '../../images/recipeNotFound.svg'
+import RecipeNotFound from '../../images/pizza-slice.svg'
 import ComidaImg from '../../images/comida.png'
 import IngredientCard from '../IngredientCard'
 

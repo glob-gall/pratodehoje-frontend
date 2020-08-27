@@ -1,5 +1,4 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { FiX } from 'react-icons/fi'
 import { FaSearch } from 'react-icons/fa'
 import RecipesList from '../../components/RecipesList'
 import IngredientCard from '../../components/IngredientCard'
@@ -40,7 +39,7 @@ const Dashboard: React.FC = () => {
         const response = await api.post('/recipes/ingredients', { ingredients })
         setRecipes(response.data)
       } else {
-        const response = await api.get('/recipes/all')
+        const response = await api.get('/recipes/')
         setRecipes(response.data)
       }
     }

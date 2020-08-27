@@ -1,4 +1,23 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const hoverSocialLinks = keyframes`
+from{
+  transform:rotate(0deg)
+}
+to{
+  transform:rotate(360deg)
+
+}
+`
+const notHoverSocialLinks = keyframes`
+from{
+  transform:rotate(45deg)
+}
+to{
+  transform:rotate(0deg)
+
+}
+`
 
 export const Container = styled.div`
   background: #1b1b1a;
@@ -32,14 +51,19 @@ export const SocialLinks = styled.div`
   align-items: center;
   flex-wrap: wrap;
 
-  div {
+  > div {
     display: flex;
     align-items: center;
 
     margin: 10px;
-
     svg {
+      animation: ${notHoverSocialLinks} 500ms ease forwards;
       margin-right: 5px;
+    }
+  }
+  > div:hover {
+    svg {
+      animation: ${hoverSocialLinks} 3s linear infinite forwards;
     }
   }
 `

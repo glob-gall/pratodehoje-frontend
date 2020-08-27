@@ -56,13 +56,16 @@ const CreateRecipe: React.FC = () => {
   }, [name, time, method, ingredients])
 
   const handleAddIngredient = useCallback(() => {
-    if (newIngredient === '') {
+    const haveThisIngredient = ingredients.includes(newIngredient)
+    if (haveThisIngredient || newIngredient === '') {
+      setIngredientError(true)
+      setNewIngredient('')
       return
     }
-
+    setIngredientError(false)
     setNewIngredient('')
     setIngredients(state => [...state, newIngredient])
-  }, [newIngredient])
+  }, [newIngredient, ingredients])
 
   const handleRemoveIngredient = useCallback((ingredientRemove: string) => {
     setIngredients(state => {
@@ -75,12 +78,15 @@ const CreateRecipe: React.FC = () => {
 
   const handleAddMethod = useCallback(() => {
     if (newMethod === '') {
+      setMethodError(true)
       return
     }
 
+    setMethodError(false)
     setNewMethod('')
     setMethod(state => [...state, newMethod])
   }, [newMethod])
+
   const handleRemoveMethod = useCallback((methodRemove: string) => {
     setMethod(state => {
       const filtred = state.filter(methodStep => methodStep !== methodRemove)
@@ -193,7 +199,7 @@ const CreateRecipe: React.FC = () => {
                   validateFirstStep()
                 }}
               >
-                proxima Etapa
+                Avançar
                 <FiChevronRight size={22} />
               </button>
             </ContainerButtons>
@@ -273,7 +279,7 @@ const CreateRecipe: React.FC = () => {
                 }}
               >
                 <FiChevronLeft size={22} />
-                Etapa Anterior
+                Voltar
               </button>
               <button
                 type="button"
@@ -281,7 +287,7 @@ const CreateRecipe: React.FC = () => {
                   validateSecondStep()
                 }}
               >
-                proxima Etapa
+                Avançar
                 <FiChevronRight size={22} />
               </button>
             </ContainerButtons>

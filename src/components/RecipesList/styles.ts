@@ -12,7 +12,6 @@ export const RecipeList = styled.div`
 `
 const recipeOnHover = keyframes`
   from{
-    /* transition: transform 300ms ease-in-out; */
     transform:scale(1)
   }
   to{
@@ -27,12 +26,23 @@ const onNotHover = keyframes`
 
   }
 `
+const spinning = keyframes`
+0%{
+  transform:translateY(0);
+}
+/* 50%{
+
+} */
+100%{
+  transform:translateY(-10px);
+  /* transform:translateY(0); */
+}
+`
 
 export const Recipe = styled(Link)`
   animation: ${onNotHover} 100ms ease;
   &:hover {
     animation: ${recipeOnHover} 100ms ease-out forwards;
-    /* transform: translate(5px); */
   }
   text-decoration: none;
   background: #f0f0f5;
@@ -106,7 +116,7 @@ export const RecipesNotFound = styled.div`
   img {
     width: 80px;
     height: 80px;
-    border-radius: 50%;
+    animation: ${spinning} 2s linear alternate infinite;
   }
   p {
     text-align: center;
