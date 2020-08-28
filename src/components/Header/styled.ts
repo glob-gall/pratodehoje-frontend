@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 interface NavItemsProps {
   active: boolean
-  activeLink: 'dashboard' | 'createRecipe' | 'profiles'
+  activeLink?: 'dashboard' | 'createRecipe' | 'profiles'
 }
 
 export const Container = styled.div`
@@ -69,6 +69,7 @@ export const NavItems = styled.div<NavItemsProps>`
         `}
     }
   }
+
   @media (max-width: 836px) {
     ${props =>
       props.active
@@ -80,6 +81,47 @@ export const NavItems = styled.div<NavItemsProps>`
             overflow: hidden;
           `}
     flex-direction:column;
+  }
+`
+export const ProfileNav = styled.button`
+  background: #f0f0f5;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+
+  ul {
+    width: 110px;
+    position: absolute;
+    top: 110%;
+    left: -50%;
+    background: #e94141;
+    list-style: none;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px -0px 3px 0px rgba(0, 0, 0, 0.2);
+
+    li {
+      a {
+        text-decoration: none;
+        border: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+      }
+      color: #f0f0f5;
+      font-size: 18px;
+      padding: 5px;
+      transition: background-color 0.5s ease;
+      &:hover {
+        background: #db3a3a;
+      }
+      & + li {
+        border-top: 2px solid #30303040;
+      }
+    }
   }
 `
 

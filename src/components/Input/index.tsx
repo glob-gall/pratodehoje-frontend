@@ -29,6 +29,7 @@ const Input: React.FC<InputProps> = ({
   inputOnChange,
   inputOnKeyUp,
   value,
+  type = 'text',
   ...rest
 }) => {
   const [focused, setFocused] = useState(false)
@@ -41,10 +42,10 @@ const Input: React.FC<InputProps> = ({
       animationOn={animationOn}
     >
       <input
+        type={type}
         value={value}
         onChange={inputOnChange}
         onKeyUp={inputOnKeyUp}
-        type="text"
         placeholder={placeholder}
         onFocus={() => {
           setFocused(true)
