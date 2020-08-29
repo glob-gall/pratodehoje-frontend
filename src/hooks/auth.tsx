@@ -5,9 +5,19 @@ interface Credentials {
   email: string
   password: string
 }
+interface User {
+  id: string
+  name: string
+  email: string
+  password: string
+}
 interface AuthContextData {
   name: string
   signIn(credentials: Credentials): Promise<void>
+}
+interface AuthUser {
+  token: string
+  user: User
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -18,6 +28,9 @@ export const AuthProvider: React.FC = ({ children }) => {
       email,
       password,
     })
+    const { token, user } = response.data
+    localStorage.setItem('@TodaysDinner:token', token)
+    localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
   }, [])
 
   return (
