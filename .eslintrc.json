@@ -35,6 +35,7 @@
       "import/prefer-default-export": "off",
       "react/prop-types": [0, {}],
       "jsx-a11y/label-has-associated-control":"off",
+      "react/jsx-props-no-spreading":"off",
       "import/extensions": [
         "error",
         "ignorePackages",

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback } from 'react'
+import React, { createContext, useCallback, useState, useContext } from 'react'
 import api from '../services/api'
 
 interface Credentials {
@@ -12,8 +12,10 @@ interface User {
   password: string
 }
 interface AuthContextData {
-  name: string
+  user: User
   signIn(credentials: Credentials): Promise<void>
+  signUp(): void
+  updateUser(user: User): void
 }
 interface AuthUser {
   token: string
@@ -22,19 +24,59 @@ interface AuthUser {
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
+export function useAuth(): AuthContextData {
+  const context = useContext(AuthContext)
+
+  return context
+}
+
 export const AuthProvider: React.FC = ({ children }) => {
-  const signIn = useCallback(async ({ email, password }: Credentials) => {
-    const response = await api.post('/session', {
-      email,
-      password,
-    })
-    const { token, user } = response.data
-    localStorage.setItem('@TodaysDinner:token', token)
-    localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
+  const [data, setData] = useState(() => {
+    const token = localStorage.getItem('@TodaysDinner:token')
+    const user = localStorage.getItem('@TodaysDinner:user')
+    if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`
+      return { token, user: JSON.parse(user) }
+    }
+    return {} as AuthUser
+  })
+
+  const signIn = useCallback(
+    async ({ email, password }: Credentials) => {
+      const response = await api.post('/session', {
+        email,
+        password,
+      })
+      const { token, user } = response.data
+      localStorage.setItem('@TodaysDinner:token', token)
+      localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
+
+      api.defaults.headers.authorization = `Bearer ${token}`
+
+      setData({ token, user })
+    },
+    [setData],
+  )
+
+  const signUp = useCallback(() => {
+    localStorage.removeItem('@TodaysDinner:token')
+    localStorage.removeItem('@TodaysDinner:user')
+
+    setData({} as AuthUser)
   }, [])
 
+  const updateUser = useCallback(
+    (user: User) => {
+      setData({ user, token: data.token })
+      localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
+    },
+    [data],
+  )
+
   return (
-    <AuthContext.Provider value={{ name: 'eu', signIn }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signUp, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   )
