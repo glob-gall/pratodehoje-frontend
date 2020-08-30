@@ -10,7 +10,7 @@ interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
 const Header: React.FC<HeaderProps> = ({ page }) => {
   const { user, signUp } = useAuth()
 
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(false)
   const [ProfileMenuIsActive, setProfileMenuIsActive] = useState(false)
 
   return (

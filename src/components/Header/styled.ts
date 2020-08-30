@@ -39,6 +39,7 @@ export const NavItems = styled.div<NavItemsProps>`
   display: flex;
   align-items: center;
   margin-right: 50px;
+  text-align: center;
   a {
     margin: 10px;
     padding: 5px;
@@ -123,6 +124,10 @@ export const ProfileNav = styled.button`
         border-top: 2px solid #30303040;
       }
     }
+  }
+
+  @media (max-width: 836px) {
+    margin-left: 0;
   }
 `
 
