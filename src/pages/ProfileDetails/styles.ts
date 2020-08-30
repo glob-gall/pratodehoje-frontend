@@ -1,4 +1,16 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const pageInAnimation = keyframes`
+  from{
+    transform:scale(0.9);
+    opacity:0;
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+
+  }
+`
 
 export const GridContainer = styled.div`
   display: grid;
@@ -6,6 +18,7 @@ export const GridContainer = styled.div`
   height: 100vh;
 `
 export const ProfileContainer = styled.div`
+  animation: ${pageInAnimation} 0.8s normal ease;
   background: #fff;
   border-radius: 10px;
   width: 70%;

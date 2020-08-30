@@ -40,7 +40,7 @@ const RecipeDetails: React.FC = () => {
   if (loaded) {
     return (
       <GridContainer>
-        <Header page="dashboard" />
+        <Header page="profiles" />
         <ProfileContainer>
           <TitleContainer>
             <div>
