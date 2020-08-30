@@ -43,13 +43,22 @@ const RecipeDetails: React.FC = () => {
         <Header page="dashboard" />
         <ProfileContainer>
           <TitleContainer>
-            <img src={backgroundImg} alt="recipe" />
             <div>
-              <h2>Joao</h2>
+              <img src={backgroundImg} alt="recipe" />
+            </div>
+            <div>
+              <h2>ipsum dolor sit amet consectetur vita</h2>
               <p>
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit.
                 Explicabo ex hic dignissimos vitae, neque laudantium sunt error
-                ducimus quae aspernatur
+                ducimus quae aspernatur Lorem ipsum dolor sit amet consectetur
+                adipisicing elit. Ducimus cumque dolor a ex mollitia neque
+                asperiores, esse reiciendis dolore recusandae culpa nisi
+                repellendus sit. Eos corporis ducimus laudantium aspernatur
+                expedita? Lorem ipsum dolor sit amet consectetur adipisicing
+                elit. Aut eos nisi eum, placeat, hic enim expedita excepturi
+                esse autem molestias sunt quo libero quos quas ex. Illum dolores
+                officia exercitationem?
               </p>
             </div>
           </TitleContainer>
