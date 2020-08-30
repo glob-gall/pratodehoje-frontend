@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
             Criar receitas
           </Link>
           <Link to="/profiles" className="profiles">
-            Profissionais
+            Cozinheiros
           </Link>
           <ProfileNav onClick={() => setProfileMenuIsActive(state => !state)}>
             {ProfileMenuIsActive &&

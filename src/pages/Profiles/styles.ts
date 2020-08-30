@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const GridContainer = styled.div`
   display: grid;
@@ -18,7 +19,8 @@ export const CardContainer = styled.div`
   justify-content: center;
 `
 
-export const CardProfile = styled.div`
+export const CardProfile = styled(Link)`
+  text-decoration: none;
   background: #fff;
   margin: 20px;
   width: 220px;
@@ -41,13 +43,15 @@ export const CardProfile = styled.div`
     div {
       flex-direction: column;
       h3 {
+        color: #535353;
         margin-left: 10px;
-        font-size: 21px;
+        font-size: 28px;
+        text-overflow: ellipsis;
       }
-      strong {
+      p {
         color: #6c6c80;
-        margin: 15px 0 5px 10px;
-        font-size: 14px;
+        margin: 8px 0 5px 10px;
+        font-size: 18px;
       }
     }
   }

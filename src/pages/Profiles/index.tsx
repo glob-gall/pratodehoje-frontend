@@ -3,31 +3,25 @@ import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import { Container, GridContainer, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
+import api from '../../services/api'
 
 interface ProfileInfo {
   id: number
   name: string
-  starts: number
-  totalRecipes: number
+  recipes: number
   image_url: string
 }
 
 const Profiles: React.FC = () => {
   const [profiles, setProfiles] = useState<ProfileInfo[]>([])
   useEffect(() => {
-    const profile = {
-      id: 0,
-      name: 'joao',
-      starts: 3,
-      totalRecipes: 35,
-      image_url: 'image_img',
+    const loadUsers = async () => {
+      const response = await api.get('users')
+      console.log(response.data)
+
+      setProfiles(response.data)
     }
-    const array: ProfileInfo[] = []
-    for (let i = 0; i < 9; i += 1) {
-      array[i] = profile
-      array[i].id = i
-    }
-    setProfiles(array)
+    loadUsers()
   }, [])
   return (
     <GridContainer>
@@ -35,14 +29,16 @@ const Profiles: React.FC = () => {
       <Container>
         <CardContainer>
           {profiles.map(profile => (
-            <CardProfile key={profile.id}>
+            <CardProfile key={profile.id} to={`profile/${profile.id}`}>
               <img src={Image} alt="author" />
               <div>
                 <div>
                   <h3>{profile.name}</h3>
-                  <strong>{profile.totalRecipes}</strong>
+                  <p>
+                    receitas:
+                    {profile.recipes}
+                  </p>
                 </div>
-                <span>{profile.starts}</span>
               </div>
             </CardProfile>
           ))}

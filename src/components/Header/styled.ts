@@ -84,6 +84,7 @@ export const NavItems = styled.div<NavItemsProps>`
   }
 `
 export const ProfileNav = styled.button`
+  margin-left: 24px;
   background: #f0f0f5;
   width: 50px;
   height: 50px;
