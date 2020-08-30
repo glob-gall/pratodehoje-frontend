@@ -1,15 +1,63 @@
 import React, { useState, useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
+import * as yup from 'yup'
+
 import { Container, GridContainer, Form } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import Input from '../../components/Input'
-// import api from '../../services/api'
+import { useAuth } from '../../hooks/auth'
 
 const Login: React.FC = () => {
-  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [nameError, setNameError] = useState(false)
+  const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
+  const { signIn } = useAuth()
+  const history = useHistory()
+
+  const handleLogin = useCallback(async () => {
+    setEmailError(false)
+    setPasswordError(false)
+    // setEmailError(false)
+    // setPasswordError(false)
+
+    // if (email === '') {
+    //   setEmailError(true)
+    // }
+    // if (password === '') {
+    //   setPasswordError(true)
+    // }
+
+    // if (emailError || passwordError) {
+    //   return
+    // }
+    try {
+      const schema = yup.object().shape({
+        email: yup.string().required('email').email('email'),
+        password: yup.string().min(6, 'password'),
+      })
+      await schema.validate(
+        {
+          email,
+          password,
+        },
+        { abortEarly: false },
+      )
+      await signIn({ email, password })
+      history.push('/')
+    } catch (err) {
+      if (!(err instanceof yup.ValidationError)) {
+        return
+      }
+      if (err.errors.includes('email')) {
+        setEmailError(true)
+      }
+      if (err.errors.includes('password')) {
+        setPasswordError(true)
+      }
+    }
+  }, [history, signIn, email, password, setEmailError, setPasswordError])
 
   return (
     <GridContainer>
@@ -19,15 +67,15 @@ const Login: React.FC = () => {
           <h2>Login</h2>
           <div>
             <div>
-              <label htmlFor="name-field">
+              <label htmlFor="email-field">
                 <strong>Email</strong>
               </label>
               <Input
-                value={name}
-                inputOnChange={e => setName(e.target.value)}
+                value={email}
+                inputOnChange={e => setEmail(e.target.value)}
                 placeholder="Digite seu email..."
                 animationOn
-                hasError={nameError}
+                hasError={emailError}
               />
             </div>
             <div>
@@ -43,7 +91,9 @@ const Login: React.FC = () => {
                 animationOn
               />
             </div>
-            <button type="button">Login</button>
+            <button type="button" onClick={() => handleLogin()}>
+              Login
+            </button>
           </div>
         </Form>
       </Container>

@@ -1,11 +1,4 @@
-import styled, { css, keyframes } from 'styled-components'
-
-interface stepProps {
-  progress: number
-}
-interface formProps {
-  step: number
-}
+import styled, { keyframes } from 'styled-components'
 
 const pageInAnimation = keyframes`
   from{

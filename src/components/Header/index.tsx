@@ -2,14 +2,16 @@ import React, { useState, HTMLAttributes } from 'react'
 import { Link } from 'react-router-dom'
 import LogoImg from '../../images/logo.svg'
 import { Container, Logo, Nav, NavItems, Burguer, ProfileNav } from './styled'
+import { useAuth } from '../../hooks/auth'
 
 interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
   page?: 'dashboard' | 'createRecipe' | 'profiles'
 }
 const Header: React.FC<HeaderProps> = ({ page }) => {
-  const [isActive, setIsActive] = useState(false)
+  const { user, signUp } = useAuth()
+
+  const [isActive, setIsActive] = useState(true)
   const [ProfileMenuIsActive, setProfileMenuIsActive] = useState(false)
-  const [isLoged, setIsLoged] = useState(false)
 
   return (
     <Container>
@@ -29,10 +31,16 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
           </Link>
           <ProfileNav onClick={() => setProfileMenuIsActive(state => !state)}>
             {ProfileMenuIsActive &&
-              (isLoged ? (
+              (user ? (
                 <ul>
-                  <li>Perfil</li>
-                  <li>Sair</li>
+                  <li>
+                    <Link to="/profile">Perfil</Link>
+                  </li>
+                  <li>
+                    <Link to="/login" onClick={signUp}>
+                      Sair
+                    </Link>
+                  </li>
                 </ul>
               ) : (
                 <ul>

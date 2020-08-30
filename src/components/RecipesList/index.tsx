@@ -35,7 +35,7 @@ interface recipesListProps extends HTMLAttributes<HTMLDivElement> {
 const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
-  const [itemsPerPage, _] = useState(4)
+  const itemsPerPage = 4
   const [recipesToList, setRecipesToList] = useState<IRecipe[]>([])
   const [recipes, setRecipes] = useState<IRecipe[]>([])
   useEffect(() => {

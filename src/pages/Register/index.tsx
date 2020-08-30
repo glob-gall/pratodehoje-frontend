@@ -1,4 +1,6 @@
 import React, { useState, useCallback } from 'react'
+import * as yup from 'yup'
+
 import { Container, GridContainer, Form } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -12,6 +14,41 @@ const Register: React.FC = () => {
   const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
+
+  const signUp = useCallback(async () => {
+    try {
+      const schema = yup.object().shape({
+        name: yup.string().required('name'),
+        email: yup.string().required('email').email('email'),
+        password: yup.string().min(6, 'password'),
+      })
+      await schema.validate(
+        {
+          name,
+          email,
+          password,
+        },
+        { abortEarly: false },
+      )
+      await api.post('users', { name, email, password })
+    } catch (err) {
+      if (!(err instanceof yup.ValidationError)) {
+        setEmailError(true)
+        setNameError(true)
+        setPasswordError(true)
+        return
+      }
+      if (err.errors.includes('email')) {
+        setEmailError(true)
+      }
+      if (err.errors.includes('name')) {
+        setNameError(true)
+      }
+      if (err.errors.includes('password')) {
+        setPasswordError(true)
+      }
+    }
+  }, [name, email, password])
 
   return (
     <GridContainer>
@@ -41,8 +78,7 @@ const Register: React.FC = () => {
                 inputOnChange={e => setEmail(e.target.value)}
                 placeholder="Digite seu email..."
                 animationOn
-
-                // hasError={hasNameError}
+                hasError={emailError}
               />
             </div>
             <div>
@@ -58,7 +94,9 @@ const Register: React.FC = () => {
                 type="password"
               />
             </div>
-            <button type="button">Login</button>
+            <button type="button" onClick={signUp}>
+              Cadastrar-se
+            </button>
           </div>
         </Form>
       </Container>
