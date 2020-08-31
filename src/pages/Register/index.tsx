@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import * as yup from 'yup'
 
+import { useHistory } from 'react-router-dom'
 import { Container, GridContainer, Form } from './styles'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
@@ -14,8 +15,15 @@ const Register: React.FC = () => {
   const [emailError, setEmailError] = useState(false)
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState(false)
+  const [buttonError, setButtonError] = useState(false)
+
+  const history = useHistory()
 
   const signUp = useCallback(async () => {
+    setEmailError(false)
+    setNameError(false)
+    setPasswordError(false)
+    setButtonError(false)
     try {
       const schema = yup.object().shape({
         name: yup.string().required('name'),
@@ -31,11 +39,16 @@ const Register: React.FC = () => {
         { abortEarly: false },
       )
       await api.post('users', { name, email, password })
+      history.push('/')
     } catch (err) {
       if (!(err instanceof yup.ValidationError)) {
         setEmailError(true)
         setNameError(true)
         setPasswordError(true)
+        setButtonError(true)
+        setName('')
+        setEmail('')
+        setPassword('')
         return
       }
       if (err.errors.includes('email')) {
@@ -54,7 +67,7 @@ const Register: React.FC = () => {
     <GridContainer>
       <Header />
       <Container>
-        <Form>
+        <Form Error={buttonError}>
           <h2>Cadastro</h2>
           <div>
             <div>

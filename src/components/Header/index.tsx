@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
               (user ? (
                 <ul>
                   <li>
-                    <Link to="/profile">Perfil</Link>
+                    <Link to={`/profile/${user.id}`}>Perfil</Link>
                   </li>
                   <li>
                     <Link to="/login" onClick={signUp}>
@@ -45,10 +45,10 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
               ) : (
                 <ul>
                   <li>
-                    <Link to="login">Login</Link>
+                    <Link to="/login">Login</Link>
                   </li>
                   <li>
-                    <Link to="cadastrar">Cadastrar</Link>
+                    <Link to="/cadastrar">Cadastrar</Link>
                   </li>
                 </ul>
               ))}

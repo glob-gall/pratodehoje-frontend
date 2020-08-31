@@ -11,6 +11,18 @@ const pageInAnimation = keyframes`
 
   }
 `
+const onHoverButton = keyframes`
+  from{
+    transform:scale(1);
+  }
+  to{
+    transform:scale(1.03);
+
+  }
+`
+interface formProps {
+  Error: boolean
+}
 
 export const GridContainer = styled.div`
   display: grid;
@@ -20,7 +32,7 @@ export const GridContainer = styled.div`
 export const Container = styled.div`
   display: flex;
 `
-export const Form = styled.form`
+export const Form = styled.form<formProps>`
   width: 490px;
   height: 380px;
   margin: 48px auto;
@@ -46,7 +58,7 @@ export const Form = styled.form`
 
   button {
     width: 100%;
-    background: #43abf6;
+    background: ${props => (props.Error ? '#E94141' : '#43abf6')};
     margin: 28px auto;
     border: none;
     border-radius: 10px;
@@ -55,7 +67,8 @@ export const Form = styled.form`
     color: #fff;
     transition: background-color 0.2s;
     &:hover {
-      background: #1d95ec;
+      background: ${props => (props.Error ? '#E94141' : '#1d95ec')};
+      animation: ${onHoverButton} 100ms ease-out forwards;
     }
   }
 `

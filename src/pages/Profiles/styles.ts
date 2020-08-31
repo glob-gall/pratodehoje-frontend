@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const GridContainer = styled.div`
@@ -6,7 +6,38 @@ export const GridContainer = styled.div`
   grid-template-rows: auto 1fr auto;
   height: 100vh;
 `
+const pageInAnimation = keyframes`
+  from{
+    transform:scale(0.9);
+    opacity:0;
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+
+  }
+`
+const hoverProfile = keyframes`
+  from{
+    transform:scale(1);
+  }
+  to{
+    transform:scale(1.05);
+
+  }
+`
+const notHoverProfile = keyframes`
+  from{
+    transform:scale(1.05);
+  }
+  to{
+    transform:scale(1);
+
+  }
+`
+
 export const Container = styled.div`
+  animation: ${pageInAnimation} 0.8s normal ease;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
@@ -20,6 +51,7 @@ export const CardContainer = styled.div`
 `
 
 export const CardProfile = styled(Link)`
+  animation: ${notHoverProfile} 0.5s ease;
   text-decoration: none;
   background: #fff;
   margin: 20px;
@@ -28,24 +60,24 @@ export const CardProfile = styled(Link)`
   border-radius: 5px;
   overflow: hidden;
 
+  &:hover {
+    animation: ${hoverProfile} 0.5s normal ease forwards;
+  }
+
   img {
     width: 100%;
     height: 180px;
     justify-content: center;
   }
   div {
-    display: flex;
-    height: 60px;
-    justify-content: space-between;
-    span {
-      margin-right: 10px;
-    }
     div {
-      flex-direction: column;
+      display: block;
       h3 {
         color: #535353;
         margin-left: 10px;
         font-size: 28px;
+        white-space: nowrap;
+        overflow: hidden;
         text-overflow: ellipsis;
       }
       p {

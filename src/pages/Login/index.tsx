@@ -13,25 +13,13 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [passwordError, setPasswordError] = useState(false)
+  const [buttonError, setButtonError] = useState(false)
   const { signIn } = useAuth()
   const history = useHistory()
 
   const handleLogin = useCallback(async () => {
     setEmailError(false)
     setPasswordError(false)
-    // setEmailError(false)
-    // setPasswordError(false)
-
-    // if (email === '') {
-    //   setEmailError(true)
-    // }
-    // if (password === '') {
-    //   setPasswordError(true)
-    // }
-
-    // if (emailError || passwordError) {
-    //   return
-    // }
     try {
       const schema = yup.object().shape({
         email: yup.string().required('email').email('email'),
@@ -47,7 +35,14 @@ const Login: React.FC = () => {
       await signIn({ email, password })
       history.push('/')
     } catch (err) {
+      console.log(err)
+
       if (!(err instanceof yup.ValidationError)) {
+        setEmail('')
+        setPassword('')
+        setEmailError(true)
+        setPasswordError(true)
+        setButtonError(true)
         return
       }
       if (err.errors.includes('email')) {
@@ -63,7 +58,7 @@ const Login: React.FC = () => {
     <GridContainer>
       <Header />
       <Container>
-        <Form>
+        <Form Error={buttonError}>
           <h2>Login</h2>
           <div>
             <div>
