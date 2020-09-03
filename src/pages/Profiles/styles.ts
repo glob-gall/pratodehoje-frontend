@@ -1,11 +1,6 @@
 import styled, { keyframes } from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const GridContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 100vh;
-`
 const pageInAnimation = keyframes`
   from{
     transform:scale(0.9);

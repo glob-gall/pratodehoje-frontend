@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../services/api'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import IngredientCard from '../../components/IngredientCard'
 import backgroundImg from '../../images/comida.png'
 import {
-  GridContainer,
   RecipeContainer,
   DetailsContainer,
   TitleContainer,
@@ -41,34 +38,30 @@ const RecipeDetails: React.FC = () => {
   }, [id])
   if (loaded) {
     return (
-      <GridContainer>
-        <Header page="dashboard" />
-        <RecipeContainer>
-          <TitleContainer>
-            <img src={backgroundImg} alt="recipe" />
-            <h2>{recipe.name}</h2>
-          </TitleContainer>
-          <DetailsContainer>
-            <MethodContainer>
-              <strong>Modo de preparo</strong>
-              <ul>
-                {recipe.method.map(step => {
-                  const i = recipe.method.indexOf(step) + 1
+      <RecipeContainer>
+        <TitleContainer>
+          <img src={backgroundImg} alt="recipe" />
+          <h2>{recipe.name}</h2>
+        </TitleContainer>
+        <DetailsContainer>
+          <MethodContainer>
+            <strong>Modo de preparo</strong>
+            <ul>
+              {recipe.method.map(step => {
+                const i = recipe.method.indexOf(step) + 1
 
-                  return <li key={i}>{`${i} - ${step}`}</li>
-                })}
-              </ul>
-            </MethodContainer>
-            <IngredientsContainer>
-              <strong>Ingredients</strong>
-              {recipe.ingredients.map(ingredient => (
-                <IngredientCard key={ingredient.id} message={ingredient.name} />
-              ))}
-            </IngredientsContainer>
-          </DetailsContainer>
-        </RecipeContainer>
-        <Footer />
-      </GridContainer>
+                return <li key={i}>{`${i} - ${step}`}</li>
+              })}
+            </ul>
+          </MethodContainer>
+          <IngredientsContainer>
+            <strong>Ingredients</strong>
+            {recipe.ingredients.map(ingredient => (
+              <IngredientCard key={ingredient.id} message={ingredient.name} />
+            ))}
+          </IngredientsContainer>
+        </DetailsContainer>
+      </RecipeContainer>
     )
   }
   return <h1>loading</h1>

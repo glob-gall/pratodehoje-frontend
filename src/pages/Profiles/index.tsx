@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
-import { Container, GridContainer, CardContainer, CardProfile } from './styles'
+import { Container, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
 import api from '../../services/api'
 
@@ -24,28 +22,24 @@ const Profiles: React.FC = () => {
     loadUsers()
   }, [])
   return (
-    <GridContainer>
-      <Header page="profiles" />
-      <Container>
-        <CardContainer>
-          {profiles.map(profile => (
-            <CardProfile key={profile.id} to={`profile/${profile.id}`}>
-              <img src={Image} alt="author" />
+    <Container>
+      <CardContainer>
+        {profiles.map(profile => (
+          <CardProfile key={profile.id} to={`profile/${profile.id}`}>
+            <img src={Image} alt="author" />
+            <div>
               <div>
-                <div>
-                  <h3>{profile.name}</h3>
-                  <p>
-                    receitas:
-                    {profile.recipes}
-                  </p>
-                </div>
+                <h3>{profile.name}</h3>
+                <p>
+                  receitas:
+                  {profile.recipes}
+                </p>
               </div>
-            </CardProfile>
-          ))}
-        </CardContainer>
-      </Container>
-      <Footer />
-    </GridContainer>
+            </div>
+          </CardProfile>
+        ))}
+      </CardContainer>
+    </Container>
   )
 }
 

@@ -2,9 +2,7 @@ import React, { useState, useCallback } from 'react'
 import * as yup from 'yup'
 
 import { useHistory } from 'react-router-dom'
-import { Container, GridContainer, Form } from './styles'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import { Container, Form } from './styles'
 import Input from '../../components/Input'
 import api from '../../services/api'
 
@@ -64,57 +62,53 @@ const Register: React.FC = () => {
   }, [name, email, password])
 
   return (
-    <GridContainer>
-      <Header />
-      <Container>
-        <Form Error={buttonError}>
-          <h2>Cadastro</h2>
+    <Container>
+      <Form Error={buttonError}>
+        <h2>Cadastro</h2>
+        <div>
           <div>
-            <div>
-              <label htmlFor="name-field">
-                <strong>Nome</strong>
-              </label>
-              <Input
-                value={name}
-                inputOnChange={e => setName(e.target.value)}
-                placeholder="Digite seu nome..."
-                animationOn
-                hasError={nameError}
-              />
-            </div>
-            <div>
-              <label htmlFor="name-field">
-                <strong>Email</strong>
-              </label>
-              <Input
-                value={email}
-                inputOnChange={e => setEmail(e.target.value)}
-                placeholder="Digite seu email..."
-                animationOn
-                hasError={emailError}
-              />
-            </div>
-            <div>
-              <label htmlFor="time-field">
-                <strong>Senha</strong>
-              </label>
-              <Input
-                value={password}
-                hasError={passwordError}
-                inputOnChange={e => setPassword(e.target.value)}
-                placeholder="Digite sua senha..."
-                animationOn
-                type="password"
-              />
-            </div>
-            <button type="button" onClick={signUp}>
-              Cadastrar-se
-            </button>
+            <label htmlFor="name-field">
+              <strong>Nome</strong>
+            </label>
+            <Input
+              value={name}
+              inputOnChange={e => setName(e.target.value)}
+              placeholder="Digite seu nome..."
+              animationOn
+              hasError={nameError}
+            />
           </div>
-        </Form>
-      </Container>
-      <Footer />
-    </GridContainer>
+          <div>
+            <label htmlFor="name-field">
+              <strong>Email</strong>
+            </label>
+            <Input
+              value={email}
+              inputOnChange={e => setEmail(e.target.value)}
+              placeholder="Digite seu email..."
+              animationOn
+              hasError={emailError}
+            />
+          </div>
+          <div>
+            <label htmlFor="time-field">
+              <strong>Senha</strong>
+            </label>
+            <Input
+              value={password}
+              hasError={passwordError}
+              inputOnChange={e => setPassword(e.target.value)}
+              placeholder="Digite sua senha..."
+              animationOn
+              type="password"
+            />
+          </div>
+          <button type="button" onClick={signUp}>
+            Cadastrar-se
+          </button>
+        </div>
+      </Form>
+    </Container>
   )
 }
 

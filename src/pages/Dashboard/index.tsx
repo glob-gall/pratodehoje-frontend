@@ -4,16 +4,8 @@ import RecipesList from '../../components/RecipesList'
 import IngredientCard from '../../components/IngredientCard'
 import api from '../../services/api'
 
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import Input from '../../components/Input'
-import {
-  GridContainer,
-  Container,
-  ContainerFeed,
-  Search,
-  IngredientsList,
-} from './styles'
+import { Container, ContainerFeed, Search, IngredientsList } from './styles'
 
 interface Ingredient {
   id: string
@@ -68,45 +60,41 @@ const Dashboard: React.FC = () => {
   )
 
   return (
-    <GridContainer>
-      <Header page="dashboard" />
-      <Container>
-        <ContainerFeed>
-          <Search>
-            <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
-            <div>
-              <Input
-                animationOn
-                value={newIngredient}
-                inputOnChange={e => setNewIngredient(e.target.value)}
-                placeholder="digite o nome de um ingrediente..."
-                icon={FaSearch}
-                iconColor="#69B645"
-                onClickButton={handleAddIngredient}
-                inputOnKeyUp={e => {
-                  return (e.which || e.keyCode) === 13 && handleAddIngredient()
-                }}
-                hasError={hasError}
-              />
-            </div>
-          </Search>
-          <IngredientsList>
-            {ingredients.map(ingredient => (
-              <IngredientCard
-                key={ingredient}
-                hasDeleteButton
-                message={ingredient}
-                onClickButton={() => {
-                  handleRemoveIngredient(ingredient)
-                }}
-              />
-            ))}
-          </IngredientsList>
-          <RecipesList recipesProps={recipes} />
-        </ContainerFeed>
-      </Container>
-      <Footer />
-    </GridContainer>
+    <Container>
+      <ContainerFeed>
+        <Search>
+          <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
+          <div>
+            <Input
+              animationOn
+              value={newIngredient}
+              inputOnChange={e => setNewIngredient(e.target.value)}
+              placeholder="digite o nome de um ingrediente..."
+              icon={FaSearch}
+              iconColor="#69B645"
+              onClickButton={handleAddIngredient}
+              inputOnKeyUp={e => {
+                return (e.which || e.keyCode) === 13 && handleAddIngredient()
+              }}
+              hasError={hasError}
+            />
+          </div>
+        </Search>
+        <IngredientsList>
+          {ingredients.map(ingredient => (
+            <IngredientCard
+              key={ingredient}
+              hasDeleteButton
+              message={ingredient}
+              onClickButton={() => {
+                handleRemoveIngredient(ingredient)
+              }}
+            />
+          ))}
+        </IngredientsList>
+        <RecipesList recipesProps={recipes} />
+      </ContainerFeed>
+    </Container>
   )
 }
 

@@ -1,11 +1,5 @@
 import styled, { keyframes } from 'styled-components'
 
-export const GridContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 100vh;
-`
-
 const pageInAnimation = keyframes`
   from{
     transform:scale(0.9);

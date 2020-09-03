@@ -2,9 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import * as yup from 'yup'
 
-import { Container, GridContainer, Form } from './styles'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
+import { Container, Form } from './styles'
 import Input from '../../components/Input'
 import { useAuth } from '../../hooks/auth'
 
@@ -55,45 +53,41 @@ const Login: React.FC = () => {
   }, [history, signIn, email, password, setEmailError, setPasswordError])
 
   return (
-    <GridContainer>
-      <Header />
-      <Container>
-        <Form Error={buttonError}>
-          <h2>Login</h2>
+    <Container>
+      <Form Error={buttonError}>
+        <h2>Login</h2>
+        <div>
           <div>
-            <div>
-              <label htmlFor="email-field">
-                <strong>Email</strong>
-              </label>
-              <Input
-                value={email}
-                inputOnChange={e => setEmail(e.target.value)}
-                placeholder="Digite seu email..."
-                animationOn
-                hasError={emailError}
-              />
-            </div>
-            <div>
-              <label htmlFor="time-field">
-                <strong>Senha</strong>
-              </label>
-              <Input
-                value={password}
-                hasError={passwordError}
-                inputOnChange={e => setPassword(e.target.value)}
-                placeholder="Digite sua senha..."
-                type="password"
-                animationOn
-              />
-            </div>
-            <button type="button" onClick={() => handleLogin()}>
-              Login
-            </button>
+            <label htmlFor="email-field">
+              <strong>Email</strong>
+            </label>
+            <Input
+              value={email}
+              inputOnChange={e => setEmail(e.target.value)}
+              placeholder="Digite seu email..."
+              animationOn
+              hasError={emailError}
+            />
           </div>
-        </Form>
-      </Container>
-      <Footer />
-    </GridContainer>
+          <div>
+            <label htmlFor="time-field">
+              <strong>Senha</strong>
+            </label>
+            <Input
+              value={password}
+              hasError={passwordError}
+              inputOnChange={e => setPassword(e.target.value)}
+              placeholder="Digite sua senha..."
+              type="password"
+              animationOn
+            />
+          </div>
+          <button type="button" onClick={() => handleLogin()}>
+            Login
+          </button>
+        </div>
+      </Form>
+    </Container>
   )
 }
 

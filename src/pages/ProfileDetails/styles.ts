@@ -13,11 +13,6 @@ const pageInAnimation = keyframes`
   }
 `
 
-export const GridContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  height: 100vh;
-`
 export const ProfileContainer = styled.div`
   animation: ${pageInAnimation} 0.8s normal ease;
   background: #fff;

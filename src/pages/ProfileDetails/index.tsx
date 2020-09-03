@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../services/api'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import backgroundImg from '../../images/comida.png'
 import {
-  GridContainer,
   ProfileContainer,
   TitleContainer,
   RecipesContainer,
@@ -45,31 +42,25 @@ const UserDetails: React.FC = () => {
   }, [id])
   if (loaded) {
     return (
-      <GridContainer>
-        <Header page="profiles" />
-        <ProfileContainer>
-          <TitleContainer>
-            <div>
+      <ProfileContainer>
+        <TitleContainer>
+          <div>
+            <img src={backgroundImg} alt="recipe" />
+          </div>
+          <div>
+            <h2>{user.name}</h2>
+            <textarea disabled>Em breve disponivel para alterações...</textarea>
+          </div>
+        </TitleContainer>
+        <RecipesContainer>
+          {user.recipes.map(recipe => (
+            <Recipe key={recipe.id} to={`/${recipe.id}`}>
               <img src={backgroundImg} alt="recipe" />
-            </div>
-            <div>
-              <h2>{user.name}</h2>
-              <textarea disabled>
-                Em breve disponivel para alterações...
-              </textarea>
-            </div>
-          </TitleContainer>
-          <RecipesContainer>
-            {user.recipes.map(recipe => (
-              <Recipe key={recipe.id} to={`/${recipe.id}`}>
-                <img src={backgroundImg} alt="recipe" />
-                <h4>{recipe.name}</h4>
-              </Recipe>
-            ))}
-          </RecipesContainer>
-        </ProfileContainer>
-        <Footer />
-      </GridContainer>
+              <h4>{recipe.name}</h4>
+            </Recipe>
+          ))}
+        </RecipesContainer>
+      </ProfileContainer>
     )
   }
   return <h1>loading</h1>
