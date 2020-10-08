@@ -1,69 +1,41 @@
-import React, {
-  InputHTMLAttributes,
-  useState,
-  ChangeEvent,
-  KeyboardEvent,
-} from 'react'
+/* eslint-disable jsx-a11y/label-has-for */
+import React, { InputHTMLAttributes, useState, useRef, useEffect } from 'react'
+import { useField } from '@unform/core'
 import { IconBaseProps } from 'react-icons'
-import { Container } from './styles'
+import { Container, SpanError } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  placeholder: string
+  name: string
+  label?: string
   icon?: React.ComponentType<IconBaseProps>
-  iconColor?: string
-  hasError?: boolean
-  value?: string
-  animationOn?: boolean
-  onClickButton?: () => void
-  inputOnChange?: (e: ChangeEvent<HTMLInputElement>) => void
-  inputOnKeyUp?: (e: KeyboardEvent<HTMLInputElement>) => void
 }
 
-const Input: React.FC<InputProps> = ({
-  placeholder,
-  icon: Icon,
-  iconColor = '#81e251',
-  hasError = false,
-  animationOn = false,
-  onClickButton = () => '',
-  inputOnChange,
-  inputOnKeyUp,
-  value,
-  type = 'text',
-  ...rest
-}) => {
-  const [focused, setFocused] = useState(false)
+const Input: React.FC<InputProps> = ({ name, label, icon: Icon, ...rest }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+  const { fieldName, defaultValue, registerField, error } = useField(name)
+
+  const [isFocused, setIsFocused] = useState(false)
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef.current,
+      path: 'value',
+    })
+  }, [fieldName, registerField])
+
   return (
-    <Container
-      hasIcon={!!Icon}
-      iconColor={iconColor}
-      hasError={hasError}
-      hasFocused={focused}
-      animationOn={animationOn}
-    >
+    <Container isFocused={isFocused} hasError={!!error}>
+      <label>{label || name}</label>
       <input
-        type={type}
-        value={value}
-        onChange={inputOnChange}
-        onKeyUp={inputOnKeyUp}
-        placeholder={placeholder}
-        onFocus={() => {
-          setFocused(true)
-        }}
-        onBlur={() => {
-          setFocused(false)
-        }}
+        ref={inputRef}
+        defaultValue={defaultValue}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        {...rest}
       />
-      {Icon && (
-        <button
-          type="button"
-          onClick={() => {
-            onClickButton()
-          }}
-        >
-          <Icon size={24} color="#fff" />
-        </button>
-      )}
+      {Icon && <Icon size={24} color="#fff" />}
+      <SpanError>{error}</SpanError>
     </Container>
   )
 }

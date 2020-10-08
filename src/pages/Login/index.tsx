@@ -1,91 +1,79 @@
-import React, { useState, useCallback } from 'react'
-import { useHistory } from 'react-router-dom'
-import * as yup from 'yup'
+/* eslint-disable no-unused-expressions */
+import React, { useCallback, useRef } from 'react'
+import { Form } from '@unform/web'
+import { FormHandles } from '@unform/core'
+import * as Yup from 'yup'
 
-import { Container, Form } from './styles'
+import { Link, useHistory } from 'react-router-dom'
+import { Container } from './styles'
 import Input from '../../components/Input'
+import getValidationErrors from '../../utils/getValidationErrors'
+import api from '../../services/api'
 import { useAuth } from '../../hooks/auth'
 
-const Login: React.FC = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [emailError, setEmailError] = useState(false)
-  const [passwordError, setPasswordError] = useState(false)
-  const [buttonError, setButtonError] = useState(false)
-  const { signIn } = useAuth()
-  const history = useHistory()
+interface dataSignIn {
+  email: string
+  password: string
+}
 
-  const handleLogin = useCallback(async () => {
-    setEmailError(false)
-    setPasswordError(false)
+const Login: React.FC = () => {
+  const history = useHistory()
+  const formRef = useRef<FormHandles>(null)
+  const { signIn } = useAuth()
+
+  const handleSubmit = useCallback(async (data: dataSignIn) => {
     try {
-      const schema = yup.object().shape({
-        email: yup.string().required('email').email('email'),
-        password: yup.string().min(6, 'password'),
+      formRef.current?.setErrors({})
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .required('campo obrigatório')
+          .email('email invalido'),
+        password: Yup.string()
+          .required('campo obrigatório')
+          .min(8, 'senha invalida'),
       })
-      await schema.validate(
-        {
-          email,
-          password,
-        },
-        { abortEarly: false },
-      )
-      await signIn({ email, password })
+      await schema.validate(data, {
+        abortEarly: false,
+      })
+      const { email, password } = data
+
+      await api.post('/session', { email, password })
+
+      signIn({
+        email,
+        password,
+      })
+
       history.push('/')
     } catch (err) {
-      console.log(err)
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
 
-      if (!(err instanceof yup.ValidationError)) {
-        setEmail('')
-        setPassword('')
-        setEmailError(true)
-        setPasswordError(true)
-        setButtonError(true)
-        return
-      }
-      if (err.errors.includes('email')) {
-        setEmailError(true)
-      }
-      if (err.errors.includes('password')) {
-        setPasswordError(true)
+        formRef.current?.setErrors(errors)
       }
     }
-  }, [history, signIn, email, password, setEmailError, setPasswordError])
+  }, [])
 
   return (
     <Container>
-      <Form Error={buttonError}>
+      <Form ref={formRef} onSubmit={handleSubmit}>
         <h2>Login</h2>
-        <div>
-          <div>
-            <label htmlFor="email-field">
-              <strong>Email</strong>
-            </label>
-            <Input
-              value={email}
-              inputOnChange={e => setEmail(e.target.value)}
-              placeholder="Digite seu email..."
-              animationOn
-              hasError={emailError}
-            />
-          </div>
-          <div>
-            <label htmlFor="time-field">
-              <strong>Senha</strong>
-            </label>
-            <Input
-              value={password}
-              hasError={passwordError}
-              inputOnChange={e => setPassword(e.target.value)}
-              placeholder="Digite sua senha..."
-              type="password"
-              animationOn
-            />
-          </div>
-          <button type="button" onClick={() => handleLogin()}>
-            Login
-          </button>
-        </div>
+        <Input
+          name="email"
+          label="Email"
+          placeholder="digite seu E-mail aqui"
+        />
+
+        <Input
+          type="password"
+          name="password"
+          label="Senha"
+          placeholder="Digite sua senha aqui"
+        />
+
+        <button type="submit">Login</button>
+        <Link to="/cadastrar">não tem uma conta? cadastre-se</Link>
       </Form>
     </Container>
   )

@@ -46,6 +46,30 @@ export const Search = styled.div`
   h2 {
     margin: 24px;
   }
+
+  div {
+    width: 100%;
+    display: flex;
+    border: 2px solid #5b9751;
+    border-radius: 10px;
+
+    input {
+      width: 100%;
+      border: none;
+      padding: 14px 8px 10px;
+      font-size: 18px;
+
+      border-radius: 10px 0 0 10px;
+    }
+    button {
+      width: 48px;
+      border: none;
+      background: #5b9751;
+
+      /* border-top-right-radius: 10px; */
+      border-radius: 0 6px 6px 0;
+    }
+  }
 `
 
 export const IngredientsList = styled.div`

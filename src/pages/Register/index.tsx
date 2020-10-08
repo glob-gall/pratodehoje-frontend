@@ -1,112 +1,84 @@
-import React, { useState, useCallback } from 'react'
-import * as yup from 'yup'
+/* eslint-disable no-unused-expressions */
+import React, { useCallback, useRef } from 'react'
+import { Form } from '@unform/web'
+import * as Yup from 'yup'
 
-import { useHistory } from 'react-router-dom'
-import { Container, Form } from './styles'
+import { Link, useHistory } from 'react-router-dom'
+import { FormHandles } from '@unform/core'
+import { Container } from './styles'
 import Input from '../../components/Input'
+import getValidationErrors from '../../utils/getValidationErrors'
 import api from '../../services/api'
 
+interface dataSignUp {
+  name: string
+  email: string
+  password: string
+  password_confirmation: string
+}
+
 const Register: React.FC = () => {
-  const [name, setName] = useState('')
-  const [nameError, setNameError] = useState(false)
-  const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState(false)
-  const [password, setPassword] = useState('')
-  const [passwordError, setPasswordError] = useState(false)
-  const [buttonError, setButtonError] = useState(false)
-
+  const formRef = useRef<FormHandles>(null)
   const history = useHistory()
-
-  const signUp = useCallback(async () => {
-    setEmailError(false)
-    setNameError(false)
-    setPasswordError(false)
-    setButtonError(false)
+  const handleSubmit = useCallback(async (data: dataSignUp) => {
     try {
-      const schema = yup.object().shape({
-        name: yup.string().required('name'),
-        email: yup.string().required('email').email('email'),
-        password: yup.string().min(6, 'password'),
+      formRef.current?.setErrors({})
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required('campo obrigatório'),
+        email: Yup.string()
+          .required('campo obrigatório')
+          .email('email invalido'),
+        password: Yup.string()
+          .required('campo obrigatório')
+          .min(8, 'senha invalida'),
+        password_confirmation: Yup.string()
+          .required('senha necessaria')
+          .oneOf([Yup.ref('password')], 'confirmação incorreta'),
       })
-      await schema.validate(
-        {
-          name,
-          email,
-          password,
-        },
-        { abortEarly: false },
-      )
-      await api.post('users', { name, email, password })
-      history.push('/')
+      await schema.validate(data, {
+        abortEarly: false,
+      })
+      const { email, name, password } = data
+      await api.post('/users', { email, name, password })
+
+      history.push('/login')
     } catch (err) {
-      if (!(err instanceof yup.ValidationError)) {
-        setEmailError(true)
-        setNameError(true)
-        setPasswordError(true)
-        setButtonError(true)
-        setName('')
-        setEmail('')
-        setPassword('')
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err)
+
+        formRef.current?.setErrors(errors)
         return
       }
-      if (err.errors.includes('email')) {
-        setEmailError(true)
-      }
-      if (err.errors.includes('name')) {
-        setNameError(true)
-      }
-      if (err.errors.includes('password')) {
-        setPasswordError(true)
-      }
+      console.log(err)
     }
-  }, [name, email, password])
+  }, [])
 
   return (
     <Container>
-      <Form Error={buttonError}>
+      <Form ref={formRef} onSubmit={handleSubmit}>
         <h2>Cadastro</h2>
-        <div>
-          <div>
-            <label htmlFor="name-field">
-              <strong>Nome</strong>
-            </label>
-            <Input
-              value={name}
-              inputOnChange={e => setName(e.target.value)}
-              placeholder="Digite seu nome..."
-              animationOn
-              hasError={nameError}
-            />
-          </div>
-          <div>
-            <label htmlFor="name-field">
-              <strong>Email</strong>
-            </label>
-            <Input
-              value={email}
-              inputOnChange={e => setEmail(e.target.value)}
-              placeholder="Digite seu email..."
-              animationOn
-              hasError={emailError}
-            />
-          </div>
-          <div>
-            <label htmlFor="time-field">
-              <strong>Senha</strong>
-            </label>
-            <Input
-              value={password}
-              hasError={passwordError}
-              inputOnChange={e => setPassword(e.target.value)}
-              placeholder="Digite sua senha..."
-              animationOn
-              type="password"
-            />
-          </div>
-          <button type="button" onClick={signUp}>
-            Cadastrar-se
-          </button>
-        </div>
+
+        <Input name="name" label="Nome" placeholder="digite seu nome aqui" />
+        <Input
+          name="email"
+          label="E-mail"
+          placeholder="digite seu Email aqui"
+        />
+        <Input
+          name="password"
+          type="password"
+          label="Senha"
+          placeholder="digite sua senha aqui"
+        />
+        <Input
+          name="password_confirmation"
+          type="password"
+          label="Confirmar senha"
+          placeholder="confirme sua senha"
+        />
+        <button type="submit">Cadastrar-se</button>
+        <Link to="/login">Já tem uma conta? faça login</Link>
       </Form>
     </Container>
   )

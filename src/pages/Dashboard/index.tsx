@@ -4,7 +4,6 @@ import RecipesList from '../../components/RecipesList'
 import IngredientCard from '../../components/IngredientCard'
 import api from '../../services/api'
 
-import Input from '../../components/Input'
 import { Container, ContainerFeed, Search, IngredientsList } from './styles'
 
 interface Ingredient {
@@ -22,7 +21,7 @@ interface IRecipe {
 const Dashboard: React.FC = () => {
   const [ingredients, setIngredients] = useState<string[]>([])
   const [newIngredient, setNewIngredient] = useState('')
-  const [hasError, setHasError] = useState(false)
+  // const [hasError, setHasError] = useState(false)
   const [recipes, setRecipes] = useState<IRecipe[]>([])
 
   useEffect(() => {
@@ -42,22 +41,24 @@ const Dashboard: React.FC = () => {
   const handleAddIngredient = useCallback(() => {
     setNewIngredient('')
     if (newIngredient === '' || newIngredient.includes(' ')) {
-      setHasError(true)
+      // setHasError(true)
+      return
+    }
+
+    if (ingredients.includes(newIngredient)) {
       return
     }
 
     setIngredients(state => [...state, newIngredient])
-    setHasError(false)
-  }, [newIngredient])
+    // setHasError(false)
+  }, [newIngredient, ingredients])
 
-  const handleRemoveIngredient = useCallback(
-    (ingredientRemove: string) => {
-      setIngredients(
-        ingredients.filter(ingredient => ingredient !== ingredientRemove),
-      )
-    },
-    [ingredients],
-  )
+  const handleRemoveIngredient = useCallback((ingredientRemove: string) => {
+    setIngredients(state =>
+      state.filter(ingredient => ingredient !== ingredientRemove),
+    )
+    // ingredients.filter(ingredient => ingredient !== ingredientRemove),
+  }, [])
 
   return (
     <Container>
@@ -65,19 +66,17 @@ const Dashboard: React.FC = () => {
         <Search>
           <h2>Pesquise pelo nome dos ingedientes que você tem em casa</h2>
           <div>
-            <Input
-              animationOn
+            <input
               value={newIngredient}
-              inputOnChange={e => setNewIngredient(e.target.value)}
+              onChange={e => setNewIngredient(e.target.value)}
               placeholder="digite o nome de um ingrediente..."
-              icon={FaSearch}
-              iconColor="#69B645"
-              onClickButton={handleAddIngredient}
-              inputOnKeyUp={e => {
+              onKeyUp={e => {
                 return (e.which || e.keyCode) === 13 && handleAddIngredient()
               }}
-              hasError={hasError}
             />
+            <button type="button" onClick={handleAddIngredient}>
+              <FaSearch size={24} color="#fff" />
+            </button>
           </div>
         </Search>
         <IngredientsList>

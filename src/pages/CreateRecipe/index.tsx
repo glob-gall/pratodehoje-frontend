@@ -1,65 +1,35 @@
-import React, { useState, useCallback, ChangeEvent } from 'react'
-import {
-  FiChevronLeft,
-  FiChevronRight,
-  FiPlus,
-  FiX,
-  FiCheck,
-} from 'react-icons/fi'
-import {
-  Container,
-  Form,
-  Progress,
-  FirstStep,
-  DragAndDrop,
-  ContainerButtons,
-  SecondStep,
-  IngredientsList,
-  InputAdditems,
-  MethodList,
-  ThirdStep,
-} from './styles'
+/* eslint-disable no-unused-expressions */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, { useCallback, useRef, useState } from 'react'
+import * as Yup from 'yup'
+
+import { FiX } from 'react-icons/fi'
+import { FormHandles } from '@unform/core'
+import { Container, Form, Button, IngredientsList, MethodList } from './styles'
 import Input from '../../components/Input'
 import IngredientCard from '../../components/IngredientCard'
+import getValidationErrors from '../../utils/getValidationErrors'
 
-import api from '../../services/api'
+interface SubmitProps {
+  name: string
+  time: number
+}
 
 const CreateRecipe: React.FC = () => {
-  const [progress, setProgress] = useState(34)
-  const [step, setStep] = useState(1)
+  const formRef = useRef<FormHandles>(null)
 
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
   const [newIngredient, setNewIngredient] = useState('')
-  const [hasNameError, setNameError] = useState(false)
-  const [hasTimeError, setTimeError] = useState(false)
-  const [hasIngredientError, setIngredientError] = useState(false)
-  const [hasMethodError, setMethodError] = useState(false)
   const [newMethod, setNewMethod] = useState('')
-  const [time, setTime] = useState('')
-  const [name, setName] = useState('')
-  const [image, setImage] = useState('')
-
-  const createRecipe = useCallback(async () => {
-    const recipe = {
-      name,
-      time,
-      method,
-      ingredientsNames: ingredients,
-      equipaments: '',
-      image_url: '',
-    }
-    await api.post('/recipes', recipe)
-  }, [name, time, method, ingredients])
 
   const handleAddIngredient = useCallback(() => {
     const haveThisIngredient = ingredients.includes(newIngredient)
     if (haveThisIngredient || newIngredient === '') {
-      setIngredientError(true)
       setNewIngredient('')
       return
     }
-    setIngredientError(false)
+
     setNewIngredient('')
     setIngredients(state => [...state, newIngredient])
   }, [newIngredient, ingredients])
@@ -75,11 +45,8 @@ const CreateRecipe: React.FC = () => {
 
   const handleAddMethod = useCallback(() => {
     if (newMethod === '') {
-      setMethodError(true)
       return
     }
-
-    setMethodError(false)
     setNewMethod('')
     setMethod(state => [...state, newMethod])
   }, [newMethod])
@@ -91,224 +58,120 @@ const CreateRecipe: React.FC = () => {
     })
   }, [])
 
-  const changeTime = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    const hasLetters = /[^0-9]/.test(value)
+  const handleSubmit = useCallback(
+    async (data: SubmitProps) => {
+      try {
+        formRef.current?.setErrors({})
+        const schema = Yup.object().shape({
+          name: Yup.string().required('nome invalido'),
+          time: Yup.string().required('tempo de preparo invalido'),
+        })
+        await schema.validate(data, { abortEarly: false })
+        if (ingredients.length === 0) {
+          throw new Error('RecipeWithNoIngredients')
+        }
+        if (method.length === 0) {
+          throw new Error('RecipeWithNoMethod')
+        }
+        console.log(data)
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-    if (hasLetters) {
-      setTime('')
-      return
-    }
-    setTime(e.target.value)
-  }, [])
+          formRef.current?.setErrors(errors)
+          return
+        }
 
-  const prevStep = useCallback(() => {
-    if (step === 1) return
-
-    setStep(step - 1)
-    setProgress(progress - 33)
-  }, [step, progress])
-
-  const nextStep = useCallback(() => {
-    if (step === 3) return
-    setStep(step + 1)
-    setProgress(progress + 33)
-  }, [step, progress])
-
-  const validateFirstStep = useCallback(() => {
-    setNameError(false)
-    setTimeError(false)
-    if (name === '') {
-      setNameError(true)
-    }
-    if (time === '') {
-      setTimeError(true)
-    }
-    if (name !== '' && time !== '') {
-      nextStep()
-    }
-  }, [name, time, nextStep])
-
-  const validateSecondStep = useCallback(() => {
-    setIngredientError(false)
-    setMethodError(false)
-
-    if (ingredients.length === 0) {
-      setIngredientError(true)
-    }
-    if (method.length === 0) {
-      setMethodError(true)
-    }
-    if (ingredients.length !== 0 && method.length !== 0) {
-      nextStep()
-    }
-  }, [ingredients, method, nextStep])
+        if (err instanceof Error) {
+          if (err.message === 'RecipeWithNoIngredients') {
+            formRef.current?.setErrors({
+              ingredients: 'a receita deve ter ao menos 1 ingrediente',
+            })
+          }
+          if (err.message === 'RecipeWithNoMethod') {
+            formRef.current?.setErrors({
+              method: 'receita sem nenhum passo',
+            })
+          }
+        }
+        console.error(err)
+      }
+    },
+    [ingredients.length, method.length],
+  )
 
   return (
     <Container>
-      <Form>
-        <Progress progress={progress}>
-          <div />
-        </Progress>
-        <FirstStep step={step}>
-          <div>
-            <div>
-              <label htmlFor="name-field">
-                <strong>Nome da Receita</strong>
-              </label>
-              <Input
-                value={name}
-                inputOnChange={e => setName(e.target.value)}
-                placeholder="digite o nome da receita"
-                hasError={hasNameError}
-              />
-            </div>
-            <div>
-              <label htmlFor="time-field">
-                <strong>Tempo de Preparo</strong>
-              </label>
-              <Input
-                value={time}
-                hasError={hasTimeError}
-                inputOnChange={changeTime}
-                placeholder="ex:120"
-              />
-            </div>
-          </div>
-          <DragAndDrop>
-            <label htmlFor="image-field">
-              Selecione ou arraste o arquivo aqui
-            </label>
-            <input
-              id="image-field"
-              name="image"
-              type="file"
-              value={image}
-              onChange={e => setImage(e.target.value)}
-            />
-          </DragAndDrop>
-          <ContainerButtons>
-            <button
-              type="button"
-              onClick={() => {
-                validateFirstStep()
-              }}
-            >
-              Avançar
-              <FiChevronRight size={22} />
-            </button>
-          </ContainerButtons>
-        </FirstStep>
-        <SecondStep step={step}>
-          <InputAdditems>
-            <Input
-              hasError={hasIngredientError}
-              value={newIngredient}
-              inputOnChange={e => setNewIngredient(e.target.value)}
-              placeholder="digite o nome de um ingrediente"
-              icon={FiPlus}
-              iconColor="#69B645"
-              onClickButton={handleAddIngredient}
-              inputOnKeyUp={e => {
-                return (e.which || e.keyCode) === 13 && handleAddIngredient()
-              }}
-              // hasError={hasError}
-            />
-          </InputAdditems>
-          <div>
-            <strong>Ingredientes</strong>
-          </div>
-          <IngredientsList>
-            {ingredients.map(ingredient => (
-              <IngredientCard
-                key={ingredient}
-                message={ingredient}
-                onClickButton={() => {
-                  handleRemoveIngredient(ingredient)
-                }}
-                hasDeleteButton
-              />
-            ))}
-          </IngredientsList>
-          <InputAdditems>
-            <Input
-              hasError={hasMethodError}
-              placeholder="digite a receita passo a passo"
-              value={newMethod}
-              inputOnChange={e => setNewMethod(e.target.value)}
-              icon={FiPlus}
-              iconColor="#69B645"
-              inputOnKeyUp={e => {
-                return (e.which || e.keyCode) === 13 && handleAddMethod()
-              }}
-              onClickButton={handleAddMethod}
-            />
-          </InputAdditems>
-          <MethodList>
-            <strong>Modo de preparo</strong>
-            <ul>
-              {method.map(methodStep => {
-                const i = method.indexOf(methodStep) + 1
+      <h1>Você pode adicionar sua receita mais gostosa para todo mundo!</h1>
+      <Form ref={formRef} onSubmit={data => handleSubmit(data)}>
+        <button type="submit" disabled style={{ display: 'none' }} />
+        <Input name="name" label="Nome da receita" />
 
-                return (
-                  <li key={i}>
-                    {`${i} - ${methodStep}`}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleRemoveMethod(methodStep)
-                      }}
-                    >
-                      <FiX color="#333" size={22} />
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </MethodList>
-          <ContainerButtons>
-            <button
-              type="button"
-              onClick={() => {
-                prevStep()
+        <Input
+          name="time"
+          label="Tempo em minutos"
+          type="number"
+          min="0"
+          step="10"
+        />
+        <Input
+          name="ingredients"
+          value={newIngredient}
+          onChange={e => setNewIngredient(e.target.value)}
+          placeholder="digite o nome de um ingrediente"
+          onKeyUp={e => {
+            return e.keyCode === 13 && handleAddIngredient()
+          }}
+        />
+        <div>
+          <strong>Lista de Ingredientes</strong>
+        </div>
+        <IngredientsList>
+          {ingredients.map(ingredient => (
+            <IngredientCard
+              key={ingredient}
+              message={ingredient}
+              onClickButton={() => {
+                handleRemoveIngredient(ingredient)
               }}
-            >
-              <FiChevronLeft size={22} />
-              Voltar
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                validateSecondStep()
-              }}
-            >
-              Avançar
-              <FiChevronRight size={22} />
-            </button>
-          </ContainerButtons>
-        </SecondStep>
-        <ThirdStep step={step}>
-          <p>RECEITA CRIADA!</p>
-          <FiCheck size={256} color="#7dcc57" />
-          <span>
-            sua receita esta pronta, para confirmar seu cadastro clique no botão
-            a baixo
-          </span>
-          <button type="button" onClick={() => createRecipe()}>
-            Cadastrar Receita
-          </button>
-          <ContainerButtons>
-            <strong
-              role="none"
-              onClick={() => {
-                prevStep()
-              }}
-            >
-              <FiChevronLeft size={18} />
-              Caso queira alterar sua receita clique aqui
-            </strong>
-          </ContainerButtons>
-        </ThirdStep>
+              hasDeleteButton
+            />
+          ))}
+        </IngredientsList>
+        <Input
+          name="method"
+          label="Método de preparo"
+          placeholder="digite a receita passo a passo"
+          value={newMethod}
+          onChange={e => setNewMethod(e.target.value)}
+          onKeyUp={e => {
+            return e.keyCode === 13 && handleAddMethod()
+          }}
+        />
+        <MethodList>
+          <strong>Etapas</strong>
+          <ul>
+            {method.map(methodStep => {
+              const i = method.indexOf(methodStep) + 1
+
+              return (
+                <li key={i}>
+                  {`${i} - ${methodStep}`}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleRemoveMethod(methodStep)
+                    }}
+                  >
+                    <FiX color="#333" size={22} />
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </MethodList>
+        <Input name="file" label="Foto da receita" type="file" />
+        <Button type="submit">CRIAR RECEITA</Button>
       </Form>
     </Container>
   )

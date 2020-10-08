@@ -1,30 +1,13 @@
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 
 interface containerProps {
-  hasIcon: boolean
-  iconColor: string
-  hasFocused: boolean
+  isFocused?: boolean
   hasError: boolean
-  animationOn: boolean
 }
 
-const onHover = keyframes`
-  from{
-    transform:scale(1);
-  }to{
-    transform:scale(1.01);
-
-  }
-`
-const onNotHover = keyframes`
-  from{
-    transform:scale(1.01);
-  }to{
-    transform:scale(1);
-
-  }
-`
 export const Container = styled.div<containerProps>`
+  position: relative;
+
   border-radius: 10px;
   margin-bottom: 24px;
   display: flex;
@@ -33,61 +16,46 @@ export const Container = styled.div<containerProps>`
   ${props =>
     props.hasError &&
     css`
-      border: 2px solid #ff4949;
+      border-color: #ff4949;
     `}
   ${props =>
-    props.hasFocused &&
+    props.isFocused &&
     css`
-      border: 2px solid #81e251;
+      -webkit-box-shadow: 0px 0px 8px 4px rgba(128, 191, 237, 1);
+      -moz-box-shadow: 0px 0px 8px 4px rgba(128, 191, 237, 1);
+      box-shadow: 0px 0px 8px 4px rgba(128, 191, 237, 1);
     `}
-    ${props =>
-      props.animationOn &&
-      css`
-        animation: ${onNotHover} 250ms ease;
-      `}
-
-  &:hover {
-    ${props =>
-      props.animationOn &&
-      css`
-        animation: ${onHover} 250ms forwards;
-      `}
-
-
-  }
   input {
-    flex: 1;
+    border-radius: 10px;
     font-size: 18px;
     border: none;
     color: #535353;
     padding: 0 16px;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    ${props =>
-      !props.hasIcon &&
-      css`
-        border-radius: 8px;
-      `}
+    width: 100%;
   }
   transition: background-color 0.5s;
-  button {
-    width: 49px;
-    border: none;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
 
-    background: ${props => props.iconColor};
+  label {
+    position: absolute;
+    font-size: 20px;
+    color: #646464;
 
-    ${props =>
-      props.hasError &&
-      css`
-        background: #ff4949;
-      `}
-    ${props =>
-      props.hasFocused &&
-      css`
-        background: ${props.iconColor};
-      `}
-      transition: background-color 0.2s;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+    left: 5px;
+    top: -32px;
   }
+
+  /* & + & { */
+  margin-top: 36px;
+  /* } */
+`
+export const SpanError = styled.span`
+  position: absolute;
+  top: 110%;
+  left: 5px;
+
+  font-size: 12px;
+  color: #db3a3a;
 `
