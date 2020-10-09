@@ -5,10 +5,12 @@ import * as Yup from 'yup'
 
 import { FiX } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
+import { useHistory } from 'react-router-dom'
 import { Container, Form, Button, IngredientsList, MethodList } from './styles'
 import Input from '../../components/Input'
 import IngredientCard from '../../components/IngredientCard'
 import getValidationErrors from '../../utils/getValidationErrors'
+import api from '../../services/api'
 
 interface SubmitProps {
   name: string
@@ -22,6 +24,8 @@ const CreateRecipe: React.FC = () => {
   const [method, setMethod] = useState<string[]>([])
   const [newIngredient, setNewIngredient] = useState('')
   const [newMethod, setNewMethod] = useState('')
+
+  const history = useHistory()
 
   const handleAddIngredient = useCallback(() => {
     const haveThisIngredient = ingredients.includes(newIngredient)
@@ -73,7 +77,16 @@ const CreateRecipe: React.FC = () => {
         if (method.length === 0) {
           throw new Error('RecipeWithNoMethod')
         }
-        console.log(data)
+        const { name, time } = data
+        const recipe = {
+          name,
+          time,
+          ingredientsNames: ingredients,
+          method,
+          image_url: 'aindanaotem',
+        }
+        const response = await api.post('/recipes', recipe)
+        history.push(response.data.id)
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -97,7 +110,7 @@ const CreateRecipe: React.FC = () => {
         console.error(err)
       }
     },
-    [ingredients.length, method.length],
+    [ingredients, method, history],
   )
 
   return (
