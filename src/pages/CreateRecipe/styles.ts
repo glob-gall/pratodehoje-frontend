@@ -43,6 +43,9 @@ export const Form = styled(FormUnform)`
   strong {
     margin: 0 16px;
   }
+  p {
+    color: #80bfed;
+  }
 
   animation: ${pageInAnimation} 0.8s normal ease;
 `

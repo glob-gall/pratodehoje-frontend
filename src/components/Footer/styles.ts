@@ -20,7 +20,7 @@ to{
 `
 
 export const Container = styled.div`
-  background: #1b1b1a;
+  background: #262625;
   min-height: 100px;
   margin-top: 50px;
 
@@ -36,7 +36,7 @@ export const Content = styled.div`
   align-items: center;
   justify-content: center;
 
-  background: #262625;
+  background: #303030;
   margin: 15px;
   border-radius: 7px;
   p {

@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useEffect,
+} from 'react'
 import api from '../services/api'
 
 interface Credentials {
@@ -20,6 +26,7 @@ interface AuthContextData {
 interface AuthUser {
   token: string
   user: User
+  expiresIn: string
 }
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData)
@@ -34,40 +41,56 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState(() => {
     const token = localStorage.getItem('@TodaysDinner:token')
     const user = localStorage.getItem('@TodaysDinner:user')
-    if (token && user) {
+    const expiresIn = localStorage.getItem('@TodaysDinner:expiresIn')
+
+    if (!expiresIn) {
+      return {} as AuthUser
+    }
+    const datenow = new Date()
+    const time = datenow.getTime() - new Date(expiresIn).getTime()
+    const timeInDays = time / (1000 * 3600 * 24)
+
+    if (timeInDays >= 1) {
+      localStorage.removeItem('@TodaysDinner:token')
+      localStorage.removeItem('@TodaysDinner:user')
+      localStorage.removeItem('@TodaysDinner:expiresIn')
+    }
+
+    if (token && user && expiresIn) {
       api.defaults.headers.authorization = `Bearer ${token}`
-      return { token, user: JSON.parse(user) }
+      return { token, user: JSON.parse(user), expiresIn }
     }
     return {} as AuthUser
   })
 
-  const signIn = useCallback(
-    async ({ email, password }: Credentials) => {
-      const response = await api.post('/session', {
-        email,
-        password,
-      })
-      const { token, user } = response.data
-      localStorage.setItem('@TodaysDinner:token', token)
-      localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
+  const signIn = useCallback(async ({ email, password }: Credentials) => {
+    const response = await api.post('/session', {
+      email,
+      password,
+    })
 
-      api.defaults.headers.authorization = `Bearer ${token}`
+    const expiresIn = new Date().toString()
+    const { token, user } = response.data
+    localStorage.setItem('@TodaysDinner:token', token)
+    localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
+    localStorage.setItem('@TodaysDinner:expiresIn', expiresIn)
 
-      setData({ token, user })
-    },
-    [setData],
-  )
+    api.defaults.headers.authorization = `Bearer ${token}`
+
+    setData({ token, user, expiresIn })
+  }, [])
 
   const signUp = useCallback(() => {
     localStorage.removeItem('@TodaysDinner:token')
     localStorage.removeItem('@TodaysDinner:user')
+    localStorage.removeItem('@TodaysDinner:expiresIn')
 
     setData({} as AuthUser)
   }, [])
 
   const updateUser = useCallback(
     (user: User) => {
-      setData({ user, token: data.token })
+      setData({ user, token: data.token, expiresIn: data.expiresIn })
       localStorage.setItem('@TodaysDinner:user', JSON.stringify(user))
     },
     [data],

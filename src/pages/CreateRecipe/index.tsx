@@ -127,6 +127,7 @@ const CreateRecipe: React.FC = () => {
           min="0"
           step="10"
         />
+
         <Input
           name="ingredients"
           value={newIngredient}
@@ -138,6 +139,7 @@ const CreateRecipe: React.FC = () => {
         />
         <div>
           <strong>Lista de Ingredientes</strong>
+          <p>(Aperte enter para adicionar um ingrediente)</p>
         </div>
         <IngredientsList>
           {ingredients.map(ingredient => (
@@ -162,7 +164,10 @@ const CreateRecipe: React.FC = () => {
           }}
         />
         <MethodList>
-          <strong>Etapas</strong>
+          <div>
+            <strong>Etapas</strong>
+            <p>(Aperte enter para adicionar uma etapa)</p>
+          </div>
           <ul>
             {method.map(methodStep => {
               const i = method.indexOf(methodStep) + 1
