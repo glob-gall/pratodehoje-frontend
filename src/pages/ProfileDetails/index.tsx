@@ -27,11 +27,14 @@ interface IUser {
   email: string
   recipes: IRecipe[]
 }
+interface ParamsType {
+  id: string
+}
 
 const UserDetails: React.FC = () => {
   const [user, setUser] = useState<IUser>({} as IUser)
   const [loaded, setLoaded] = useState(false)
-  const { id } = useParams()
+  const { id } = useParams<ParamsType>()
   useEffect(() => {
     const loadUser = async () => {
       const response = await api.get(`/users/${id}`)
@@ -44,9 +47,9 @@ const UserDetails: React.FC = () => {
     return (
       <ProfileContainer>
         <TitleContainer>
-          <div>
-            <img src={backgroundImg} alt="recipe" />
-          </div>
+          {/* <div> */}
+          <img src={backgroundImg} alt="recipe" />
+          {/* </div> */}
           <div>
             <h2>{user.name}</h2>
             <textarea disabled>Em breve disponivel para alterações...</textarea>

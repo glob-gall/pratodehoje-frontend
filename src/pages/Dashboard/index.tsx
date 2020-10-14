@@ -75,7 +75,7 @@ const Dashboard: React.FC = () => {
               }}
             />
             <button type="button" onClick={handleAddIngredient}>
-              <FaSearch size={24} color="#fff" />
+              <FaSearch size={24} color="#7A8078" />
             </button>
           </div>
         </Search>

@@ -26,6 +26,7 @@ export const ProfileContainer = styled.div`
 `
 export const TitleContainer = styled.div`
   height: 200px;
+  width: 100%;
   display: flex;
   img {
     width: 200px;
@@ -34,9 +35,11 @@ export const TitleContainer = styled.div`
     border-radius: 10px;
   }
   div {
+    display: flex;
     flex-direction: column;
+    width: 100%;
+    margin-left: 24px;
     h2 {
-      margin-left: 24px;
       height: 50px;
       color: #535353;
       font-size: 42px;
@@ -44,7 +47,6 @@ export const TitleContainer = styled.div`
     }
     textarea {
       resize: none;
-      margin-left: 24px;
       height: 150px;
       width: 100%;
       border: none;

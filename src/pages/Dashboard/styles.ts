@@ -50,7 +50,7 @@ export const Search = styled.div`
   div {
     width: 100%;
     display: flex;
-    border: 2px solid #5b9751;
+    border: 2px solid #fff;
     border-radius: 10px;
 
     input {
@@ -64,11 +64,12 @@ export const Search = styled.div`
     button {
       width: 48px;
       border: none;
-      background: #5b9751;
+      background: #fff;
 
       /* border-top-right-radius: 10px; */
       border-radius: 0 6px 6px 0;
     }
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
   }
 `
 

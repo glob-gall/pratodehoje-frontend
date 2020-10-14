@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, CardContainer, CardProfile } from './styles'
 import Image from '../../images/comida.png'
 import api from '../../services/api'
+// import { useAuth } from '../../hooks/auth'
 
 interface ProfileInfo {
   id: number
@@ -12,10 +13,11 @@ interface ProfileInfo {
 
 const Profiles: React.FC = () => {
   const [profiles, setProfiles] = useState<ProfileInfo[]>([])
+  // const { user } = useAuth()
+
   useEffect(() => {
     const loadUsers = async () => {
       const response = await api.get('users')
-      console.log(response.data)
 
       setProfiles(response.data)
     }

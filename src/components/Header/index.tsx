@@ -1,13 +1,10 @@
-import React, { useState, HTMLAttributes } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { NavLink } from 'react-router-dom'
 import LogoImg from '../../images/logo.svg'
 import { Container, Logo, Nav, NavItems, Burguer, ProfileNav } from './styled'
 import { useAuth } from '../../hooks/auth'
 
-interface HeaderProps extends HTMLAttributes<HTMLDivElement> {
-  page?: 'dashboard' | 'createRecipe' | 'profiles'
-}
-const Header: React.FC<HeaderProps> = ({ page }) => {
+const Header: React.FC = () => {
   const { user, signUp } = useAuth()
 
   const [isActive, setIsActive] = useState(false)
@@ -19,36 +16,36 @@ const Header: React.FC<HeaderProps> = ({ page }) => {
         <Logo to="/">
           <img src={LogoImg} alt="prato de hoje" />
         </Logo>
-        <NavItems active={isActive} activeLink={page}>
-          <Link to="/" className="dashboard">
+        <NavItems>
+          <NavLink to="/" exact activeClassName="active">
             Procurar receitas
-          </Link>
-          <Link to="/createRecipe" className="createRecipe">
+          </NavLink>
+          <NavLink to="/createRecipe" exact activeClassName="active">
             Criar receitas
-          </Link>
-          <Link to="/profiles" className="profiles">
+          </NavLink>
+          <NavLink to="/profiles" exact activeClassName="active">
             Cozinheiros
-          </Link>
+          </NavLink>
           <ProfileNav onClick={() => setProfileMenuIsActive(state => !state)}>
             {ProfileMenuIsActive &&
               (user ? (
                 <ul>
                   <li>
-                    <Link to={`/profile/${user.id}`}>Perfil</Link>
+                    <NavLink to={`/profile/${user.id}`}>Perfil</NavLink>
                   </li>
                   <li>
-                    <Link to="/login" onClick={signUp}>
+                    <NavLink to="/login" onClick={signUp}>
                       Sair
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               ) : (
                 <ul>
                   <li>
-                    <Link to="/login">Login</Link>
+                    <NavLink to="/login">Login</NavLink>
                   </li>
                   <li>
-                    <Link to="/cadastrar">Cadastrar</Link>
+                    <NavLink to="/cadastrar">Cadastrar</NavLink>
                   </li>
                 </ul>
               ))}

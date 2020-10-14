@@ -1,10 +1,5 @@
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-
-interface NavItemsProps {
-  active: boolean
-  activeLink?: 'dashboard' | 'createRecipe' | 'profiles'
-}
 
 export const Container = styled.div`
   background: #e94141;
@@ -34,7 +29,7 @@ export const Logo = styled(Link)`
   }
 `
 
-export const NavItems = styled.div<NavItemsProps>`
+export const NavItems = styled.div`
   margin-left: auto;
   display: flex;
   align-items: center;
@@ -48,40 +43,9 @@ export const NavItems = styled.div<NavItemsProps>`
     color: #fff;
     border-bottom: 3px solid #e94141;
     transition: color 1s ease;
-    &.dashboard {
-      ${props =>
-        props.activeLink === 'dashboard' &&
-        css`
-          border-color: #69b645;
-        `}
+    &.active {
+      border-color: #69b645;
     }
-    &.createRecipe {
-      ${props =>
-        props.activeLink === 'createRecipe' &&
-        css`
-          border-bottom: 3px solid #69b645;
-        `}
-    }
-    &.profiles {
-      ${props =>
-        props.activeLink === 'profiles' &&
-        css`
-          border-color: #69b645;
-        `}
-    }
-  }
-
-  @media (max-width: 836px) {
-    ${props =>
-      props.active
-        ? css`
-            /* display: flex; */
-          `
-        : css`
-            height: 0px;
-            overflow: hidden;
-          `}
-    flex-direction:column;
   }
 `
 export const ProfileNav = styled.button`
