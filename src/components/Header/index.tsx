@@ -1,13 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import LogoImg from '../../images/logo.svg'
-import { Container, Logo, Nav, NavItems, Burguer, ProfileNav } from './styled'
+import { Container, Logo, Nav, NavItems } from './styled'
 import { useAuth } from '../../hooks/auth'
 
 const Header: React.FC = () => {
   const { user, signUp } = useAuth()
-
-  const [ProfileMenuIsActive, setProfileMenuIsActive] = useState(false)
 
   return (
     <Container>
@@ -25,30 +23,15 @@ const Header: React.FC = () => {
           <NavLink to="/profiles" exact activeClassName="active">
             Cozinheiros
           </NavLink>
-          <ProfileNav onClick={() => setProfileMenuIsActive(state => !state)}>
-            {ProfileMenuIsActive &&
-              (user ? (
-                <ul>
-                  <li>
-                    <NavLink to="/me">Perfil</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/login" onClick={signUp}>
-                      Sair
-                    </NavLink>
-                  </li>
-                </ul>
-              ) : (
-                <ul>
-                  <li>
-                    <NavLink to="/login">Login</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/cadastrar">Cadastrar</NavLink>
-                  </li>
-                </ul>
-              ))}
-          </ProfileNav>
+          {user ? (
+            <NavLink to="/me" exact activeClassName="active">
+              Meu Perfil
+            </NavLink>
+          ) : (
+            <NavLink to="/login" exact activeClassName="active">
+              Login
+            </NavLink>
+          )}
         </NavItems>
       </Nav>
     </Container>

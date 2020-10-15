@@ -73,7 +73,7 @@ export const Recipe = styled(Link)`
 `
 export const IngredientsContainer = styled.div`
   overflow-y: scroll;
-  &::-webkit-scrollbar {
+  /* &::-webkit-scrollbar {
     width: 10px;
     overflow: hidden;
   }
@@ -84,7 +84,7 @@ export const IngredientsContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background: #6c6c80;
     border-radius: 5px;
-  }
+  } */
   margin: 7px 10px 10px 25px;
 
   p {

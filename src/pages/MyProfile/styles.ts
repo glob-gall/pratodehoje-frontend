@@ -13,12 +13,16 @@ const pageInAnimation = keyframes`
   }
 `
 
+export const Container = styled.div`
+  position: relative;
+`
+
 export const ProfileContainer = styled.div`
   animation: ${pageInAnimation} 0.8s normal ease;
   background: #fff;
   border-radius: 10px;
   width: 70%;
-  margin: 25px auto;
+  margin: 80px auto 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,11 +112,12 @@ export const ImageUpload = styled.div`
   height: 200px;
 
   position: relative;
+  overflow: hidden;
+  border-radius: 10px;
   img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
+    width: 200px;
+    height: 200px;
+    object-fit: center;
   }
   label {
     position: absolute;
@@ -134,8 +139,39 @@ export const ImageUpload = styled.div`
       opacity: 1;
     }
   }
-
+  div {
+    position: absolute;
+    top: 0;
+    background: #ddd5;
+  }
   input {
     display: none;
+  }
+`
+export const LogOutButton = styled.button`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+
+  display: flex;
+  align-items: center;
+  padding: 8px;
+
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0px -0px 3px 0px rgba(0, 0, 0, 0.4);
+  border: none;
+
+  font-size: 22px;
+  color: #e94141;
+
+  svg {
+    margin-left: 6px;
+  }
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    background: #e94141;
   }
 `

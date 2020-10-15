@@ -8,6 +8,7 @@ import {
   RecipesContainer,
   Recipe,
 } from './styles'
+import Loading from '../../components/Loading'
 
 interface Ingredient {
   id: string
@@ -25,6 +26,7 @@ interface IUser {
   id: string
   name: string
   email: string
+  avatar_url: string
   recipes: IRecipe[]
 }
 interface ParamsType {
@@ -47,12 +49,16 @@ const UserDetails: React.FC = () => {
     return (
       <ProfileContainer>
         <TitleContainer>
-          {/* <div> */}
-          <img src={backgroundImg} alt="recipe" />
-          {/* </div> */}
           <div>
+            {user.avatar_url ? (
+              <img src={user.avatar_url} alt="recipe" />
+            ) : (
+              <img src={backgroundImg} alt="recipe" />
+            )}
+          </div>
+          <div className="right">
             <h2>{user.name}</h2>
-            <textarea disabled>Em breve disponivel para alterações...</textarea>
+            <textarea disabled value="Em breve disponivel para alterações..." />
           </div>
         </TitleContainer>
         <RecipesContainer>
@@ -66,7 +72,7 @@ const UserDetails: React.FC = () => {
       </ProfileContainer>
     )
   }
-  return <h1>loading</h1>
+  return <Loading />
 }
 
 export default UserDetails

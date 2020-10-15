@@ -10,6 +10,7 @@ import {
   MethodContainer,
   IngredientsContainer,
 } from './styles'
+import Loading from '../../components/Loading'
 
 interface Ingredient {
   id: string
@@ -69,7 +70,7 @@ const RecipeDetails: React.FC = () => {
       </RecipeContainer>
     )
   }
-  return <h1>loading</h1>
+  return <Loading />
 }
 
 export default RecipeDetails

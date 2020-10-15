@@ -24,6 +24,7 @@ export const ProfileContainer = styled.div`
   align-items: center;
   padding: 24px;
 `
+
 export const TitleContainer = styled.div`
   height: 200px;
   width: 100%;
@@ -34,7 +35,7 @@ export const TitleContainer = styled.div`
     display: block;
     border-radius: 10px;
   }
-  div {
+  .right {
     display: flex;
     flex-direction: column;
     width: 100%;

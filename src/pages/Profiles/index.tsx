@@ -7,8 +7,8 @@ import api from '../../services/api'
 interface ProfileInfo {
   id: number
   name: string
-  recipes: number
-  image_url: string
+  recipes: any[]
+  avatar_url: string
 }
 
 const Profiles: React.FC = () => {
@@ -18,6 +18,7 @@ const Profiles: React.FC = () => {
   useEffect(() => {
     const loadUsers = async () => {
       const response = await api.get('users')
+      console.log(response.data)
 
       setProfiles(response.data)
     }
@@ -28,13 +29,17 @@ const Profiles: React.FC = () => {
       <CardContainer>
         {profiles.map(profile => (
           <CardProfile key={profile.id} to={`profile/${profile.id}`}>
-            <img src={Image} alt="author" />
+            {profile.avatar_url ? (
+              <img src={profile.avatar_url} alt="author" />
+            ) : (
+              <img src={Image} alt="author" />
+            )}
             <div>
               <div>
                 <h3>{profile.name}</h3>
                 <p>
                   receitas:
-                  {profile.recipes}
+                  {profile.recipes.length}
                 </p>
               </div>
             </div>
