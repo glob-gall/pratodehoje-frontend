@@ -7,7 +7,6 @@ import { useAuth } from '../../hooks/auth'
 const Header: React.FC = () => {
   const { user, signUp } = useAuth()
 
-  const [isActive, setIsActive] = useState(false)
   const [ProfileMenuIsActive, setProfileMenuIsActive] = useState(false)
 
   return (
@@ -31,7 +30,7 @@ const Header: React.FC = () => {
               (user ? (
                 <ul>
                   <li>
-                    <NavLink to={`/profile/${user.id}`}>Perfil</NavLink>
+                    <NavLink to="/me">Perfil</NavLink>
                   </li>
                   <li>
                     <NavLink to="/login" onClick={signUp}>
@@ -52,15 +51,6 @@ const Header: React.FC = () => {
           </ProfileNav>
         </NavItems>
       </Nav>
-      <Burguer
-        onClick={() => {
-          setIsActive(!isActive)
-        }}
-      >
-        <div />
-        <div />
-        <div />
-      </Burguer>
     </Container>
   )
 }

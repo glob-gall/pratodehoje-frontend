@@ -86,7 +86,7 @@ const CreateRecipe: React.FC = () => {
           image_url: 'aindanaotem',
         }
         const response = await api.post('/recipes', recipe)
-        history.push(response.data.id)
+        history.push(`/recipe/${response.data.id}`)
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)

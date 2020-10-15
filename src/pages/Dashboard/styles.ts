@@ -50,24 +50,19 @@ export const Search = styled.div`
   div {
     width: 100%;
     display: flex;
-    border: 2px solid #fff;
     border-radius: 10px;
-
+    overflow: hidden;
+    /* border: 2px solid #fff; */
     input {
-      width: 100%;
+      flex: 1;
       border: none;
-      padding: 14px 8px 10px;
+      padding: 14px;
       font-size: 18px;
-
-      border-radius: 10px 0 0 10px;
     }
     button {
       width: 48px;
       border: none;
       background: #fff;
-
-      /* border-top-right-radius: 10px; */
-      border-radius: 0 6px 6px 0;
     }
     box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.2);
   }

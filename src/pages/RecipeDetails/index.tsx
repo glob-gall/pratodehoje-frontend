@@ -24,10 +24,14 @@ interface IRecipe {
   equipaments: string
 }
 
+interface IParams {
+  id: string
+}
+
 const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe>({} as IRecipe)
   const [loaded, setLoaded] = useState(false)
-  const { id } = useParams()
+  const { id } = useParams<IParams>()
   useEffect(() => {
     const loadRecipe = async () => {
       const response = await api.get(`/recipes/${id}`)
@@ -36,6 +40,7 @@ const RecipeDetails: React.FC = () => {
     }
     loadRecipe()
   }, [id])
+
   if (loaded) {
     return (
       <RecipeContainer>

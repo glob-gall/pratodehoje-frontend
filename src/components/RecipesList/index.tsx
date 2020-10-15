@@ -95,7 +95,7 @@ const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
         )}
         {recipes.length !== 0 ? (
           recipesToList.map(recipe => (
-            <Recipe key={recipe.id} to={`/${recipe.id}`}>
+            <Recipe key={recipe.id} to={`/recipe/${recipe.id}`}>
               <img src={ComidaImg} alt="" />
               <div>
                 <h3>{recipe.name}</h3>

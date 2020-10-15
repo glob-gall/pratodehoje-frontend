@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { FiImage } from 'react-icons/fi'
+
 import api from '../../services/api'
 import backgroundImg from '../../images/comida.png'
 import {
@@ -7,7 +8,9 @@ import {
   TitleContainer,
   RecipesContainer,
   Recipe,
+  ImageUpload,
 } from './styles'
+import { useAuth } from '../../hooks/auth'
 
 interface Ingredient {
   id: string
@@ -27,30 +30,33 @@ interface IUser {
   email: string
   recipes: IRecipe[]
 }
-interface ParamsType {
-  id: string
-}
 
 const UserDetails: React.FC = () => {
-  const [user, setUser] = useState<IUser>({} as IUser)
+  const auth = useAuth()
+  const [user, setUser] = useState({} as IUser)
   const [loaded, setLoaded] = useState(false)
-  const { id } = useParams<ParamsType>()
+
   useEffect(() => {
     const loadUser = async () => {
-      const response = await api.get(`/users/${id}`)
+      const response = await api.get(`/users/${auth.user.id}`)
       setUser(response.data)
       setLoaded(true)
     }
     loadUser()
-  }, [id])
+  }, [auth.user.id])
+
   if (loaded) {
     return (
       <ProfileContainer>
         <TitleContainer>
-          {/* <div> */}
-          <img src={backgroundImg} alt="recipe" />
-          {/* </div> */}
-          <div>
+          <ImageUpload>
+            <img src={backgroundImg} alt="recipe" />
+            <label htmlFor="avatar">
+              <FiImage size={36} color="#f2f2f2" />
+            </label>
+            <input type="file" id="avatar" accept=".png,.jpg" />
+          </ImageUpload>
+          <div className="right">
             <h2>{user.name}</h2>
             <textarea disabled>Em breve disponivel para alterações...</textarea>
           </div>

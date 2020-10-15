@@ -42,7 +42,7 @@ export const NavItems = styled.div`
     text-decoration: none;
     color: #fff;
     border-bottom: 3px solid #e94141;
-    transition: color 1s ease;
+    transition: border-color 0.2s ease;
     &.active {
       border-color: #69b645;
     }
