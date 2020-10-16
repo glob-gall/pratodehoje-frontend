@@ -21,11 +21,12 @@ to{
 
 export const Container = styled.div`
   background: #262625;
-  min-height: 100px;
+  /* min-height: 100px; */
   margin-top: 50px;
 
   display: grid;
   grid-template-columns: 50px 1fr 1fr 50px;
+  grid-template-rows: 100px 1fr;
 `
 export const Content = styled.div`
   grid-column: 2/3;
@@ -37,7 +38,7 @@ export const Content = styled.div`
   justify-content: center;
 
   background: #303030;
-  margin: 15px;
+  margin: 15px 0;
   border-radius: 7px;
   p {
     text-align: center;
@@ -49,6 +50,7 @@ export const SocialLinks = styled.div`
 
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 
   > div {
@@ -65,5 +67,19 @@ export const SocialLinks = styled.div`
     svg {
       animation: ${hoverSocialLinks} 3s linear infinite forwards;
     }
+  }
+`
+
+export const Contact = styled.div`
+  grid-column: 2/4;
+
+  background: #7a8078;
+  border-radius: 10px;
+
+  padding: 24px;
+  margin-bottom: 36px;
+  text-align: center;
+  strong {
+    margin-left: 8px;
   }
 `

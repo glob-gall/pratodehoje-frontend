@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import LogoImg from '../../images/logo.svg'
+import LogoImg from '../../images/logo.png'
 import { Container, Logo, Nav, NavItems } from './styled'
 import { useAuth } from '../../hooks/auth'
 
