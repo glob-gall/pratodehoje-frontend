@@ -32,7 +32,7 @@ export const TitleContainer = styled.div`
   img {
     width: 200px;
     height: 200px;
-    display: block;
+    object-fit: cover;
     border-radius: 10px;
   }
   .right {
@@ -94,7 +94,7 @@ export const Recipe = styled(Link)`
   overflow: hidden;
   img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     filter: brightness(80%);
   }

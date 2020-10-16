@@ -22,7 +22,7 @@ interface Ingredient {
 interface IRecipe {
   id: string
   name: string
-  image_url: string
+  avatar_url: string
   ingredients: Ingredient[]
   method: string[]
   equipaments: string
@@ -114,7 +114,11 @@ const UserDetails: React.FC = () => {
           <RecipesContainer>
             {user.recipes.map(recipe => (
               <Recipe key={recipe.id} to={`/recipe/${recipe.id}`}>
-                <img src={backgroundImg} alt="recipe" />
+                {recipe.avatar_url ? (
+                  <img src={recipe.avatar_url} alt="avatar-user" />
+                ) : (
+                  <img src={backgroundImg} alt="recipe" />
+                )}
                 <h4>{recipe.name}</h4>
               </Recipe>
             ))}

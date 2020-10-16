@@ -62,7 +62,7 @@ export const CardProfile = styled(Link)`
   img {
     width: 100%;
     height: 180px;
-    justify-content: center;
+    object-fit: cover;
   }
   div {
     div {
