@@ -8,6 +8,7 @@ import { FormHandles } from '@unform/core'
 import { useHistory } from 'react-router-dom'
 import { Container, Form, Button, IngredientsList, MethodList } from './styles'
 import Input from '../../components/Input'
+import InputImage from '../../components/InputImage'
 import IngredientCard from '../../components/IngredientCard'
 import getValidationErrors from '../../utils/getValidationErrors'
 import api from '../../services/api'
@@ -15,6 +16,7 @@ import api from '../../services/api'
 interface SubmitProps {
   name: string
   time: number
+  file: string
 }
 
 const CreateRecipe: React.FC = () => {
@@ -64,11 +66,14 @@ const CreateRecipe: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: SubmitProps) => {
+      console.log(data)
+
       try {
         formRef.current?.setErrors({})
         const schema = Yup.object().shape({
           name: Yup.string().required('nome invalido'),
           time: Yup.string().required('tempo de preparo invalido'),
+          file: Yup.string().required('arquivo não encontrado'),
         })
         await schema.validate(data, { abortEarly: false })
         if (ingredients.length === 0) {
@@ -77,8 +82,9 @@ const CreateRecipe: React.FC = () => {
         if (method.length === 0) {
           throw new Error('RecipeWithNoMethod')
         }
-        const { name, time } = data
+        const { name, time, file } = data
         const recipe = {
+          file,
           name,
           time,
           ingredientsNames: ingredients,
@@ -188,7 +194,12 @@ const CreateRecipe: React.FC = () => {
             })}
           </ul>
         </MethodList>
-        <Input name="file" label="Foto da receita" type="file" />
+        <InputImage
+          name="file"
+          label="Escolher uma foto para a receita"
+          type="file"
+          accept=".jpg,.png"
+        />
         <Button type="submit">CRIAR RECEITA</Button>
       </Form>
     </Container>
