@@ -13,7 +13,7 @@ interface Ingredient {
 interface IRecipe {
   id: string
   name: string
-  image_url: string
+  avatar_url: string
   ingredients: Ingredient[]
   equipaments: string
 }

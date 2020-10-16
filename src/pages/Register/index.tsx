@@ -20,39 +20,42 @@ interface dataSignUp {
 const Register: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const history = useHistory()
-  const handleSubmit = useCallback(async (data: dataSignUp) => {
-    try {
-      formRef.current?.setErrors({})
+  const handleSubmit = useCallback(
+    async (data: dataSignUp) => {
+      try {
+        formRef.current?.setErrors({})
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('campo obrigatório'),
-        email: Yup.string()
-          .required('campo obrigatório')
-          .email('email invalido'),
-        password: Yup.string()
-          .required('campo obrigatório')
-          .min(8, 'senha invalida'),
-        password_confirmation: Yup.string()
-          .required('senha necessaria')
-          .oneOf([Yup.ref('password')], 'confirmação incorreta'),
-      })
-      await schema.validate(data, {
-        abortEarly: false,
-      })
-      const { email, name, password } = data
-      await api.post('/users', { email, name, password })
+        const schema = Yup.object().shape({
+          name: Yup.string().required('campo obrigatório'),
+          email: Yup.string()
+            .required('campo obrigatório')
+            .email('email invalido'),
+          password: Yup.string()
+            .required('campo obrigatório')
+            .min(8, 'senha invalida'),
+          password_confirmation: Yup.string()
+            .required('senha necessaria')
+            .oneOf([Yup.ref('password')], 'confirmação incorreta'),
+        })
+        await schema.validate(data, {
+          abortEarly: false,
+        })
+        const { email, name, password } = data
+        await api.post('/users', { email, name, password })
 
-      history.push('/login')
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err)
+        history.push('/login')
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-        formRef.current?.setErrors(errors)
-        return
+          formRef.current?.setErrors(errors)
+          return
+        }
+        console.log(err)
       }
-      console.log(err)
-    }
-  }, [])
+    },
+    [history],
+  )
 
   return (
     <Container>

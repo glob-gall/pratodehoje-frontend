@@ -21,39 +21,42 @@ const Login: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const { signIn } = useAuth()
 
-  const handleSubmit = useCallback(async (data: dataSignIn) => {
-    try {
-      formRef.current?.setErrors({})
+  const handleSubmit = useCallback(
+    async (data: dataSignIn) => {
+      try {
+        formRef.current?.setErrors({})
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('campo obrigatório')
-          .email('email invalido'),
-        password: Yup.string()
-          .required('campo obrigatório')
-          .min(8, 'senha invalida'),
-      })
-      await schema.validate(data, {
-        abortEarly: false,
-      })
-      const { email, password } = data
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('campo obrigatório')
+            .email('email invalido'),
+          password: Yup.string()
+            .required('campo obrigatório')
+            .min(8, 'senha invalida'),
+        })
+        await schema.validate(data, {
+          abortEarly: false,
+        })
+        const { email, password } = data
 
-      await api.post('/session', { email, password })
+        await api.post('/session', { email, password })
 
-      signIn({
-        email,
-        password,
-      })
+        signIn({
+          email,
+          password,
+        })
 
-      history.push('/')
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err)
+        history.push('/')
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-        formRef.current?.setErrors(errors)
+          formRef.current?.setErrors(errors)
+        }
       }
-    }
-  }, [])
+    },
+    [history, signIn],
+  )
 
   return (
     <Container>

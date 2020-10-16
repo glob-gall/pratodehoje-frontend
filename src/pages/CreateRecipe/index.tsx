@@ -16,7 +16,7 @@ import api from '../../services/api'
 interface SubmitProps {
   name: string
   time: number
-  file: string
+  file: File
 }
 
 const CreateRecipe: React.FC = () => {
@@ -66,14 +66,11 @@ const CreateRecipe: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: SubmitProps) => {
-      console.log(data)
-
       try {
         formRef.current?.setErrors({})
         const schema = Yup.object().shape({
           name: Yup.string().required('nome invalido'),
           time: Yup.string().required('tempo de preparo invalido'),
-          file: Yup.string().required('arquivo não encontrado'),
         })
         await schema.validate(data, { abortEarly: false })
         if (ingredients.length === 0) {
@@ -84,15 +81,18 @@ const CreateRecipe: React.FC = () => {
         }
         const { name, time, file } = data
         const recipe = {
-          file,
           name,
           time,
           ingredientsNames: ingredients,
           method,
-          image_url: 'aindanaotem',
         }
         const response = await api.post('/recipes', recipe)
+
+        const formData = new FormData()
+        formData.append('image_url', file)
+        formData.append('recipe_id', response.data.id)
         history.push(`/recipe/${response.data.id}`)
+        await api.post('/recipes/changeImage', formData)
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)

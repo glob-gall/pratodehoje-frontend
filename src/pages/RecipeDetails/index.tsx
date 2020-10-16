@@ -19,7 +19,7 @@ interface Ingredient {
 interface IRecipe {
   id: string
   name: string
-  image_url: string
+  avatar_url: string
   ingredients: Ingredient[]
   method: string[]
   equipaments: string
@@ -46,7 +46,11 @@ const RecipeDetails: React.FC = () => {
     return (
       <RecipeContainer>
         <TitleContainer>
-          <img src={backgroundImg} alt="recipe" />
+          {recipe.avatar_url ? (
+            <img src={recipe.avatar_url} alt="recipe" />
+          ) : (
+            <img src={backgroundImg} alt="recipe" />
+          )}
           <h2>{recipe.name}</h2>
         </TitleContainer>
         <DetailsContainer>

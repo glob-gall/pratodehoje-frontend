@@ -18,7 +18,7 @@ interface Props {
 type InputProps = JSX.IntrinsicElements['input'] & Props
 const ImageInput: React.FC<InputProps> = ({ name, label, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const { fieldName, registerField, defaultValue, error } = useField(name)
+  const { fieldName, registerField, defaultValue } = useField(name)
   const [preview, setPreview] = useState(defaultValue)
   const handlePreview = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]

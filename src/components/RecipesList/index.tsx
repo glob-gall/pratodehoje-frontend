@@ -24,7 +24,7 @@ interface Ingredient {
 interface IRecipe {
   id: string
   name: string
-  image_url: string
+  avatar_url: string
   ingredients: Ingredient[]
   equipaments: string
 }
@@ -96,7 +96,12 @@ const RecipesList: React.FC<recipesListProps> = ({ recipesProps }) => {
         {recipes.length !== 0 ? (
           recipesToList.map(recipe => (
             <Recipe key={recipe.id} to={`/recipe/${recipe.id}`}>
-              <img src={ComidaImg} alt="" />
+              {recipe.avatar_url ? (
+                <img src={recipe.avatar_url} alt="" />
+              ) : (
+                <img src={ComidaImg} alt="" />
+              )}
+
               <div>
                 <h3>{recipe.name}</h3>
                 <IngredientsContainer>

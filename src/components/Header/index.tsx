@@ -5,7 +5,7 @@ import { Container, Logo, Nav, NavItems } from './styled'
 import { useAuth } from '../../hooks/auth'
 
 const Header: React.FC = () => {
-  const { user, signUp } = useAuth()
+  const { user } = useAuth()
 
   return (
     <Container>

@@ -14,6 +14,7 @@ export const Container = styled.div`
     padding: 12px;
     border-radius: 10px;
     cursor: pointer;
+    font-size: 22px;
 
     background: #80bfed;
     color: #fff;
@@ -35,7 +36,7 @@ export const PreviewImage = styled.div`
   display: flex;
   justify-content: center;
 
-  border: 3px solid #89b0cd;
+  border: 3px solid #e8e8e8;
   border-radius: 10px;
   overflow: hidden;
 
