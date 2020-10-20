@@ -51,7 +51,7 @@ const Register: React.FC = () => {
           formRef.current?.setErrors(errors)
           return
         }
-        console.log(err)
+        console.error(err)
       }
     },
     [history],

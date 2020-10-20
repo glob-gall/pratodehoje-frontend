@@ -18,7 +18,6 @@ const Profiles: React.FC = () => {
   useEffect(() => {
     const loadUsers = async () => {
       const response = await api.get('users')
-      console.log(response.data)
 
       setProfiles(response.data)
     }
