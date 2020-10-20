@@ -7,17 +7,25 @@ const Footer: React.FC = () => {
   return (
     <Container>
       <Content>
-        <p>© 2020 - Todas as lisenças reservadas</p>
+        <p>© 2020 - Todos os direitos reservados</p>
       </Content>
       <SocialLinks>
-        <div>
-          <TiSocialInstagram size={27} />
-          @instaReceitasHoje
-        </div>
-        <div>
-          <FaFacebookSquare size={25} />
-          /receitas-de-hoje
-        </div>
+        <a
+          href="https://www.instagram.com/receita.de.hoje.net.br/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <TiSocialInstagram size={27} color="#fcfcfc" />
+          @receita.de.hoje.net.br
+        </a>
+        <a
+          href="https://www.facebook.com/receitadehoje.net.br"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaFacebookSquare size={25} color="#fcfcfc" />
+          /receitadehoje.net.br
+        </a>
       </SocialLinks>
       <Contact>
         <p>

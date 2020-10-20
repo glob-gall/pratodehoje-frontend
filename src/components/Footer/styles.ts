@@ -46,17 +46,23 @@ export const Content = styled.div`
 `
 export const SocialLinks = styled.div`
   grid-column: 3/4;
-  color: #fcfcfc;
 
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 
-  > div {
+  a {
     display: flex;
     align-items: center;
-
+    justify-content: center;
+    color: #fcfcfc;
+    text-decoration: none;
+    & + a {
+      margin-left: 24px;
+    }
+  }
+  > div {
     margin: 10px;
     svg {
       animation: ${notHoverSocialLinks} 500ms ease forwards;
