@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { FiClock } from 'react-icons/fi'
 import api from '../../services/api'
 import IngredientCard from '../../components/IngredientCard'
@@ -11,6 +11,7 @@ import {
   MethodContainer,
   IngredientsContainer,
   MethodTtitle,
+  SubmitContainer,
 } from './styles'
 import Loading from '../../components/Loading'
 
@@ -28,22 +29,21 @@ interface IRecipe {
 }
 
 interface IParams {
-  id: string
+  recipe_id: string
 }
 
 const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe>({} as IRecipe)
   const [loaded, setLoaded] = useState(false)
-  const { id } = useParams<IParams>()
+  const { recipe_id } = useParams<IParams>()
   useEffect(() => {
     const loadRecipe = async () => {
-      const response = await api.get(`/recipes/${id}`)
+      const response = await api.get(`/recipes/${recipe_id}`)
       setRecipe(response.data)
-
       setLoaded(true)
     }
     loadRecipe()
-  }, [id])
+  }, [recipe_id])
 
   if (loaded) {
     return (
@@ -81,6 +81,9 @@ const RecipeDetails: React.FC = () => {
             ))}
           </IngredientsContainer>
         </DetailsContainer>
+        <SubmitContainer>
+          <Link to={`/editRecipe/${recipe.id}`}>Alterar</Link>
+        </SubmitContainer>
       </RecipeContainer>
     )
   }

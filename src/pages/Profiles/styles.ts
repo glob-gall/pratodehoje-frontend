@@ -52,7 +52,7 @@ export const CardProfile = styled(Link)`
   margin: 20px;
   width: 220px;
   height: 250px;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
 
   &:hover {

@@ -10,6 +10,8 @@ import CreateRecipe from '../pages/CreateRecipe'
 import Login from '../pages/Login'
 import Register from '../pages/Register'
 import MyProfile from '../pages/MyProfile'
+import MyRecipeDetails from '../pages/MyRecipeDetails'
+import EditRecipe from '../pages/editRecipe'
 
 const Routes: React.FC = () => {
   return (
@@ -22,6 +24,18 @@ const Routes: React.FC = () => {
       <NotAuthenticatedRoute path="/cadastrar" exact component={Register} />
       <Route path="/createRecipe" isPrivate component={CreateRecipe} />
       <Route path="/me" exact isPrivate component={MyProfile} />
+      <Route
+        path="/me/:recipe_id"
+        exact
+        isPrivate
+        component={MyRecipeDetails}
+      />
+      <Route
+        path="/editRecipe/:recipe_id"
+        exact
+        isPrivate
+        component={EditRecipe}
+      />
     </Switch>
   )
 }

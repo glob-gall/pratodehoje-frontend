@@ -83,7 +83,7 @@ export const MethodTtitle = styled.div`
 
     margin-left: 16px;
     background: #e8e8e8;
-    color: #535353;
+    color: #6c6c80;
     padding: 12px;
     border-radius: 10px;
 
@@ -124,14 +124,6 @@ export const IngredientsContainer = styled.div`
     font-size: 18px;
   }
 
-  li {
-    color: #fff;
-    background: #41c900;
-    margin: 5px;
-    padding: 10px;
-    font-weight: bold;
-    border-radius: 10px;
-  }
   @media (max-width: 836px) {
     width: 90%;
     margin: 15px auto 15px;
@@ -139,5 +131,23 @@ export const IngredientsContainer = styled.div`
     li {
       text-align: center;
     }
+  }
+`
+export const SubmitContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  a {
+    margin: 15px;
+    border: none;
+    border-radius: 10px;
+
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+
+    background: #69b645;
+    color: #fff;
+    text-decoration: none;
   }
 `

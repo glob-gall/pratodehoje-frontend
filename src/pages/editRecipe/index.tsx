@@ -1,31 +1,77 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useCallback, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup'
 
 import { FiX } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
-import { useHistory } from 'react-router-dom'
-import { Container, Form, Button, IngredientsList, MethodList } from './styles'
+import { useHistory, useParams } from 'react-router-dom'
+import {
+  Container,
+  Form,
+  Button,
+  IngredientsList,
+  MethodList,
+  RecipeImage,
+} from './styles'
 import Input from '../../components/Input'
 import InputImage from '../../components/InputImage'
 import IngredientCard from '../../components/IngredientCard'
 import getValidationErrors from '../../utils/getValidationErrors'
 import api from '../../services/api'
+import Loading from '../../components/Loading'
+import defaultImage from '../../images/comida.png'
 
 interface SubmitProps {
   name: string
   time: number
   file: File
 }
+interface IIngredient {
+  id: string
+  name: string
+}
 
-const CreateRecipe: React.FC = () => {
+interface IRecipe {
+  name: string
+  time: number
+  ingredients: IIngredient[]
+  method: string[]
+  avatar_url: string
+}
+interface IParams {
+  recipe_id: string
+}
+const EditRecipe: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
 
+  const [loaded, setLoaded] = useState(false)
+  const [initialRecipe, setInitialRecipe] = useState<IRecipe>({} as IRecipe)
   const [ingredients, setIngredients] = useState<string[]>([])
   const [method, setMethod] = useState<string[]>([])
   const [newIngredient, setNewIngredient] = useState('')
   const [newMethod, setNewMethod] = useState('')
+  const { recipe_id } = useParams<IParams>()
+
+  useEffect(() => {
+    const loadRecipe = async () => {
+      const response = await api.get(`/recipes/${recipe_id}`)
+      setInitialRecipe(response.data)
+    }
+
+    loadRecipe()
+    setLoaded(true)
+  }, [recipe_id])
+  useEffect(() => {
+    if (initialRecipe.name) {
+      const ingredientsNames = initialRecipe.ingredients.map(
+        ingredient => ingredient.name,
+      )
+      setIngredients(ingredientsNames)
+
+      setMethod(initialRecipe.method)
+    }
+  }, [initialRecipe])
 
   const history = useHistory()
 
@@ -90,14 +136,17 @@ const CreateRecipe: React.FC = () => {
           time,
           ingredientsNames: ingredients,
           method,
+          id: recipe_id,
         }
-        const response = await api.post('/recipes', recipe)
+        const response = await api.put('/recipes', recipe)
 
-        const formData = new FormData()
-        formData.append('image_url', file)
-        formData.append('recipe_id', response.data.id)
-        history.push(`/recipe/${response.data.id}`)
-        await api.post('/recipes/changeImage', formData)
+        if (data.file) {
+          const formData = new FormData()
+          formData.append('image_url', file)
+          formData.append('recipe_id', response.data.id)
+          await api.post('/recipes/changeImage', formData)
+          history.push(`/me/${response.data.id}`)
+        }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err)
@@ -121,13 +170,24 @@ const CreateRecipe: React.FC = () => {
         console.error(err)
       }
     },
-    [ingredients, method, history],
+    [ingredients, method, history, recipe_id],
   )
 
+  if (!loaded) {
+    return <Loading />
+  }
   return (
     <Container>
       <h1>Você pode adicionar sua receita mais gostosa para todo mundo!</h1>
-      <Form ref={formRef} onSubmit={data => handleSubmit(data)}>
+      <Form
+        ref={formRef}
+        onSubmit={data => handleSubmit(data)}
+        initialData={{
+          name: initialRecipe.name,
+          time: initialRecipe.time,
+          file: initialRecipe.avatar_url,
+        }}
+      >
         <button type="submit" disabled style={{ display: 'none' }} />
         <Input name="name" label="Nome da receita" />
 
@@ -199,16 +259,26 @@ const CreateRecipe: React.FC = () => {
             })}
           </ul>
         </MethodList>
+        <RecipeImage>
+          <p>Imagem atual</p>
+          <div>
+            {initialRecipe.avatar_url ? (
+              <img src={initialRecipe.avatar_url} alt="" />
+            ) : (
+              <img src={defaultImage} alt="" />
+            )}
+          </div>
+        </RecipeImage>
         <InputImage
           name="file"
           label="Escolher uma foto para a receita"
           type="file"
           accept=".jpg,.png"
         />
-        <Button type="submit">CRIAR RECEITA</Button>
+        <Button type="submit">Editar</Button>
       </Form>
     </Container>
   )
 }
 
-export default CreateRecipe
+export default EditRecipe

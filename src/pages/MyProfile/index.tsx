@@ -113,7 +113,7 @@ const UserDetails: React.FC = () => {
           </TitleContainer>
           <RecipesContainer>
             {user.recipes.map(recipe => (
-              <Recipe key={recipe.id} to={`/recipe/${recipe.id}`}>
+              <Recipe key={recipe.id} to={`/me/${recipe.id}`}>
                 {recipe.avatar_url ? (
                   <img src={recipe.avatar_url} alt="avatar-user" />
                 ) : (
