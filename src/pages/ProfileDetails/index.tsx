@@ -9,6 +9,7 @@ import {
   Recipe,
 } from './styles'
 import Loading from '../../components/Loading'
+import NotFound from '../../components/NotFound'
 
 interface Ingredient {
   id: string
@@ -36,12 +37,17 @@ interface ParamsType {
 const UserDetails: React.FC = () => {
   const [user, setUser] = useState<IUser>({} as IUser)
   const [loaded, setLoaded] = useState(false)
+  const [error, setError] = useState(false)
   const { id } = useParams<ParamsType>()
   useEffect(() => {
     const loadUser = async () => {
-      const response = await api.get(`/users/${id}`)
-      setUser(response.data)
-      setLoaded(true)
+      try {
+        const response = await api.get(`/users/${id}`)
+        setUser(response.data)
+        setLoaded(true)
+      } catch {
+        setError(true)
+      }
     }
     loadUser()
   }, [id])
@@ -75,6 +81,9 @@ const UserDetails: React.FC = () => {
         </RecipesContainer>
       </ProfileContainer>
     )
+  }
+  if (error) {
+    return <NotFound title="not found" />
   }
   return <Loading />
 }

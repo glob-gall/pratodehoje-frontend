@@ -13,6 +13,7 @@ import {
   MethodTtitle,
 } from './styles'
 import Loading from '../../components/Loading'
+import NotFound from '../../components/NotFound'
 
 interface Ingredient {
   id: string
@@ -34,13 +35,18 @@ interface IParams {
 const RecipeDetails: React.FC = () => {
   const [recipe, setRecipe] = useState<IRecipe>({} as IRecipe)
   const [loaded, setLoaded] = useState(false)
+  const [error, setError] = useState(false)
   const { id } = useParams<IParams>()
   useEffect(() => {
     const loadRecipe = async () => {
-      const response = await api.get(`/recipes/${id}`)
-      setRecipe(response.data)
+      try {
+        const response = await api.get(`/recipes/${id}`)
+        setRecipe(response.data)
 
-      setLoaded(true)
+        setLoaded(true)
+      } catch {
+        setError(true)
+      }
     }
     loadRecipe()
   }, [id])
@@ -83,6 +89,9 @@ const RecipeDetails: React.FC = () => {
         </DetailsContainer>
       </RecipeContainer>
     )
+  }
+  if (error) {
+    return <NotFound title="Recipe not found" />
   }
   return <Loading />
 }
